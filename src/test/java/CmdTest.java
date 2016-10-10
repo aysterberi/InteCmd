@@ -1,5 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito.*;
 
 import static org.junit.Assert.*;
 
@@ -11,6 +12,7 @@ public class CmdTest {
     @Before
     public void setUpTests() {
         cmd = new Cmd();
+
     }
 
     @Test
@@ -20,6 +22,6 @@ public class CmdTest {
 
     @Test
     public void theCmdShouldSplitAtEachSpaceCharacter() {
-        assertEquals(cmd.tokenizeString("cd ..").length, 2);
+        assertEquals(2, cmd.tokenizeString("cd ..").length);
     }
 }
