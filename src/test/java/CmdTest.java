@@ -17,4 +17,9 @@ public class CmdTest {
     public void theCmdShouldNotBeNull() {
         assertNotNull(cmd);
     }
+
+    @Test
+    public void theCmdShouldSplitAtEachSpaceCharacter() {
+        assertEquals(cmd.tokenizeString("cd ..").length, 2);
+    }
 }
