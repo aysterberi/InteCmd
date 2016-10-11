@@ -13,16 +13,15 @@ public class Cmd {
     }
 
     public void processInput() {
+        System.out.println("Type 'help' for a list of commands");
         while (true) {
             System.out.print(">> ");
             String[] tokens = this.tokenizeString(scanner.nextLine());
             switch (tokens[0]) {
                 case "exit":
-                    System.exit(1);
+                    exitCommand();
                 case "echo":
-                    for (int i = 1; i < tokens.length; i++)
-                        System.out.print(tokens[i] + " ");
-                    System.out.println();
+                    System.out.println(echoCommand(tokens));
                     break;
                 default:
                     System.out.println("Unrecognized command");
@@ -31,7 +30,18 @@ public class Cmd {
         }
     }
 
-    public void processInput(String mockInput) {
+    public void exitCommand() {
+        System.exit(0);
+    }
 
+    public String echoCommand(String[] tokens) {
+        String result = "";
+        for (int i = 1; i < tokens.length; i++) {
+            if (i == tokens.length - 1)
+                result += tokens[i];
+            else
+                result += tokens[i] + " ";
+        }
+        return result;
     }
 }
