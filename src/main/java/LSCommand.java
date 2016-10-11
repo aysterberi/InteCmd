@@ -5,11 +5,11 @@ import java.io.FilenameFilter;
  * Created by Mattin on 2016-10-11.
  */
 
-public class CmdLS{
+public class LSCommand{
     private File file;
     private File[] directories, files;
 
-    public CmdLS(String pathToFile) {
+    public LSCommand(String pathToFile) {
         this.file = new File(pathToFile);
         setDirectories();
         setFiles();

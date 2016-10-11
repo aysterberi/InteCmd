@@ -47,6 +47,4 @@ fabric.properties
 .idea/encodings.xml
 .idea/misc.xml
 .idea/modules.xml
-target/classes/Cmd.class
-target/classes/Runner.class
-target/test-classes/CmdTest.class
+target/
