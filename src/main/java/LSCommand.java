@@ -30,11 +30,19 @@ public class LSCommand{
     }
 
     public File[] getFiles() {
+        if (files == null || files.length == 0){
+            throw new NullPointerException();
+        }else {
         return files;
+        }
     }
 
     public File getFile() {
+        if (file == null || file.length() == 0){
+            throw new NullPointerException();
+        }else{
         return file;
+        }
     }
 
     public File[] getDirectories() {
