@@ -17,7 +17,7 @@ public class CmdDirectoryTest {
     @Test (expected = NullPointerException.class)
     public void theFileShouldNotBeEmpty() {
         cmdLS = new LSCommand("");
-        assertEquals(cmdLS.getFile().length(), 0);
+        cmdLS.getFile().length();
     }
 
     @Test (expected = NullPointerException.class)
