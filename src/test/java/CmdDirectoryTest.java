@@ -22,27 +22,26 @@ public class CmdDirectoryTest {
 
     @Test (expected = NullPointerException.class)
     public void theFileShouldNotBeNull() {
-        cmdLS = new LSCommand("//");
+        cmdLS = new LSCommand("");
         cmdLS.getFile();
     }
 
-
     @Test(expected = NullPointerException.class)
     public void theDirectoryListShouldNotBeNull() {
-        cmdLS = new LSCommand("//");
+        cmdLS = new LSCommand("");
         cmdLS.getDirectories();
     }
 
     @Test(expected = NullPointerException.class)
     public void theDirectoryListShouldNotBeEmpty() {
-        cmdLS = new LSCommand("//");
+        cmdLS = new LSCommand("");
         cmdLS.getDirectories();
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void theFileListShouldNotBeNull() {
-        cmdLS = new LSCommand("/Program Files/");
-        assertNotNull(cmdLS.getFiles());
+        cmdLS = new LSCommand("");
+        cmdLS.getFiles();
     }
 
 }
