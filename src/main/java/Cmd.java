@@ -57,9 +57,9 @@ public class Cmd {
     }
 
     public void lsCommand() {
-        CmdLS cmdLS = new CmdLS("/Program Files/");
-        System.out.println(Arrays.toString(cmdLS.getDirectories()));
-        System.out.println(Arrays.toString(cmdLS.getFiles()));
+        LSCommand ls = new LSCommand("/Program Files/");
+        System.out.println(Arrays.toString(ls.getDirectories()));
+        System.out.println(Arrays.toString(ls.getFiles()));
     }
 
     public void helpCommand() {
