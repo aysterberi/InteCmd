@@ -14,28 +14,29 @@ public class CmdDirectoryTest {
         defaultPath = "/Program Files/";
     }
 
-    @Test
-    public void theFileCanBeEmpty() {
+    @Test (expected = NullPointerException.class)
+    public void theFileShouldNotBeEmpty() {
         cmdLS = new LSCommand("");
         assertEquals(cmdLS.getFile().length(), 0);
     }
 
-    @Test
+    @Test (expected = NullPointerException.class)
     public void theFileShouldNotBeNull() {
         cmdLS = new LSCommand("//");
-        assertNotNull(cmdLS.getFile());
+        cmdLS.getFile();
     }
 
 
-    @Test(expected = NullPointerException.class) @Ignore
+    @Test(expected = NullPointerException.class)
     public void theDirectoryListShouldNotBeNull() {
-        cmdLS = new LSCommand(defaultPath);
+        cmdLS = new LSCommand("//");
+        cmdLS.getDirectories();
     }
 
     @Test(expected = NullPointerException.class)
     public void theDirectoryListShouldNotBeEmpty() {
         cmdLS = new LSCommand("//");
-        assertEquals(cmdLS.getDirectories().length, 0);
+        cmdLS.getDirectories();
     }
 
     @Test
