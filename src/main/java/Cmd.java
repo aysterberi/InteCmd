@@ -57,7 +57,8 @@ public class Cmd {
     }
 
     public void lsCommand() {
-        LSCommand ls = new LSCommand("/Program Files/");
+        // . is OS-independent (UNIX/ Windows) alias for "current directory" from the OS.
+        LSCommand ls = new LSCommand(".");
         System.out.println(Arrays.toString(ls.getDirectories()));
         System.out.println(Arrays.toString(ls.getFiles()));
     }
