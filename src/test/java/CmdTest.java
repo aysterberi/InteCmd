@@ -29,9 +29,9 @@ public class CmdTest {
         assertEquals(2, cmd.tokenizeString("cd ..").length);
     }
 
-    @Test @Ignore
+    @Test
     public void theExitCommandShouldCloseTheApplication() {
         expectedSystemExit.expectSystemExit();
-        // TODO: Implement a way to test this
+        cmd.exitCommand();
     }
 }
