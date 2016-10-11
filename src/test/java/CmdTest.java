@@ -36,14 +36,14 @@ public class CmdTest {
         assertEquals("test the echo command", cmd.echoCommand(arr));
     }
 
-    @Test @Ignore
+    @Test
     public void theTokenizerShouldNotSplitBetweenQuotationMarks() {
-        assertEquals(3, cmd.tokenizeString("this 'should have a length of' three").length);
+        assertEquals(3, cmd.tokenizeString("this \"should have a length of\" three").length);
     }
 
-    @Test @Ignore
+    @Test
     public void theTokenizerShouldHandleSingleWordQuotes() {
-        assertEquals(6, cmd.tokenizeString("this strings 'length' should be six").length);
+        assertEquals(6, cmd.tokenizeString("this strings \"length\" should be six").length);
     }
 
     @Test

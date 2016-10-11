@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Cmd {
@@ -9,20 +10,23 @@ public class Cmd {
     }
 
     public String[] tokenizeString(String line) {
-        if (line.contains("'")) {
-            String[] arr = line.split("'");
-            String[] tokens = new String[line.split("'").length];
-            String quote = "";
-            for (int i = 0; i < arr.length; i++) {
-                if (arr[i].split(" ").length > 2) {
-                    quote += "'" + arr[i] + "'";
-                    tokens[i] = quote;
-                } else
-                    tokens[i] = arr[i].trim();
-            }
-            return tokens;
+        line += " ";
+        ArrayList<String> tokens = new ArrayList<>();
+        boolean quoted = false;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+            if(c == '\"' || c == ' ' && !quoted) {
+                if (c == '\"')
+                    quoted = !quoted;
+                if (!quoted && stringBuilder.length() > 0) {
+                    tokens.add(stringBuilder.toString());
+                    stringBuilder.delete(0, stringBuilder.length());
+                }
+            } else
+                stringBuilder.append(c);
         }
-        return line.split(" ");
+        return tokens.toArray(new String[tokens.size()]);
     }
 
     public void processInput() {
