@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -43,11 +46,20 @@ public class Cmd {
                 case "help":
                     helpCommand();
                     break;
+                case "ls":
+                    lsCommand();
+                    break;
                 default:
                     System.out.println("Unrecognized command");
                     break;
             }
         }
+    }
+
+    public void lsCommand() {
+        CmdLS cmdLS = new CmdLS("/Program Files/");
+        System.out.println(Arrays.toString(cmdLS.getDirectories()));
+        System.out.println(Arrays.toString(cmdLS.getFiles()));
     }
 
     public void helpCommand() {
