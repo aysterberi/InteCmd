@@ -1,14 +1,11 @@
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-/**
- * Created by Mattin on 2016-10-11.
- */
+
 public class CmdDirectoryTest {
-    private CmdLS cmdLS;
+    private LSCommand cmdLS;
     private String defaultPath;
 
     @Before
@@ -17,35 +14,32 @@ public class CmdDirectoryTest {
     }
 
     @Test
-    public void testIfFileEmpty() {
-        cmdLS = new CmdLS("");
+    public void theFileCanBeEmpty() {
+        cmdLS = new LSCommand("");
         assertEquals(cmdLS.getFile().length(), 0);
     }
 
     @Test
-    public void testIfFileNotNull() {
-        cmdLS = new CmdLS("//");
+    public void theFileShouldNotBeNull() {
+        cmdLS = new LSCommand("//");
         assertNotNull(cmdLS.getFile());
     }
 
 
-    @Test
-    public void testIfDirectoryListIsNull() {
-        cmdLS = new CmdLS(defaultPath);
-        assertEquals(cmdLS.getDirectories(), null);
-//        cmdLS = new CmdLS("");
-//        assertEquals(cmdLS.getDirectories(), ExpectedException.none());
+    @Test(expected = NullPointerException.class)
+    public void theDirectoryListShouldNotBeNull() {
+        cmdLS = new LSCommand(defaultPath);
     }
 
-    @Test
-    public void testIfDirectoryListIsEmpty() {
-        cmdLS = new CmdLS("//");
+    @Test(expected = NullPointerException.class)
+    public void theDirectoryListShouldNotBeEmpty() {
+        cmdLS = new LSCommand("//");
         assertEquals(cmdLS.getDirectories().length, 0);
     }
 
     @Test
-    public void testIfFilesListIsNull() {
-        cmdLS = new CmdLS("/Program Files/");
+    public void theFileListShouldNotBeNull() {
+        cmdLS = new LSCommand("/Program Files/");
         assertNotNull(cmdLS.getFiles());
     }
 
