@@ -1,10 +1,6 @@
 import java.io.File;
 import java.io.FilenameFilter;
 
-/**
- * Created by Mattin on 2016-10-11.
- */
-
 public class LSCommand{
     private File file;
     private File[] directories, files;
@@ -43,7 +39,7 @@ public class LSCommand{
 
     public File[] getDirectories() {
         if (directories == null || directories.length == 0){
-            throw new NullPointerException("bla");
+            throw new NullPointerException();
         }else{
             return directories;
         }
