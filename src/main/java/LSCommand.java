@@ -52,4 +52,8 @@ public class LSCommand{
             return directories;
         }
     }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
 }
