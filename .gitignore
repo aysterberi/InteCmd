@@ -48,3 +48,5 @@ fabric.properties
 .idea/misc.xml
 .idea/modules.xml
 target/
+.idea/.name
+inte-cmd.iml
