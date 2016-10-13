@@ -55,6 +55,8 @@ public class Cmd {
                 case "cd":
                     new ChangeDirectory(tokens);
                     break;
+	            case "wc":
+	            	WCCommand(tokens);
                 default:
                     System.out.println("Unrecognized command");
                     break;
