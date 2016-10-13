@@ -1,10 +1,6 @@
 public class CurrentDirectory {
 
-    private static String currentDirectory;
-
-    public CurrentDirectory() {
-        currentDirectory = System.getProperty("user.dir");
-    }
+    private static String currentDirectory = System.getProperty("user.dir");
 
     public void setCurrentDirectory(String path) {
         currentDirectory = path;

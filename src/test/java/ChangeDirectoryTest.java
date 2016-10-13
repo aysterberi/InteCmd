@@ -14,6 +14,7 @@ public class ChangeDirectoryTest {
     public void initialize() {
         cd = new ChangeDirectory();
         currentDirectory = new CurrentDirectory();
+        currentDirectory.setCurrentDirectory(USER_DIRECTORY);
     }
 
     @Test
@@ -48,5 +49,11 @@ public class ChangeDirectoryTest {
     @Test
     public void moveDownOneDirectory() {
         assertTrue(cd.moveDown("src"));
+    }
+
+    @Test
+    public void moveDownOneDirectoryPathIsCorrect() {
+        cd.moveDown("src");
+        assertEquals(USER_DIRECTORY + "\\src", currentDirectory.toString());
     }
 }
