@@ -5,6 +5,18 @@ public class ChangeDirectory {
     private CurrentDirectory currentDirectory = new CurrentDirectory();
 
     public ChangeDirectory(String[] options) {
+        if (options.length > 1) {
+            switch (options[1]) {
+                case "..":
+                    moveUp();
+                    break;
+                default:
+                    moveDown(options[1]);
+                    break;
+            }
+        } else {
+            homeDirectory();
+        }
 
     }
 

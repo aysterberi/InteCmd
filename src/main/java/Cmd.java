@@ -34,8 +34,8 @@ public class Cmd {
     }
 
     public void processInput() {
-        System.out.println(currentDirectory);
         while (true) {
+            System.out.println(currentDirectory);
             System.out.print(">> ");
             String[] tokens = this.tokenizeString(scanner.nextLine());
             switch (tokens[0]) {
@@ -49,6 +49,9 @@ public class Cmd {
                     break;
                 case "ls":
                     lsCommand();
+                    break;
+                case "cd":
+                    new ChangeDirectory(tokens);
                     break;
                 default:
                     System.out.println("Unrecognized command");
