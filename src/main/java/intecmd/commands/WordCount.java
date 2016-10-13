@@ -9,7 +9,8 @@ public class WordCount implements CmdInterface {
 
 	private String separator = ""; //whitespace
 	private File file;
-	private Long count;
+	private String currentLine;
+	private Long count = 0l;
 
 	@Override
 	public void in(String[] data) {
@@ -51,7 +52,7 @@ public class WordCount implements CmdInterface {
 
 	@Override
 	public String out() {
-		return null;
+		return count.toString()+".";
 	}
 
 	@Override
