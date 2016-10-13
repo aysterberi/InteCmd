@@ -1,6 +1,6 @@
 package intecmd;
 
-public interface CmdInterface {
+public interface CommandInterface {
 
 	void in(String[] data);
 

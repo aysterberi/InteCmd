@@ -1,11 +1,11 @@
 package intecmd.commands;
 
-import intecmd.CmdInterface;
+import intecmd.CommandInterface;
 
 import java.io.File;
 import java.util.Arrays;
 
-public class WordCount implements CmdInterface {
+public class WordCount implements CommandInterface {
 
 	private String separator = ""; //whitespace
 	private String message = "";
