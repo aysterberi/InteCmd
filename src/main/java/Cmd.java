@@ -60,13 +60,6 @@ public class Cmd {
         }
     }
 
-    public void lsCommand() {
-        // . is OS-independent (UNIX/ Windows) alias for "current directory" from the OS.
-//        System.out.println(ls.getDirectories());
-//        System.out.println(ls.getFiles());
-//        ls.toString();
-    }
-
     public void helpCommand() {
         System.out.println("Available commands:");
         System.out.println("'exit' - Exits the application");
