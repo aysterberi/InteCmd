@@ -11,6 +11,7 @@ public class WordCount implements CmdInterface {
 	private File file;
 	private String currentLine;
 	private Long count = 0l;
+	private boolean done;
 
 	@Override
 	public void in(String[] data) {
@@ -21,12 +22,8 @@ public class WordCount implements CmdInterface {
 		//TODO: Write code handling flags
 		Arrays.stream(data).forEachOrdered(s ->
 				//do something to handle flags
-				System.out.println(s)
+				System.out.println("Input was: " + s)
 		);
-		if(data.length == 1)
-		{
-			System.out.print(help());
-		}
 		//TODO: Write code handling file
 
 		//invoke count
@@ -55,13 +52,17 @@ public class WordCount implements CmdInterface {
 
 	@Override
 	public String out() {
-		return count.toString()+".";
+		if (!done) {
+			return help();
+		}
+		return count.toString() + ".";
 	}
+
 
 	@Override
 	public String help() {
 		String s;
-		s = "wc \nWord counter, written by Billy, 2016, counts all words in a given input. \nWhitespace is used as the default delimiter.";
+		s = "wc \nWord counter, written and maintained by @chrysophylax. \nThis program counts all words for a given input. \nWhitespace is used as the default delimiter.";
 		return s;
 	}
 }
