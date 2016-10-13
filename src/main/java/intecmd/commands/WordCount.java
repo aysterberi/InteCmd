@@ -18,7 +18,10 @@ public class WordCount implements CmdInterface {
 
 	private void parseArguments(String[] data) {
 		//TODO: Write code handling flags
-		Arrays.stream(data).forEachOrdered(s -> System.out.println(s));
+		Arrays.stream(data).forEachOrdered(s ->
+				//do something to handle flags
+				System.out.println(s)
+		);
 
 		//TODO: Write code handling file
 
@@ -37,6 +40,7 @@ public class WordCount implements CmdInterface {
 		We walk the string as a char array
 		If the last character was a space
 		and the current character is not a space
+		we have reached a new word
 		then we increment the counter
 		update last character
 		and take a step forward
