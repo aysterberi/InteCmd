@@ -23,7 +23,10 @@ public class WordCount implements CmdInterface {
 				//do something to handle flags
 				System.out.println(s)
 		);
-
+		if(data.length == 1)
+		{
+			System.out.print(help());
+		}
 		//TODO: Write code handling file
 
 		//invoke count
@@ -57,6 +60,8 @@ public class WordCount implements CmdInterface {
 
 	@Override
 	public String help() {
-		return null;
+		String s;
+		s = "wc \nWord counter, written by Billy, 2016, counts all words in a given input. \nWhitespace is used as the default delimiter.";
+		return s;
 	}
 }
