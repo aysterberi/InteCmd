@@ -6,11 +6,11 @@ public class CurrentDirectory {
         currentDirectory = System.getProperty("user.dir");
     }
 
-    public String getCurrentDirectory() {
-        return currentDirectory;
-    }
-
     public void setCurrentDirectory(String path) {
         currentDirectory = path;
+    }
+
+    public String toString() {
+        return currentDirectory;
     }
 }
