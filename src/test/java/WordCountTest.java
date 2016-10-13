@@ -3,18 +3,27 @@ import intecmd.commands.WordCount;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+
 import static org.junit.Assert.assertEquals;
 
 public class WordCountTest {
 
 	private WordCount wordCount;
+	private File f;
 
 	@Before
 	public void setUpTests() {
 		wordCount = new WordCount();
+		f = new File("ajfgiuwq");
 
 	}
 
+	@Test
+	public void theIncorrectPathShouldTriggerErrorMessage(){
+		wordCount.in(new String[] {"wc " + f.toPath()} );
+		assertEquals("Incorrect file or input.\nwc \nWord counter, written and maintained by @chrysophylax. \nThis program counts all words for a given input. \nWhitespace is used as the default delimiter.", wordCount.out() );
+	}
 	@Test
 	public void theEmptyStringShouldCountAsZero() {
 		wordCount.in(new String[]{"wc \"\""});
