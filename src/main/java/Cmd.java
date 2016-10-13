@@ -48,7 +48,7 @@ public class Cmd {
                     helpCommand();
                     break;
                 case "ls":
-                    lsCommand();
+                    new LSCommand(tokens, currentDirectory);
                     break;
                 case "cd":
                     new ChangeDirectory(tokens);
@@ -62,16 +62,16 @@ public class Cmd {
 
     public void lsCommand() {
         // . is OS-independent (UNIX/ Windows) alias for "current directory" from the OS.
-        LSCommand ls = new LSCommand(".");
-        System.out.println(Arrays.toString(ls.getDirectories()));
-        System.out.println(Arrays.toString(ls.getFiles()));
+//        System.out.println(ls.getDirectories());
+//        System.out.println(ls.getFiles());
+//        ls.toString();
     }
 
     public void helpCommand() {
         System.out.println("Available commands:");
         System.out.println("'exit' - Exits the application");
         System.out.println("'echo' - Whatever input comes after the command gets printed back");
-        System.out.println("'ls' - blabla");
+        System.out.println("'ls' - Shows all directories and files in the curret directory");
         System.out.println();
     }
 
