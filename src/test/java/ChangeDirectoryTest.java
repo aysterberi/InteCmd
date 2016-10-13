@@ -8,10 +8,12 @@ public class ChangeDirectoryTest {
     private final String HOME_DIRECTORY = System.getProperty("user.home");
 
     private ChangeDirectory cd;
+    private CurrentDirectory currentDirectory;
 
     @Before
     public void initialize() {
         cd = new ChangeDirectory();
+        currentDirectory = new CurrentDirectory();
     }
 
     @Test
@@ -21,11 +23,12 @@ public class ChangeDirectoryTest {
 
     @Test
     public void getCurrentDirectory() {
-        assertEquals(cd.currentDirectory(), USER_DIRECTORY);
+        assertEquals(USER_DIRECTORY, currentDirectory.toString());
     }
 
     @Test
     public void changeCurrentDirectoryToHomeDirectory() {
-        assertEquals(cd.homeDirectory(), HOME_DIRECTORY);
+        cd.homeDirectory();
+        assertEquals(HOME_DIRECTORY, currentDirectory.toString());
     }
 }
