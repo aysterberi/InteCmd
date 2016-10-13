@@ -1,7 +1,9 @@
 package intecmd;
 
-import java.util.Arrays;
+import intecmd.commands.WordCount;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Cmd {
@@ -59,6 +61,18 @@ public class Cmd {
             }
         }
     }
+
+	private void WCCommand(String[] tokens) {
+		WordCount wc = new WordCount();
+		wc.in(tokens);
+	}
+
+	public void lsCommand() {
+		// . is OS-independent (UNIX/ Windows) alias for "current directory" from the OS.
+		LSCommand ls = new LSCommand(".");
+		System.out.println(Arrays.toString(ls.getDirectories()));
+		System.out.println(Arrays.toString(ls.getFiles()));
+	}
 
     public void helpCommand() {
         System.out.println("Available commands:");
