@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 
 public class ChangeDirectory {
 
@@ -49,7 +50,7 @@ public class ChangeDirectory {
     }
 
     private boolean directoryExists(String directory) {
-        File[] files = new LSCommand(currentDirectory.toString()).getDirectories();
+        ArrayList<File> files = new LSCommand(currentDirectory.toString()).getDirectories();
         for(File file : files)
             if (file.getName().equals(directory))
                 return true;
