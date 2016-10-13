@@ -34,7 +34,7 @@ public class WordCountTest {
 	}
 
 	@Test
-	public void theNullStringShouldTriggerErrorMessage() {
+	public void theNullStringShouldTriggerHelpMessage() {
 		wordCount.in(new String[] {"wc "});
 		assertEquals(wordCount.help(), wordCount.out());
 	}
