@@ -40,10 +40,13 @@ public class ChangeDirectoryTest {
 
     @Test
     public void shouldNotBeAbleToMoveUpFurtherThanHighestLevel() {
-        cd.moveUp();
-        cd.moveUp();
-        cd.moveUp();
-        cd.moveUp();
+        for(int i = 0; i < 10; i++)
+            cd.moveUp();
         assertEquals("D:", currentDirectory.toString());
+    }
+
+    @Test
+    public void moveDownOneDirectory() {
+        assertTrue(cd.moveDown("src"));
     }
 }
