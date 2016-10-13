@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Cmd {
 
     private Scanner scanner;
+    private CurrentDirectory currentDirectory = new CurrentDirectory();
 
     public Cmd() {
         scanner = new Scanner(System.in);
@@ -33,7 +34,7 @@ public class Cmd {
     }
 
     public void processInput() {
-        System.out.println("Type 'help' for a list of commands");
+        System.out.println(currentDirectory);
         while (true) {
             System.out.print(">> ");
             String[] tokens = this.tokenizeString(scanner.nextLine());
