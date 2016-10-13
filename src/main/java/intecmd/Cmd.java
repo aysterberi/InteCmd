@@ -67,6 +67,7 @@ public class Cmd {
 	private void WCCommand(String[] tokens) {
 		WordCount wc = new WordCount();
 		wc.in(tokens);
+		System.out.print(wc.out());
 	}
 
 	public void lsCommand() {
