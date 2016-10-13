@@ -8,6 +8,7 @@ import java.util.Arrays;
 public class WordCount implements CmdInterface {
 
 	private String separator = ""; //whitespace
+	private String message = "";
 	private File file;
 	private String currentLine;
 	private Long count = 0l;
@@ -19,15 +20,33 @@ public class WordCount implements CmdInterface {
 	}
 
 	private void parseArguments(String[] data) {
-		//TODO: Write code handling flags
 		Arrays.stream(data).forEachOrdered(s ->
 				//do something to handle flags
-				System.out.println("Input was: " + s)
-		);
+		{
+			if (s.codePointAt(0) == '-') {
+				parseFlag(s);
+				return;
+			}
+			if (s.codePointAt(0) == ' ') {
+				//return;
+			}
+			try {
+				file = new File(s);
+			} catch (Exception e) {
+				e.printStackTrace();
+				message = "Incorrect file or input.";
+			}
+
+		});
+
 		//TODO: Write code handling file
 
 		//invoke count
 		count();
+	}
+
+	private void parseFlag(String s) {
+		//TODO: Write code handling flags
 	}
 
 
@@ -62,7 +81,7 @@ public class WordCount implements CmdInterface {
 	@Override
 	public String help() {
 		String s;
-		s = "wc \nWord counter, written and maintained by @chrysophylax. \nThis program counts all words for a given input. \nWhitespace is used as the default delimiter.";
+		s = message +"\nwc \nWord counter, written and maintained by @chrysophylax. \nThis program counts all words for a given input. \nWhitespace is used as the default delimiter.";
 		return s;
 	}
 }
