@@ -20,4 +20,22 @@ public class WordCountTest {
 		wordCount.in(new String[]{"wc \"\""});
 		assertEquals("0.", wordCount.out() );
 	}
+
+	@Test
+	public void theStringShouldCountAsFive() {
+		wordCount.in(new String[] {"wc \"this is a test sentence.\""});
+		assertEquals("5.", wordCount.out());
+	}
+
+	@Test
+	public void theTabCharacterShouldCountAsZero() {
+		wordCount.in(new String[] {"wc \"\t\t\t\t\""});
+		assertEquals("0.", wordCount.out());
+	}
+
+	@Test
+	public void theNullStringShouldTriggerErrorMessage() {
+		wordCount.in(new String[] {"wc "});
+		assertEquals(wordCount.help(), wordCount.out());
+	}
 }
