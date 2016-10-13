@@ -4,6 +4,14 @@ public class ChangeDirectory {
 
     private CurrentDirectory currentDirectory = new CurrentDirectory();
 
+    public ChangeDirectory(String[] options) {
+
+    }
+
+    public ChangeDirectory() {
+        this(new String[] {""});
+    }
+
     public String currentDirectory() {
         return System.getProperty("user.dir");
     }
