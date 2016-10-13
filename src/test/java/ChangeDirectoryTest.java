@@ -31,4 +31,10 @@ public class ChangeDirectoryTest {
         cd.homeDirectory();
         assertEquals(HOME_DIRECTORY, currentDirectory.toString());
     }
+
+    @Test
+    public void changeToUnderlyingDirectory() {
+        cd.moveUp();
+        assertEquals("D:\\development", currentDirectory.toString());
+    }
 }
