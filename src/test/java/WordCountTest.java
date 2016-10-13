@@ -1,4 +1,5 @@
 import intecmd.Cmd;
+import intecmd.commands.WordCount;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -6,15 +7,17 @@ import static org.junit.Assert.assertEquals;
 
 public class WordCountTest {
 
-	private Cmd cmd;
+	private WordCount wordCount;
 
 	@Before
 	public void setUpTests() {
-		cmd = new Cmd();
+		wordCount = new WordCount();
+
 	}
 
 	@Test
 	public void theEmptyStringShouldCountAsZero() {
-		assertEquals(cmd.tokenizeString("wc \"\" "), "");
+		wordCount.in(new String[]{"wc \"\""});
+		assertEquals("0.", wordCount.out() );
 	}
 }
