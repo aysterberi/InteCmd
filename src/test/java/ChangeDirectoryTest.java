@@ -33,8 +33,17 @@ public class ChangeDirectoryTest {
     }
 
     @Test
-    public void changeToUnderlyingDirectory() {
+    public void moveUpOneDirectory() {
         cd.moveUp();
         assertEquals("D:\\development", currentDirectory.toString());
+    }
+
+    @Test
+    public void shouldNotBeAbleToMoveUpFurtherThanHighestLevel() {
+        cd.moveUp();
+        cd.moveUp();
+        cd.moveUp();
+        cd.moveUp();
+        assertEquals("D:", currentDirectory.toString());
     }
 }
