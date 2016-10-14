@@ -59,9 +59,8 @@ public class CmdDirectoryTest {
         cmdLS.getFiles();
     }
 
-
     @Test
-    public void theFileListShouldShowAllFiles () throws IOException {
+    public void theFileListShouldFindAllFiles () throws IOException {
         final File file1 = temporaryFolder.newFile("file1.txt");
         final File file2 = temporaryFolder.newFile("file2.txt");
         final File file3 = temporaryFolder.newFile("file3.txt");
@@ -77,6 +76,7 @@ public class CmdDirectoryTest {
         cmdLS = new LSCommand(temporaryFolder.getRoot().getPath());
         assertEquals(cmdLS.getDirectories().size(), 3);
     }
+
     @Test
     public void theFileAndDirectoryListShouldFindAll () throws IOException {
         final File file1 = temporaryFolder.newFile("file1.txt");
@@ -88,5 +88,4 @@ public class CmdDirectoryTest {
         cmdLS = new LSCommand(temporaryFolder.getRoot().getPath());
         assertEquals(cmdLS.getDirectories().size() + cmdLS.getFiles().size(), 6);
     }
-
 }
