@@ -96,6 +96,8 @@ public class CmdDirectoryTest {
     @Test
     public void theLFlagShouldListAllContent () throws IOException {
         String command = "ls -l";
+        String expectedOutput = "Directories\r\ndirectory1\r\ndirectory2\r\ndirectory3\r\nFiles\r\nfile1.txt" +
+                "\r\nfile2.txt\r\nfile3.txt";
         final File file1 = temporaryFolder.newFile("file1.txt");
         final File file2 = temporaryFolder.newFile("file2.txt");
         final File file3 = temporaryFolder.newFile("file3.txt");
@@ -103,7 +105,6 @@ public class CmdDirectoryTest {
         final File dir2 = temporaryFolder.newFolder("directory2");
         final File dir3 = temporaryFolder.newFolder("directory3");
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
-        assertEquals("Directories\ndirectory1\ndirectory2\ndirectory3" +
-                "\nFiles\nfile1.txt\nfile2.txt\nfile3.txt", outContent.toString());
+        assertEquals(expectedOutput.trim(), outContent.toString().trim());
     }
 }
