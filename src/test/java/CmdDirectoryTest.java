@@ -12,8 +12,6 @@ import static org.junit.Assert.assertEquals;
 
 public class CmdDirectoryTest {
     private LSCommand cmdLS;
-    private String defaultPath;
-    private File mockedFile;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @Rule
@@ -22,9 +20,6 @@ public class CmdDirectoryTest {
     @Before
     public void setUpTests() {
         System.setOut(new PrintStream(outContent));
-
-//        File mockedFile = Mockito.mock(File.class);
-//        Mockito.when(mockedFile.exists()).thenReturn(true);
     }
 
     @Test (expected = NullPointerException.class)
