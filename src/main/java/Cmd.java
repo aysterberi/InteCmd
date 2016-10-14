@@ -48,7 +48,7 @@ public class Cmd {
                     helpCommand();
                     break;
                 case "ls":
-                    new LSCommand(tokens, currentDirectory);
+                    new LSCommand(tokens, currentDirectory.toString());
                     break;
                 case "cd":
                     new ChangeDirectory(tokens);
