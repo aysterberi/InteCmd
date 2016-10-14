@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 public class ChangeDirectoryTest {
 
+    private final String MOCK_PATH = "C:\\Users\\Test User\\AppData";
+    private final String MOCK_PATH_UP_ONE_LEVEL = "C:\\Users\\Test User";
     private final String USER_DIRECTORY = System.getProperty("user.dir");
     private final String HOME_DIRECTORY = System.getProperty("user.home");
 
@@ -33,11 +35,11 @@ public class ChangeDirectoryTest {
         assertEquals(HOME_DIRECTORY, currentDirectory.toString());
     }
 
-    //@Test
-    //public void moveUpOneDirectory() {
-    //    cd.moveUp();
-    //    assertEquals("D:\\development", currentDirectory.toString());
-    //}
+    @Test
+    public void moveUpOneDirectory() {
+        cd.moveUp(MOCK_PATH);
+        assertEquals(MOCK_PATH_UP_ONE_LEVEL, currentDirectory.toString());
+    }
 
     //@Test
     //public void shouldNotBeAbleToMoveUpFurtherThanHighestLevel() {

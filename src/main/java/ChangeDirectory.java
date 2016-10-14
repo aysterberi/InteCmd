@@ -9,7 +9,7 @@ public class ChangeDirectory {
         if (options.length > 1) {
             switch (options[1]) {
                 case "..":
-                    moveUp();
+                    moveUp(currentDirectory.toString());
                     break;
                 default:
                     moveDown(options[1]);
@@ -33,9 +33,9 @@ public class ChangeDirectory {
         currentDirectory.setCurrentDirectory(System.getProperty("user.home"));
     }
 
-    public void moveUp() {
-        String[] directories = currentDirectory.toString().split("\\\\");
-        String path = directories[0];
+    public void moveUp(String path) {
+        String[] directories = path.split("\\\\");
+        path = directories[0];
         for(int i = 1; i < directories.length - 1; i++)
             path += "\\" + directories[i];
         currentDirectory.setCurrentDirectory(path);
