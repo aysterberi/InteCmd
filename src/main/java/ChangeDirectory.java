@@ -25,10 +25,6 @@ public class ChangeDirectory {
         this(new String[] {""});
     }
 
-    public String currentDirectory() {
-        return System.getProperty("user.dir");
-    }
-
     public void homeDirectory() {
         currentDirectory.setCurrentDirectory(System.getProperty("user.home"));
     }
