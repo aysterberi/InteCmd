@@ -55,21 +55,11 @@ public class LSCommand{
     }
 
     public void setDirectories (){
-        directories.addAll(Arrays.asList(file.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return new File(dir, name).isDirectory();
-            }
-        })));
+        directories.addAll(Arrays.asList(file.listFiles((dir, name) -> new File(dir, name).isDirectory())));
     }
 
     public void setFiles () {
-        files.addAll(Arrays.asList(file.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File current, String name) {
-                return new File(current, name).isFile();
-            }
-        })));
+        files.addAll(Arrays.asList(file.listFiles((current, name) -> new File(current, name).isFile())));
     }
 
     public ArrayList<File> getFiles() {
