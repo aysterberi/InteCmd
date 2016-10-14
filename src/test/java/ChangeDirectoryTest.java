@@ -4,8 +4,9 @@ import static org.junit.Assert.*;
 
 public class ChangeDirectoryTest {
 
-    private final String MOCK_PATH = "C:\\Users\\Test User\\AppData";
-    private final String MOCK_PATH_UP_ONE_LEVEL = "C:\\Users\\Test User";
+    private final String MOCK_PATH_WINDOWS = "C:\\Users\\Test User\\AppData";
+    private final String MOCK_PATH_WINDOWS_ROOT = "C:";
+    private final String MOCK_PATH_WINDOWS_UP_ONE_LEVEL = "C:\\Users\\Test User";
     private final String USER_DIRECTORY = System.getProperty("user.dir");
     private final String HOME_DIRECTORY = System.getProperty("user.home");
 
@@ -37,16 +38,17 @@ public class ChangeDirectoryTest {
 
     @Test
     public void moveUpOneDirectory() {
-        cd.moveUp(MOCK_PATH);
-        assertEquals(MOCK_PATH_UP_ONE_LEVEL, currentDirectory.toString());
+        cd.moveUp(MOCK_PATH_WINDOWS);
+        assertEquals(MOCK_PATH_WINDOWS_UP_ONE_LEVEL, currentDirectory.toString());
     }
 
-    //@Test
-    //public void shouldNotBeAbleToMoveUpFurtherThanHighestLevel() {
-    //    for(int i = 0; i < 10; i++)
-    //        cd.moveUp();
-    //    assertEquals("D:", currentDirectory.toString());
-    //}
+    @Test
+    public void shouldNotBeAbleToMoveUpFurtherThanHighestLevel() {
+        currentDirectory.setCurrentDirectory(MOCK_PATH_WINDOWS);
+        for(int i = 0; i < 10; i++)
+            cd.moveUp(currentDirectory.toString());
+        assertEquals(MOCK_PATH_WINDOWS_ROOT, currentDirectory.toString());
+    }
 
     @Test
     public void moveDownOneDirectory() {
