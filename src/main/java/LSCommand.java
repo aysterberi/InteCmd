@@ -1,3 +1,5 @@
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
@@ -24,31 +26,35 @@ public class LSCommand{
         if (commands.length > 1){
             switch (commands[1]){
                 case "-l":
+                    System.out.print("Directories");
                     listDirectoriesTopDown();
+                    System.out.println("Files");
                     listFilesTopDown();
                     break;
                 case "-f":
                     System.out.println("Files");
-                    getFiles();
+                    System.out.println(getFiles());
                     break;
                 case "-lf":
-                    System.out.println("Files");
+                    System.out.println("Files:");
                     listFilesTopDown();
                     break;
                 case "-d":
-                    System.out.println("Directories");
-                    getDirectories();
+                    System.out.print("Directories: ");
+                    System.out.println(getDirectories());
                     break;
                 case "-ld":
-                    System.out.println("Directories");
+                    System.out.println("Directories:");
                     listDirectoriesTopDown();
                     break;
                 default:
                     System.out.println("are u retarded?");
             }
         }else {
+            System.out.print("Directories: ");
             System.out.println(getDirectories().size() > 0 ? getDirectories() :
                     "No directories in this directory");
+            System.out.print("Files: ");
             System.out.println(getFiles().size() > 0 ? getFiles(): "No files in this directory");
         }
 
