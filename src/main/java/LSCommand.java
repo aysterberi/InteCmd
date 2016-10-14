@@ -85,7 +85,7 @@ public class LSCommand{
     }
 
     public ArrayList<File> getDirectories() {
-        if (directories == null || directories.size() == 0){
+        if (directories == null){
             throw new NullPointerException();
         }else{
             return directories;
