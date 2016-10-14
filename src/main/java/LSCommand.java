@@ -18,15 +18,14 @@ public class LSCommand{
         setFiles();
     }
 
-    public LSCommand(String[] commands, CurrentDirectory currentDirectory) {
-        this.currentDirectory = currentDirectory;
-        this.file = new File(currentDirectory.toString());
+    public LSCommand(String[] commands, String pathToFile) {
+        this.file = new File(pathToFile);
         setDirectories();
         setFiles();
         if (commands.length > 1){
             switch (commands[1]){
                 case "-l":
-                    System.out.print("Directories");
+                    System.out.println("Directories");
                     listDirectoriesTopDown();
                     System.out.println("Files");
                     listFilesTopDown();
