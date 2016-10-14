@@ -10,7 +10,7 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
 
-public class CmdDirectoryTest {
+public class LSTest {
     private LSCommand cmdLS;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
