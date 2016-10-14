@@ -64,7 +64,7 @@ public class Cmd {
         System.out.println("Available commands:");
         System.out.println("'exit' - Exits the application");
         System.out.println("'echo' - Whatever input comes after the command gets printed back");
-        System.out.println("'ls' - Shows all directories and files in the curret directory");
+        System.out.println("'ls' - Shows all directories and files in the current directory");
         System.out.println();
     }
 
