@@ -1,11 +1,7 @@
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.mockito.Matchers;
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -13,7 +9,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class CmdDirectoryTest {
     private LSCommand cmdLS;
@@ -26,7 +21,6 @@ public class CmdDirectoryTest {
 
     @Before
     public void setUpTests() {
-        defaultPath = "/Program Files/";
         System.setOut(new PrintStream(outContent));
 
 //        File mockedFile = Mockito.mock(File.class);
