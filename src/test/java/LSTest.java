@@ -85,14 +85,15 @@ public class LSTest {
     @Test
     public void theLFlagShouldListAllContent () throws IOException {
         String command = "ls -l";
-        String expectedOutput = "Directories\r\ndirectory1\r\ndirectory2\r\ndirectory3\r\nFiles\r\nfile1.txt\r\nfile3.txt";
+        String expectedOutput = "Directories\r\ndirectory1\r\ndirectory2\r\ndirectory3\r\nFiles\r\nfile1.txt\r\nfile2.txt\r\nfile3.txt";
         final File file1 = temporaryFolder.newFile("file1.txt");
+        final File file2 = temporaryFolder.newFile("file2.txt");
         final File file3 = temporaryFolder.newFile("file3.txt");
         final File dir1 = temporaryFolder.newFolder("directory1");
         final File dir2 = temporaryFolder.newFolder("directory2");
         final File dir3 = temporaryFolder.newFolder("directory3");
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
-        assertEquals(expectedOutput.trim(), outContent.toString().trim());
+        assertEquals(expectedOutput, outContent.toString().trim());
     }
 
 }
