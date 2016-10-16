@@ -103,7 +103,12 @@ public class WordCountTest {
 		wordCount.in(new String[] {"wc", "", "-q"});
 		System.out.println(wordCount.call());
 		assertEquals("No valid input. Run wc help for more information.", outContent.toString().trim());
-
+	}
+	@Test
+	public void theParserShouldTreatEmptyQuotesAsInvalidInput() throws Exception {
+		wordCount.in(new String[] {"\"\""});
+		System.out.println(wordCount.call());
+		assertEquals("No valid input. Run wc help for more information.", outContent.toString().trim());
 	}
 	@Test
 	public void theCallShouldExitWhenWrongFile() throws Exception {

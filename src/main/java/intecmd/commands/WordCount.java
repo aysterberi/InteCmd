@@ -3,6 +3,8 @@ package intecmd.commands;
 import intecmd.CommandInterface;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 public class WordCount implements CommandInterface, Callable {
@@ -31,29 +33,38 @@ public class WordCount implements CommandInterface, Callable {
 	}
 
 	private void parseArguments(String[] data) {
+		List<String> other = new ArrayList<>();
 		for (String s : data) {
-			if (!s.contains("-")) {
+			//no flags, set all to true and print them all.
+			if (!s.contains("-l") && !s.contains("-w") && !s.contains("-c")) {
 				printWords = true;
 				printChars = true;
 				printLines = true;
 			}
+			if (!s.contains("-")) {
+				//not a flag
+				other.add(s);
+			}
 			if (s.contains("-")) {
+				//send it off to be analysed
 				parseFlag(s);
 			}
-			//no flags, set all to true and print them all.
 		}
-		for (int i = 0; i < data.length; i++) {
-			switch (data[i]) {
+		for (String s : other) {
+			switch (s) {
 				case "wc":
-					return; //fluff from the command interpreter
+					break; //fluff from the command interpreter
 				case "":
-					return;
+					break;
+				case "\"\"":
+					break;
 				case "help":
 					helpMode = true;
 					break;
 				default:
-					count(data[i]);
+					count(s);
 			}
+
 		}
 	}
 
