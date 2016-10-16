@@ -138,7 +138,6 @@ public class WordCount implements CommandInterface, Callable {
 	@Override
 	public String help() {
 		String s;
-		String message = "";
 		s = message + "\nwc - wordcount. \nThis program counts all words for a given input. \nWhitespace is used as the default delimiter.";
 		return s;
 	}
