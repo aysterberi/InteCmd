@@ -24,6 +24,12 @@ public class WordCountTest {
 	}
 
 	@Test
+	public void nullInputShouldTriggerErrorMessage() {
+		wordCount.in(null);
+		assertEquals("No input detected. Run wc help for more information.", outContent.toString().trim());
+	}
+
+	@Test
 	public void theEmptyStringShouldCountAsZero() throws Exception {
 		testStream = new ByteArrayInputStream("".getBytes());
 		long[] longs = wordCount.processStream(testStream);
