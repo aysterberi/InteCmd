@@ -98,6 +98,12 @@ public class WordCountTest {
 		String s = outContent.toString().replaceAll("\\r\\n", "\n").replaceAll("\\r", "\\n");
 		assertEquals("Could not open faux file trololol.\nAn error occurred when processing the stream.\n", s);
 	}
+	@Test
+	public void formatShouldCorrectlyPrintAllThreeOptions() throws Exception{
+		wordCount.in(new String[] {"-l", "-w", "-c"}); //set flags
+		wordCount.updateCounts(new long[] {3, 12, 2});
+		assertEquals("Words: 3.\nCharacters: 12.\nLines: 2.\n", wordCount.call().toString());
+	}
 	@After
 	public void cleanUpTests() {
 		System.setOut(oldOut);

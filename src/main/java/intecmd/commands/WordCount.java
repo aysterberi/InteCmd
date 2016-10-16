@@ -123,11 +123,15 @@ public class WordCount implements CommandInterface, Callable {
 		}
 		lines = in.getLineNumber();
 		in.close(); //release resource
-		isDone = true;
 		return new long[]{words, chars, lines};
 	}
 
-
+	public void updateCounts(long[] data){
+		wordCount = data[0];
+		charCount = data[1];
+		newlineCount = data[2];
+		isDone = true;
+	}
 	public InputStream openFile(String s) {
 		InputStream in = null;
 		try {
@@ -144,23 +148,22 @@ public class WordCount implements CommandInterface, Callable {
 		long[] results;
 		try {
 			results = processStream(in);
+			updateCounts(results);
 		} catch (Exception e) {
 			System.out.println("An error occurred when processing the stream.");
 			isError = true;
 			return;
 		}
-		wordCount = results[0];
-		charCount = results[1];
-		newlineCount = results[2];
-
 	}
 
 	@Override
 	public String out() {
+		//let's co-op this legacy
+		//for testing
 //		if (!done) {
 //			return help();
 //		}
-		return wordCount + ".";
+		return format();
 	}
 
 	private String format() {
