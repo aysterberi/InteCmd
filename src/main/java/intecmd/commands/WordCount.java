@@ -128,7 +128,7 @@ public class WordCount implements CommandInterface, Callable {
 	}
 
 
-	private InputStream openFile(String s) {
+	public InputStream openFile(String s) {
 		InputStream in = null;
 		try {
 			in = new FileInputStream(new File(s));

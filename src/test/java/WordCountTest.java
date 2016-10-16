@@ -30,6 +30,13 @@ public class WordCountTest {
 	}
 
 	@Test
+	public void fileOpenShouldFailGracefully() {
+		String s = "false file";
+		wordCount.openFile(s);
+		//trim because OS adds \n
+		assertEquals("Could not open false file.", outContent.toString().trim());
+	}
+	@Test
 	public void theLineCountAlternativeShouldWork() throws Exception {
 		wordCount.in(new String[]{"-l"}); //count only lines
 		testStream = new ByteArrayInputStream("this\r\nis\r\nfour\r\nlines.\r\n".getBytes());
