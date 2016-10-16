@@ -94,8 +94,9 @@ public class WordCountTest {
 	@Test
 	public void countShouldFailGracefully() throws Exception {
 		wordCount.in(new String[] {"-l", "-w", "-c", "faux file trololol"});
-		String s = outContent.toString();
-		assertEquals("Could not open faux file trololol.\r\nAn error occurred when processing the stream.\r\n", s);
+		//normalize EOL (should fix Travis CI breaking)
+		String s = outContent.toString().replaceAll("\\r\\n", "\n").replaceAll("\\r", "\\n");
+		assertEquals("Could not open faux file trololol.\nAn error occurred when processing the stream.\n", s);
 	}
 	@After
 	public void cleanUpTests() {
