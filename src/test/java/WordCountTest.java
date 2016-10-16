@@ -102,6 +102,7 @@ public class WordCountTest {
 	public void nonsenseInput() throws Exception {
 		wordCount.in(new String[] {"wc", "", "-q"});
 		System.out.println(wordCount.call());
+		assertEquals("No valid input.", outContent.toString().trim());
 
 	}
 	@Test
