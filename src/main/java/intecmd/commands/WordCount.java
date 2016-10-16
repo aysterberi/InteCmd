@@ -143,13 +143,13 @@ public class WordCount implements CommandInterface, Callable {
 	private String format() {
 		StringBuilder sb = new StringBuilder();
 		if (printWords) {
-			sb.append("Words: ").append(wordCount).append(".");
+			sb.append("Words: ").append(wordCount).append(".\n");
 		}
 		if (printChars) {
-			sb.append("Characters: ").append(charCount).append(".");
+			sb.append("Characters: ").append(charCount).append(".\n");
 		}
 		if (printLines) {
-			sb.append("Lines: ").append(newlineCount).append(".");
+			sb.append("Lines: ").append(newlineCount).append(".\n");
 		}
 		return sb.toString();
 	}
