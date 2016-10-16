@@ -118,9 +118,9 @@ public class WordCount implements CommandInterface, Callable {
 
 	@Override
 	public String out() {
-		if (!done) {
-			return help();
-		}
+//		if (!done) {
+//			return help();
+//		}
 		return wordCount + ".";
 	}
 
