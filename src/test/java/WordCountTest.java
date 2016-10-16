@@ -3,7 +3,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.InputStream;
 
 import static org.junit.Assert.assertEquals;
@@ -38,9 +37,9 @@ public class WordCountTest {
 	}
 	@Test
 	public void theCounterShouldCountNonbreakingSpace() throws Exception {
-		testStream = new ByteArrayInputStream("\u00A0".getBytes());
+		testStream = new ByteArrayInputStream("\u00A0\u00A0\u00A0".getBytes());
 		long[] longs = wordCount.processStream(testStream);
-		assertEquals(1L, longs[1]);
+		assertEquals(3L, longs[1]);
 	}
 	@Test
 	public void theCounterShouldCountWords() throws Exception {
