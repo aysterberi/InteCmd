@@ -31,11 +31,14 @@ public class WordCount implements CommandInterface, Callable {
 	}
 
 	private void parseArguments(String[] data) {
-		for(String s : data) {
+		for (String s : data) {
 			if (!s.contains("-")) {
 				printWords = true;
 				printChars = true;
 				printLines = true;
+			}
+			if (s.contains("-")) {
+				parseFlag(s);
 			}
 			//no flags, set all to true and print them all.
 		}
@@ -45,22 +48,31 @@ public class WordCount implements CommandInterface, Callable {
 					return; //fluff from the command interpreter
 				case "":
 					return;
-				case "-c":
-					printChars = true;
-					break;
-				case "-l":
-					printLines = true;
-					break;
-				case "-w":
-					printWords = true;
-					break;
 				case "help":
 					helpMode = true;
 					break;
 				default:
-					isWorking=true;
 					count(data[i]);
 			}
+		}
+	}
+
+	private void parseFlag(String flag) {
+
+		switch (flag) {
+			case "-c":
+				printChars = true;
+				break;
+			case "-l":
+				printLines = true;
+				break;
+			case "-w":
+				printWords = true;
+				break;
+			case "-h":
+				helpMode = true;
+				break;
+
 		}
 	}
 
@@ -99,14 +111,13 @@ public class WordCount implements CommandInterface, Callable {
 		If we're just going to count lines
 		Let's not do all these silly checks
 		 */
-		if (printLines && !printChars && !printWords)
-		{
+		if (printLines && !printChars && !printWords) {
 			while ((c = in.read()) != -1) {
 				//just go through the whole stream
 			}
 			lines = in.getLineNumber();
 			isDone = true;
-			return new long[] {words, chars, lines};
+			return new long[]{words, chars, lines};
 		}
 
 		// -1 is EOF
@@ -127,12 +138,13 @@ public class WordCount implements CommandInterface, Callable {
 		return new long[]{words, chars, lines};
 	}
 
-	public void updateCounts(long[] data){
+	public void updateCounts(long[] data) {
 		wordCount = data[0];
 		charCount = data[1];
 		newlineCount = data[2];
 		isDone = true;
 	}
+
 	public InputStream openFile(String s) {
 		InputStream in = null;
 		try {
@@ -145,6 +157,7 @@ public class WordCount implements CommandInterface, Callable {
 	}
 
 	private void count(String s) {
+		isWorking = true;
 		InputStream in = openFile(s);
 		long[] results;
 		try {
@@ -155,6 +168,7 @@ public class WordCount implements CommandInterface, Callable {
 			isError = true;
 			return;
 		}
+		isDone = true;
 	}
 
 	@Override
@@ -196,22 +210,18 @@ public class WordCount implements CommandInterface, Callable {
 	 */
 	@Override
 	public Object call() throws Exception {
-		while(!isDone)
-		{
+		while (!isDone) {
 
 			//do not return
 			//unless printing help
-			if(helpMode)
-			{
+			if (helpMode) {
 				return help();
 			}
 			//Exit gracefully.
-			if(isError)
-			{
+			if (isError) {
 				return "Exiting wc.\n";
 			}
-			if(!isWorking)
-			{
+			if (!isWorking) {
 				return "No valid input. Run wc help for more information.\n";
 			}
 		}
