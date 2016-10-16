@@ -34,13 +34,17 @@ public class WordCount implements CommandInterface, Callable {
 
 	private void parseArguments(String[] data) {
 		List<String> other = new ArrayList<>();
-		for (String s : data) {
-			//no flags, set all to true and print them all.
-			if (!s.contains("-l") && !s.contains("-w") && !s.contains("-c")) {
-				printWords = true;
-				printChars = true;
-				printLines = true;
+		String flagCheck = Arrays.toString(data);
+		if (!flagCheck.contains("-l") &&
+		    !flagCheck.contains("-w")
+		    && !flagCheck.contains("-c)) {
+			//no flags, set all to true and print them all.		   
+			printWords = true;
+			printChars = true;
+			printLines = true;
 			}
+		for (String s : data) {
+
 			if (!s.contains("-")) {
 				//not a flag
 				other.add(s);
