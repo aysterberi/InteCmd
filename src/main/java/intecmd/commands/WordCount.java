@@ -70,7 +70,7 @@ public class WordCount implements CommandInterface, Callable {
 			chars++;
 			cc = (char) c;
 			if (Character.isWhitespace(cc)) {
-				//do \r\n and \n here (lookahead?)
+				last = cc;
 				continue;
 			}
 			if (!Character.isWhitespace(cc) && Character.isWhitespace(last)) {
