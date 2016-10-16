@@ -12,7 +12,7 @@ public class WordCount implements CommandInterface, Callable {
 	private Long wordCount;
 	private Long newlineCount;
 	private boolean printWords, printChars, printLines;
-	private boolean isDone, helpMode, isError;
+	private boolean isDone, helpMode, isError, isWorking;
 
 	public WordCount() {
 		message = "";
@@ -42,7 +42,7 @@ public class WordCount implements CommandInterface, Callable {
 		for (int i = 0; i < data.length; i++) {
 			switch (data[i]) {
 				case "wc":
-					break; //fluff from the command interpreter
+					return; //fluff from the command interpreter
 				case "":
 					return;
 				case "-c":
@@ -58,6 +58,7 @@ public class WordCount implements CommandInterface, Callable {
 					helpMode = true;
 					break;
 				default:
+					isWorking=true;
 					count(data[i]);
 			}
 		}
@@ -157,12 +158,8 @@ public class WordCount implements CommandInterface, Callable {
 	}
 
 	@Override
+	@Deprecated
 	public String out() {
-		//let's co-op this legacy
-		//for testing
-//		if (!done) {
-//			return help();
-//		}
 		return format();
 	}
 
@@ -201,6 +198,7 @@ public class WordCount implements CommandInterface, Callable {
 	public Object call() throws Exception {
 		while(!isDone)
 		{
+
 			//do not return
 			//unless printing help
 			if(helpMode)
@@ -210,7 +208,11 @@ public class WordCount implements CommandInterface, Callable {
 			//Exit gracefully.
 			if(isError)
 			{
-				return "Exiting wc.\r\n";
+				return "Exiting wc.\n";
+			}
+			if(!isWorking)
+			{
+				return "No valid input.\n";
 			}
 		}
 

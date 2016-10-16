@@ -99,6 +99,12 @@ public class WordCountTest {
 		assertEquals("Could not open faux file trololol.\nAn error occurred when processing the stream.\n", s);
 	}
 	@Test
+	public void nonsenseInput() throws Exception {
+		wordCount.in(new String[] {"wc", "", "-q"});
+		System.out.println(wordCount.call());
+
+	}
+	@Test
 	public void formatShouldCorrectlyPrintAllThreeOptions() throws Exception{
 		wordCount.in(new String[] {"-l", "-w", "-c"}); //set flags
 		wordCount.updateCounts(new long[] {3, 12, 2});
