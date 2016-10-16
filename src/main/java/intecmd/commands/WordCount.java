@@ -12,7 +12,7 @@ public class WordCount implements CommandInterface, Callable {
 	private Long wordCount;
 	private Long newlineCount;
 	private boolean printWords, printChars, printLines;
-	private boolean isDone, helpMode;
+	private boolean isDone, helpMode, isError;
 
 	public WordCount() {
 		message = "";
@@ -31,7 +31,14 @@ public class WordCount implements CommandInterface, Callable {
 	}
 
 	private void parseArguments(String[] data) {
-
+		for(String s : data) {
+			if (!s.contains("-")) {
+				printWords = true;
+				printChars = true;
+				printLines = true;
+			}
+			//no flags, set all to true and print them all.
+		}
 		for (int i = 0; i < data.length; i++) {
 			switch (data[i]) {
 				case "wc":
@@ -127,6 +134,7 @@ public class WordCount implements CommandInterface, Callable {
 			in = new FileInputStream(new File(s));
 		} catch (Exception e) {
 			System.out.println("Could not open " + s + ".\n");
+			isError = true;
 		}
 		return in;
 	}
@@ -138,6 +146,7 @@ public class WordCount implements CommandInterface, Callable {
 			results = processStream(in);
 		} catch (Exception e) {
 			System.out.println("An error occurred when processing the stream.");
+			isError = true;
 			return;
 		}
 		wordCount = results[0];
@@ -194,6 +203,11 @@ public class WordCount implements CommandInterface, Callable {
 			if(helpMode)
 			{
 				return help();
+			}
+			//Exit gracefully.
+			if(isError)
+			{
+				return "Exiting wc.";
 			}
 		}
 
