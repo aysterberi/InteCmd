@@ -5,9 +5,10 @@ import intecmd.CommandInterface;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
-public class WordCount implements CommandInterface {
+public class WordCount implements CommandInterface, Callable {
 
 	private Logger log;
 	private State currentState = State.ALL;
@@ -67,20 +68,22 @@ public class WordCount implements CommandInterface {
 		boolean whitespace = false;
 		while (scanner.hasNextLine()) {
 			String s = scanner.nextLine();
-			for (Character c : s.toCharArray()
-					) {
+			for (Character c : s.toCharArray()) {
+				if (c == '\n') {
+					newlineCount++;
+				}
 				if (Character.isWhitespace(c)) {
 					whitespace = true;
 					continue;
 				}
-				if ((whitespace) && !Character.isWhitespace(c))
-				{
+				if ((whitespace) && !Character.isWhitespace(c)) {
 					wordCount++;
 					whitespace = false;
 					continue;
 				}
 
 			}
+			done = true;
 		}
 		/*
 		So, we read in a line using scanner
@@ -106,11 +109,45 @@ public class WordCount implements CommandInterface {
 		return wordCount + ".";
 	}
 
+	private String format() {
+		StringBuilder sb = new StringBuilder();
+		switch (currentState) {
+			case WORDS:
+				sb.append("Words: ").append(wordCount).append(".");
+				break;
+			case LINES:
+				sb.append("Lines: ").append(newlineCount).append(".");
+				break;
+			case CHARS:
+				sb.append("Characters: ").append(charCount).append(".");
+				break;
+			case ALL:
+				//fall through
+			default:
+				sb.append("Words: ").append(wordCount).append(".");
+				sb.append("Lines: ").append(newlineCount).append(".");
+				sb.append("Characters: ").append(charCount).append(".");
+		}
+		return sb.toString();
+	}
+
 	@Override
 	public String help() {
 		String s;
 		s = message + "\nwc - wordcount. \nThis program counts all words for a given input. \nWhitespace is used as the default delimiter.";
 		return s;
+	}
+
+	/**
+	 * Computes a result, or throws an exception if unable to do so.
+	 *
+	 * @return computed result
+	 * @throws Exception if unable to compute a result
+	 */
+	@Override
+	public Object call() throws Exception {
+		count();
+		return format();
 	}
 
 
