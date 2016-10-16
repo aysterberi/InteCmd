@@ -91,7 +91,12 @@ public class WordCountTest {
 		long[] longs = wordCount.processStream(testStream);
 		assertEquals(5L, longs[0]); //fetch words
 	}
-
+	@Test
+	public void countShouldFailGracefully() throws Exception {
+		wordCount.in(new String[] {"-l", "-w", "-c", "faux file trololol"});
+		String s = outContent.toString();
+		assertEquals("Could not open faux file trololol.\n\r\nAn error occurred when processing the stream.\r\n", s);
+	}
 	@After
 	public void cleanUpTests() {
 		System.setOut(oldOut);
