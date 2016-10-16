@@ -2,9 +2,10 @@ package intecmd.commands;
 
 import intecmd.CommandInterface;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
@@ -14,10 +15,11 @@ public class WordCount implements CommandInterface, Callable {
 	private State currentState = State.ALL;
 	private File file;
 	private String message;
-	private Long charCount;
+	private Long charCount = 0l;
 	private Long wordCount = 0l;
-	private Long newlineCount;
-	private Scanner scanner;
+	private Long newlineCount = 0l;
+	private FileReader fileReader;
+	private BufferedReader bufferedReader;
 	private boolean done;
 
 	public WordCount() {
@@ -55,9 +57,9 @@ public class WordCount implements CommandInterface, Callable {
 	}
 
 	private void tryOpenFile(String s) {
-		file = new File(s);
 		try {
-			scanner = new Scanner(file);
+			fileReader = new FileReader(s);
+			bufferedReader = new BufferedReader(fileReader);
 
 		} catch (IOException e) {
 			message = "Could not open " + file.toString() + ".\n";
@@ -66,14 +68,14 @@ public class WordCount implements CommandInterface, Callable {
 
 	}
 
-	private void count() {
+	private void count() throws Exception {
 		boolean whitespace = false;
-		while (scanner.hasNextLine()) {
-			String s = scanner.nextLine();
+		StringBuilder sb = new StringBuilder();
+		String s;
+		while ((s = bufferedReader.readLine()) != null) {
+			newlineCount++;
 			for (Character c : s.toCharArray()) {
-				if (c == '\n') {
-					newlineCount++;
-				}
+
 				if (Character.isWhitespace(c)) {
 					whitespace = true;
 					continue;
@@ -83,7 +85,6 @@ public class WordCount implements CommandInterface, Callable {
 					whitespace = false;
 					continue;
 				}
-
 			}
 			done = true;
 		}
@@ -150,10 +151,11 @@ public class WordCount implements CommandInterface, Callable {
 	@Override
 	public Object call() throws Exception {
 		try {
-		count(); } catch (Exception e) {
+			count();
+		} catch (Exception e) {
 			return message;
-			}
-		if(!done){
+		}
+		if (!done) {
 			return message;
 		}
 		return format();
