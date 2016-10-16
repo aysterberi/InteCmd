@@ -82,12 +82,11 @@ public class WordCount implements CommandInterface, Callable {
 		in.close(); //release resource
 		return new long[] {words, chars, lines};
 	}
-	private void tryOpenFile(String s) {
+	public void tryOpenFile(String s) {
 		try {
-			FileReader fileReader = new FileReader(s);
-			bufferedReader = new BufferedReader(fileReader);
-
-		} catch (IOException e) {
+			InputStream in = new FileInputStream(new File(s));
+			processStream(in);
+		} catch (Exception e) {
 			message = "Could not open " + s + ".\n";
 		}
 
