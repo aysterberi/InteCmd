@@ -1,4 +1,3 @@
-import intecmd.Cmd;
 import intecmd.commands.WordCount;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,36 +14,38 @@ public class WordCountTest {
 	@Before
 	public void setUpTests() {
 		wordCount = new WordCount();
-		f = new File("ajfgiuwq");
+		System.out.println(System.getProperty("user.dir"));
+		f = new File("test.txt");
 
 	}
 
 	@Test
-	public void theIncorrectPathShouldTriggerHelpMessage(){
-		wordCount.in(new String[] {"wc " + f.toPath()} );
-		assertEquals(wordCount.help(), wordCount.out() );
+	public void theIncorrectPathShouldTriggerHelpMessage() throws Exception {
+		wordCount.in(new String[]{"wc", "blatantly false file name.txt"});
+		assertEquals("Could not open blatantly false file name.txt.\n", wordCount.call());
 	}
+
 	@Test
 	public void theEmptyStringShouldCountAsZero() {
-		wordCount.in(new String[]{"wc \"\""});
-		assertEquals("0.", wordCount.out() );
+		wordCount.in(new String[]{"wc", "\"\""});
+		assertEquals("0.", wordCount.out());
 	}
 
 	@Test
 	public void theStringShouldCountAsFive() {
-		wordCount.in(new String[] {"wc \"this is a test sentence.\""});
+		wordCount.in(new String[]{"wc", "\"this is a test sentence.\""});
 		assertEquals("5.", wordCount.out());
 	}
 
 	@Test
 	public void theTabCharacterShouldCountAsZero() {
-		wordCount.in(new String[] {"wc \"\t\t\t\t\""});
+		wordCount.in(new String[]{"wc", "\"\t\t\t\t\""});
 		assertEquals("0.", wordCount.out());
 	}
 
 	@Test
 	public void theNullStringShouldTriggerHelpMessage() {
-		wordCount.in(new String[] {"wc "});
+		wordCount.in(new String[]{"wc", ""});
 		assertEquals(wordCount.help(), wordCount.out());
 	}
 }

@@ -12,10 +12,10 @@ public class WordCount implements CommandInterface, Callable {
 
 	private Logger log;
 	private State currentState = State.ALL;
-	private String message = "";
 	private File file;
+	private String message;
 	private Long charCount;
-	private Long wordCount;
+	private Long wordCount = 0l;
 	private Long newlineCount;
 	private Scanner scanner;
 	private boolean done;
@@ -50,7 +50,6 @@ public class WordCount implements CommandInterface, Callable {
 					break;
 				default:
 					tryOpenFile(data[i]);
-					count();
 			}
 		}
 	}
@@ -61,7 +60,8 @@ public class WordCount implements CommandInterface, Callable {
 			scanner = new Scanner(file);
 
 		} catch (IOException e) {
-			System.out.printf("Could not open {0}.", file);
+			message = "Could not open " + file.toString() + ".\n";
+			System.out.printf("Could not open %s.%n", file.toString());
 		}
 
 	}
@@ -136,6 +136,7 @@ public class WordCount implements CommandInterface, Callable {
 	@Override
 	public String help() {
 		String s;
+		String message = "";
 		s = message + "\nwc - wordcount. \nThis program counts all words for a given input. \nWhitespace is used as the default delimiter.";
 		return s;
 	}
@@ -148,7 +149,13 @@ public class WordCount implements CommandInterface, Callable {
 	 */
 	@Override
 	public Object call() throws Exception {
-		count();
+		try {
+		count(); } catch (Exception e) {
+			return message;
+			}
+		if(!done){
+			return message;
+		}
 		return format();
 	}
 
