@@ -103,6 +103,7 @@ public class WordCount implements CommandInterface, Callable {
 		while ((s = bufferedReader.readLine()) != null) {
 				processLine(s);
 		}
+		bufferedReader.close();
 		done = true;
 		/*
 		So, we read in a line using a BufferedReader
