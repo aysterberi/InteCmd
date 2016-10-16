@@ -30,6 +30,14 @@ public class WordCountTest {
 	}
 
 	@Test
+	public void theLineCountAlternativeShouldWork() throws Exception {
+		wordCount.in(new String[]{"-l"}); //count only lines
+		testStream = new ByteArrayInputStream("this\r\nis\r\nfour\r\nlines.\r\n".getBytes());
+		long[] longs = wordCount.processStream(testStream);
+		assertEquals(4L, longs[2]); //fetch lines
+
+	}
+	@Test
 	public void theEmptyStringShouldCountAsZero() throws Exception {
 		testStream = new ByteArrayInputStream("".getBytes());
 		long[] longs = wordCount.processStream(testStream);
