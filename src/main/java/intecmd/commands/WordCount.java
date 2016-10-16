@@ -4,6 +4,7 @@ import intecmd.CommandInterface;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -37,7 +38,7 @@ public class WordCount implements CommandInterface, Callable {
 		String flagCheck = Arrays.toString(data);
 		if (!flagCheck.contains("-l") &&
 		    !flagCheck.contains("-w")
-		    && !flagCheck.contains("-c)) {
+		    && !flagCheck.contains("-c")) {
 			//no flags, set all to true and print them all.		   
 			printWords = true;
 			printChars = true;
