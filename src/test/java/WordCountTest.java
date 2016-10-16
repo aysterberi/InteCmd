@@ -20,9 +20,9 @@ public class WordCountTest {
 	}
 
 	@Test
-	public void theIncorrectPathShouldTriggerErrorMessage(){
+	public void theIncorrectPathShouldTriggerHelpMessage(){
 		wordCount.in(new String[] {"wc " + f.toPath()} );
-		assertEquals("Incorrect file or input.\nwc \nWord counter, written and maintained by @chrysophylax. \nThis program counts all words for a given input. \nWhitespace is used as the default delimiter.", wordCount.out() );
+		assertEquals(wordCount.help(), wordCount.out() );
 	}
 	@Test
 	public void theEmptyStringShouldCountAsZero() {

@@ -38,8 +38,10 @@ public class WordCount implements CommandInterface {
 		for (int i=0; i<data.length;i++)
 		{
 			switch(data[i]) {
+				case "wc":
+					break; //fluff from the command interpreter
 				case " ":
-					break;
+					break; //whitespace
 				case "-c":
 					currentState = State.CHARS;
 					break;
@@ -50,33 +52,15 @@ public class WordCount implements CommandInterface {
 					currentState = State.WORDS;
 					break;
 				default:
-
+					tryOpenFile(data[i]);
 			}
 		}
-
-		Arrays.stream(data).forEachOrdered(s ->
-				//do something to handle flags
-		{
-			if (s.codePointAt(0) == '-') {
-				parseFlag(s);
-				return;
-			}
-			if (s.codePointAt(0) == ' ') {
-				//return;
-			}
-			try {
-				file = new File(s);
-			} catch (Exception e) {
-				e.printStackTrace();
-				message = "Incorrect file or input.";
-			}
-
-		});
-
-		//TODO: Write code handling file
-
 		//invoke count
 		count();
+	}
+
+	private void tryOpenFile(String s) {
+
 	}
 
 
