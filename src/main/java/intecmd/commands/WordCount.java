@@ -133,7 +133,7 @@ public class WordCount implements CommandInterface, Callable {
 		try {
 			in = new FileInputStream(new File(s));
 		} catch (Exception e) {
-			System.out.println("Could not open " + s + ".\n");
+			System.out.println("Could not open " + s + ".");
 			isError = true;
 		}
 		return in;
@@ -207,7 +207,7 @@ public class WordCount implements CommandInterface, Callable {
 			//Exit gracefully.
 			if(isError)
 			{
-				return "Exiting wc.";
+				return "Exiting wc.\r\n";
 			}
 		}
 
