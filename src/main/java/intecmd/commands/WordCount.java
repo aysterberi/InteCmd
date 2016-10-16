@@ -4,14 +4,26 @@ import intecmd.CommandInterface;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.logging.*;
 
 public class WordCount implements CommandInterface {
 
+	public WordCount() {
+		log = Logger.getLogger(WordCount.class.getName());
+	}
+
+	private enum State{
+		CHARS, WORDS, LINES, ALL
+	}
+	private Logger log;
+	private State currentState = State.ALL;
 	private String separator = ""; //whitespace
 	private String message = "";
 	private File file;
 	private String currentLine;
-	private Long count = 0l;
+	private Long charCount;
+	private Long wordCount;
+	private Long newlineCount;
 	private boolean done;
 
 	@Override
@@ -19,7 +31,29 @@ public class WordCount implements CommandInterface {
 		parseArguments(data);
 	}
 
+
+
 	private void parseArguments(String[] data) {
+
+		for (int i=0; i<data.length;i++)
+		{
+			switch(data[i]) {
+				case " ":
+					break;
+				case "-c":
+					currentState = State.CHARS;
+					break;
+				case "-l":
+					currentState = State.LINES;
+					break;
+				case "-w":
+					currentState = State.WORDS;
+					break;
+				default:
+
+			}
+		}
+
 		Arrays.stream(data).forEachOrdered(s ->
 				//do something to handle flags
 		{
@@ -43,10 +77,6 @@ public class WordCount implements CommandInterface {
 
 		//invoke count
 		count();
-	}
-
-	private void parseFlag(String s) {
-		//TODO: Write code handling flags
 	}
 
 
@@ -81,7 +111,7 @@ public class WordCount implements CommandInterface {
 	@Override
 	public String help() {
 		String s;
-		s = message +"\nwc \nWord counter, written and maintained by @chrysophylax. \nThis program counts all words for a given input. \nWhitespace is used as the default delimiter.";
+		s = message +"\nwc - wordcount. \nThis program counts all words for a given input. \nWhitespace is used as the default delimiter.";
 		return s;
 	}
 }
