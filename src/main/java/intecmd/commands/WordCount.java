@@ -2,9 +2,7 @@ package intecmd.commands;
 
 import intecmd.CommandInterface;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
@@ -59,7 +57,31 @@ public class WordCount implements CommandInterface, Callable {
 			}
 		}
 	}
-
+	public long[] processStream(InputStream is) throws Exception {
+		long words = 0L;
+		long chars = 0L;
+		long lines = 0L;
+		LineNumberReader in = new LineNumberReader(new InputStreamReader((is)));
+		int c;
+		char cc;
+		char last = ' ';
+		// -1 is EOF
+		while((c = in.read()) != -1) {
+			chars++;
+			cc = (char) c;
+			if (Character.isWhitespace(cc)) {
+				//do \r\n and \n here (lookahead?)
+				continue;
+			}
+			if (!Character.isWhitespace(cc) && Character.isWhitespace(last)) {
+				words++;
+			}
+			last = cc;
+		}
+		lines = in.getLineNumber();
+		in.close(); //release resource
+		return new long[] {words, chars, lines};
+	}
 	private void tryOpenFile(String s) {
 		try {
 			FileReader fileReader = new FileReader(s);
@@ -70,7 +92,7 @@ public class WordCount implements CommandInterface, Callable {
 		}
 
 	}
-	private void processLine(String s) {
+	public void processLine(String s) {
 		/*
 				->
 		We walk the string as a char array
