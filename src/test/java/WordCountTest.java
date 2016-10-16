@@ -44,14 +44,14 @@ public class WordCountTest {
 	}
 
 	@Test
-	public void theTabCharacterShouldCountAsZero() {
-		wordCount.in(new String[]{"wc", "\"\t\t\t\t\""});
-		assertEquals("0.", wordCount.out());
+	public void theTabCharacterShouldCountAsZero() throws Exception{
+		wordCount.in(new String[]{"wc", "-w", "tab.txt"});
+		assertEquals("Words: 0.", wordCount.call());
 	}
 
 	@Test
-	public void theNullStringShouldTriggerHelpMessage() {
+	public void theNullStringShouldTriggerHelpMessage() throws Exception {
 		wordCount.in(new String[]{"wc", ""});
-		assertEquals(wordCount.help(), wordCount.out());
+		assertEquals(wordCount.help(), wordCount.call());
 	}
 }

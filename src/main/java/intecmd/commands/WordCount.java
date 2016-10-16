@@ -68,10 +68,11 @@ public class WordCount implements CommandInterface, Callable {
 	}
 
 	private void count() throws Exception {
-		boolean whitespace = false;
+		boolean whitespace = true;
 		StringBuilder sb = new StringBuilder();
 		String s;
 		while ((s = bufferedReader.readLine()) != null) {
+			s += " "; //handle omission of whitespace at beginning of line
 			newlineCount++;
 			for (Character c : s.toCharArray()) {
 
@@ -89,11 +90,11 @@ public class WordCount implements CommandInterface, Callable {
 		}
 		done = true;
 		/*
-		So, we read in a line using scanner
+		So, we read in a line using a BufferedReader
 		and as long as we have another line
 		->
 		We walk the string as a char array
-		If the last character was a space
+		If the last character was a space (the whitespace flag)
 		and the current character is not a space
 		we have reached a new word
 		then we increment the counter
