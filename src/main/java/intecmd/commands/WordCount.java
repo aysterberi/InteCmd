@@ -8,17 +8,13 @@ import java.util.logging.Logger;
 
 public class WordCount implements CommandInterface, Callable {
 
-	private Logger log;
-	private State currentState = State.ALL;
 	private String message;
 	private Long charCount;
 	private Long wordCount;
 	private Long newlineCount;
-	private BufferedReader bufferedReader;
-	private boolean done;
+	private boolean printWords, printChars, printLines;
 
 	public WordCount() {
-		log = Logger.getLogger(WordCount.class.getName());
 		message = "";
 		wordCount = 0L;
 		newlineCount = 0L;
@@ -27,9 +23,11 @@ public class WordCount implements CommandInterface, Callable {
 
 	@Override
 	public void in(String[] data) {
-		if (data != null) {
-			parseArguments(data);
+		if (data == null) {
+			System.out.println("No input detected. Run wc help for more information.");
+			return;
 		}
+		parseArguments(data);
 	}
 
 	private void parseArguments(String[] data) {
@@ -41,19 +39,19 @@ public class WordCount implements CommandInterface, Callable {
 				case "":
 					return;
 				case "-c":
-					currentState = State.CHARS;
+					printChars = true;
 					break;
 				case "-l":
-					currentState = State.LINES;
+					printLines = true;
 					break;
 				case "-w":
-					currentState = State.WORDS;
+					printWords = true;
 					break;
 				case "help":
 					System.out.print(help());
 					break;
 				default:
-					tryOpenFile(data[i]);
+					openFile(data[i]);
 			}
 		}
 	}
@@ -61,14 +59,14 @@ public class WordCount implements CommandInterface, Callable {
 	/**
 	 * A simple word counting procedure. Whitespace is
 	 * defined by the Java criterion as outlined in {@link Character}
-	 *
+	 * <p>
 	 * We use {@link LineNumberReader} to keep track of \r\n & \n for us.
 	 * This way we can be platform-agnostic as the Java library
 	 * takes care of it for us.
-	 *
+	 * <p>
 	 * We also keep a count of the amount of 16-bit Unicode
 	 * characters.
-	 *
+	 * <p>
 	 * How does it work? Well, we step through each character
 	 * and check if it's whitespace. If it's whitespace,
 	 * we store it in last and proceed to the next character.
@@ -90,7 +88,7 @@ public class WordCount implements CommandInterface, Callable {
 		char cc;
 		char last = ' ';
 		// -1 is EOF
-		while((c = in.read()) != -1) {
+		while ((c = in.read()) != -1) {
 			chars++;
 			cc = (char) c;
 			if (Character.isWhitespace(cc)) {
@@ -104,9 +102,11 @@ public class WordCount implements CommandInterface, Callable {
 		}
 		lines = in.getLineNumber();
 		in.close(); //release resource
-		return new long[] {words, chars, lines};
+		return new long[]{words, chars, lines};
 	}
-	public void tryOpenFile(String s) {
+
+
+	public void openFile(String s) {
 		try {
 			InputStream in = new FileInputStream(new File(s));
 			processStream(in);
@@ -114,48 +114,6 @@ public class WordCount implements CommandInterface, Callable {
 			message = "Could not open " + s + ".\n";
 		}
 
-	}
-	public void processLine(String s) {
-		/*
-				->
-		We walk the string as a char array
-		If the last character was a space (the whitespace flag)
-		and the current character is not a space
-		we have reached a new word
-		then we increment the counter
-		update last character
-		and take a step forward
-		thus reading a new character
-		 */
-		boolean whitespace = true;
-		newlineCount++;
-		for (Character c : s.toCharArray()) {
-
-			if (Character.isWhitespace(c)) {
-				whitespace = true;
-				continue;
-			}
-			if ((whitespace) && !Character.isWhitespace(c)) {
-				wordCount++;
-				whitespace = false;
-				continue;
-			}
-		}
-	}
-	private void count() throws Exception {
-		boolean whitespace = true;
-		String s;
-		while ((s = bufferedReader.readLine()) != null) {
-				processLine(s);
-		}
-		bufferedReader.close();
-		done = true;
-		/*
-		So, we read in a line using a BufferedReader
-		and as long as we have another line
-		we call processLine();
-
-		 */
 	}
 
 	@Override
@@ -168,22 +126,14 @@ public class WordCount implements CommandInterface, Callable {
 
 	private String format() {
 		StringBuilder sb = new StringBuilder();
-		switch (currentState) {
-			case WORDS:
-				sb.append("Words: ").append(wordCount).append(".");
-				break;
-			case LINES:
-				sb.append("Lines: ").append(newlineCount).append(".");
-				break;
-			case CHARS:
-				sb.append("Characters: ").append(charCount).append(".");
-				break;
-			case ALL:
-				//fall through
-			default:
-				sb.append("Words: ").append(wordCount).append(".\n");
-				sb.append("Lines: ").append(newlineCount).append(".\n");
-				sb.append("Characters: ").append(charCount).append(".");
+		if (printWords) {
+			sb.append("Words: ").append(wordCount).append(".");
+		}
+		if (printChars) {
+			sb.append("Lines: ").append(newlineCount).append(".");
+		}
+		if (printLines) {
+			sb.append("Lines: ").append(newlineCount).append(".");
 		}
 		return sb.toString();
 	}
@@ -191,11 +141,11 @@ public class WordCount implements CommandInterface, Callable {
 	@Override
 	public String help() {
 		String s;
-		String general  = "\nwc - wordcount. \nThis program counts all words for a given file. " +
+		String general = "\nwc - wordcount. \nThis program counts all words for a given file. " +
 				"\nWhitespace is used as the delimiter. Empty lines will not be counted." +
 				"\nFlags:\n-l\t\tCount all lines.\n-w\t\tCount all words.\n-c\t\tCount all 16-bit Unicode characters.\nDefault (no flags) shows all of these counts.\n\nFor example, to count the lines in file xyz.txt run:\n\t\t\twc -l xyz.txt";
 
-		s = message.isEmpty() ?  message + general : general;
+		s = message.isEmpty() ? message + general : general;
 		return s;
 	}
 
@@ -207,19 +157,12 @@ public class WordCount implements CommandInterface, Callable {
 	 */
 	@Override
 	public Object call() throws Exception {
-		try {
-			count();
-		} catch (Exception e) {
-			return message;
-		}
-//		if (!done) {
-//			return help();
+//		try {
+//			count();
+//		} catch (Exception e) {
+//			return message;
 //		}
 		return format();
 	}
 
-
-	private enum State {
-		CHARS, WORDS, LINES, ALL
-	}
 }
