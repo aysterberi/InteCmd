@@ -12,7 +12,7 @@ public class WordCount implements CommandInterface, Callable {
 	private Long wordCount;
 	private Long newlineCount;
 	private boolean printWords, printChars, printLines;
-	private boolean isDone;
+	private boolean isDone, helpMode;
 
 	public WordCount() {
 		message = "";
@@ -48,7 +48,7 @@ public class WordCount implements CommandInterface, Callable {
 					printWords = true;
 					break;
 				case "help":
-					System.out.print(help());
+					helpMode = true;
 					break;
 				default:
 					count(data[i]);
@@ -176,7 +176,13 @@ public class WordCount implements CommandInterface, Callable {
 		while(!isDone)
 		{
 			//do not return
+			//unless printing help
+			if(helpMode)
+			{
+				return help();
+			}
 		}
+
 		return format();
 	}
 
