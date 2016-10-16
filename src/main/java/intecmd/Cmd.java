@@ -4,7 +4,6 @@ import intecmd.commands.WordCount;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class Cmd {
@@ -79,8 +78,8 @@ public class Cmd {
 	public void lsCommand() {
 		// . is OS-independent (UNIX/ Windows) alias for "current directory" from the OS.
 		LSCommand ls = new LSCommand(".");
-		System.out.println(Arrays.toString(ls.getDirectories()));
-		System.out.println(Arrays.toString(ls.getFiles()));
+		System.out.println(Arrays.toString(ls.getDirectories().toArray()));
+		System.out.println(Arrays.toString(ls.getFiles().toArray()));
 	}
 
     public void helpCommand() {

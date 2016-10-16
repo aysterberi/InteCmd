@@ -1,3 +1,5 @@
+package intecmd;
+
 public class CurrentDirectory {
 
     private static String currentDirectory = System.getProperty("user.dir");
