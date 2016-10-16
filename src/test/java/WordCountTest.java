@@ -27,7 +27,7 @@ public class WordCountTest {
 
 	@Test
 	public void theEmptyStringShouldCountAsZero() throws Exception {
-		wordCount.in(new String[]{"wc", "-l", "empty.txt"});
+		wordCount.in(new String[]{"wc", "-w", "empty.txt"});
 		assertEquals("Words: 0.", wordCount.call());
 	}
 

@@ -85,8 +85,9 @@ public class WordCount implements CommandInterface, Callable {
 					continue;
 				}
 			}
-			done = true;
+
 		}
+		done = true;
 		/*
 		So, we read in a line using scanner
 		and as long as we have another line
