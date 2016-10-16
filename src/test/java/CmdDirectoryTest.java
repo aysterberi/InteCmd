@@ -1,4 +1,4 @@
-import intecmd.LSCommand;
+import intecmd.commands.LSCommand;
 import org.junit.Before;
 import org.junit.Test;
 

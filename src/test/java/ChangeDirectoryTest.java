@@ -1,4 +1,4 @@
-import intecmd.ChangeDirectory;
+import intecmd.commands.ChangeDirectory;
 import intecmd.CurrentDirectory;
 import org.junit.Before;
 import org.junit.Test;

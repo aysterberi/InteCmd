@@ -1,5 +1,7 @@
 package intecmd;
 
+import intecmd.commands.ChangeDirectory;
+import intecmd.commands.LSCommand;
 import intecmd.commands.WordCount;
 
 import java.util.ArrayList;
