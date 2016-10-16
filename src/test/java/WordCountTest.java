@@ -30,6 +30,12 @@ public class WordCountTest {
 		assertEquals(4L, longs[2]); //fetch lines
 	}
 	@Test
+	public void theCounterShouldCountCharacters() throws Exception {
+		InputStream testStream = new ByteArrayInputStream("ῥῶ".getBytes());
+		long[] longs = wordCount.processStream(testStream);
+		assertEquals(2L, longs[1]); //fetch chars
+	}
+	@Test
 	public void theCounterShouldCountWords() throws Exception {
 		InputStream testStream = new ByteArrayInputStream("this is now five words.".getBytes());
 		long[] longs = wordCount.processStream(testStream);
