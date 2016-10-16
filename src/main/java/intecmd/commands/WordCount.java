@@ -57,6 +57,30 @@ public class WordCount implements CommandInterface, Callable {
 			}
 		}
 	}
+
+	/**
+	 * A simple word counting procedure. Whitespace is
+	 * defined by the Java criterion as outlined in {@link Character}
+	 *
+	 * We use {@link LineNumberReader} to keep track of \r\n & \n for us.
+	 * This way we can be platform-agnostic as the Java library
+	 * takes care of it for us.
+	 *
+	 * We also keep a count of the amount of 16-bit Unicode
+	 * characters.
+	 *
+	 * How does it work? Well, we step through each character
+	 * and check if it's whitespace. If it's whitespace,
+	 * we store it in last and proceed to the next character.
+	 * If this character is not whitespace AND the previous
+	 * character was a whitespace character, we have encountered
+	 * the start of a word so we increase our counter.
+	 * Repeat until we reach EOF (signalled as int -1)
+	 *
+	 * @param is The data that needs to be counted
+	 * @return [0] = words, [1] = chars, [2] = lines
+	 * @throws Exception If the InputStream cannot be read
+	 */
 	public long[] processStream(InputStream is) throws Exception {
 		long words = 0L;
 		long chars = 0L;
