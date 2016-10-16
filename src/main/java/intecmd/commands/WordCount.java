@@ -102,6 +102,7 @@ public class WordCount implements CommandInterface, Callable {
 		}
 		lines = in.getLineNumber();
 		in.close(); //release resource
+		isDone = true;
 		return new long[]{words, chars, lines};
 	}
 
