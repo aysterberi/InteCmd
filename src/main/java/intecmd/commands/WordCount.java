@@ -4,7 +4,6 @@ import intecmd.CommandInterface;
 
 import java.io.*;
 import java.util.concurrent.Callable;
-import java.util.logging.Logger;
 
 public class WordCount implements CommandInterface, Callable {
 
@@ -13,6 +12,7 @@ public class WordCount implements CommandInterface, Callable {
 	private Long wordCount;
 	private Long newlineCount;
 	private boolean printWords, printChars, printLines;
+	private boolean isDone;
 
 	public WordCount() {
 		message = "";
@@ -51,7 +51,7 @@ public class WordCount implements CommandInterface, Callable {
 					System.out.print(help());
 					break;
 				default:
-					openFile(data[i]);
+					count(data[i]);
 			}
 		}
 	}
@@ -106,13 +106,28 @@ public class WordCount implements CommandInterface, Callable {
 	}
 
 
-	public void openFile(String s) {
+	private InputStream openFile(String s) {
+		InputStream in = null;
 		try {
-			InputStream in = new FileInputStream(new File(s));
-			processStream(in);
+			in = new FileInputStream(new File(s));
 		} catch (Exception e) {
-			message = "Could not open " + s + ".\n";
+			System.out.println("Could not open " + s + ".\n");
 		}
+		return in;
+	}
+
+	private void count(String s) {
+		InputStream in = openFile(s);
+		long[] results;
+		try {
+			results = processStream(in);
+		} catch (Exception e) {
+			System.out.println("An error occurred when processing the stream.");
+			return;
+		}
+		wordCount = results[0];
+		charCount = results[1];
+		newlineCount = results[2];
 
 	}
 
@@ -130,7 +145,7 @@ public class WordCount implements CommandInterface, Callable {
 			sb.append("Words: ").append(wordCount).append(".");
 		}
 		if (printChars) {
-			sb.append("Lines: ").append(newlineCount).append(".");
+			sb.append("Characters: ").append(charCount).append(".");
 		}
 		if (printLines) {
 			sb.append("Lines: ").append(newlineCount).append(".");
