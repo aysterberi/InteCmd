@@ -26,19 +26,19 @@ public class WordCountTest {
 	}
 
 	@Test
-	public void theEmptyStringShouldCountAsZero() {
-		wordCount.in(new String[]{"wc", "\"\""});
-		assertEquals("0.", wordCount.out());
+	public void theEmptyStringShouldCountAsZero() throws Exception {
+		wordCount.in(new String[]{"wc", "-l", "empty.txt"});
+		assertEquals("Words: 0.", wordCount.call());
 	}
 
 	@Test
 	public void theWordCountShouldBe15() throws Exception {
-		wordCount.in(new String[] {"wc", "-w", f.toString()});
+		wordCount.in(new String[]{"wc", "-w", f.toString()});
 		assertEquals("Words: 15.", wordCount.call());
 	}
 
 	@Test
-	public void theLineCountShouldBe3() throws Exception{
+	public void theLineCountShouldBe3() throws Exception {
 		wordCount.in(new String[]{"wc", "-l", f.toString()});
 		assertEquals("Lines: 3.", wordCount.call());
 	}
