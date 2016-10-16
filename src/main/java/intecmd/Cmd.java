@@ -58,6 +58,7 @@ public class Cmd {
                     break;
 	            case "wc":
 	            	WCCommand(tokens);
+		            break;
                 default:
                     System.out.println("Unrecognized command");
                     break;
