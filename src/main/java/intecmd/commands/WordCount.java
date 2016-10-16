@@ -172,11 +172,10 @@ public class WordCount implements CommandInterface, Callable {
 	 */
 	@Override
 	public Object call() throws Exception {
-//		try {
-//			count();
-//		} catch (Exception e) {
-//			return message;
-//		}
+		while(!isDone)
+		{
+			//do not return
+		}
 		return format();
 	}
 
