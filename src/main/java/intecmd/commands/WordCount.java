@@ -26,7 +26,9 @@ public class WordCount implements CommandInterface, Callable {
 
 	@Override
 	public void in(String[] data) {
-		parseArguments(data);
+		if (data != null) {
+			parseArguments(data);
+		}
 	}
 
 	private void parseArguments(String[] data) {
