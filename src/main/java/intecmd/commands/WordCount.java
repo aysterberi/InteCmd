@@ -87,6 +87,20 @@ public class WordCount implements CommandInterface, Callable {
 		int c;
 		char cc;
 		char last = ' ';
+		/*
+		If we're just going to count lines
+		Let's not do all these silly checks
+		 */
+		if (printLines && !printChars && !printWords)
+		{
+			while ((c = in.read()) != -1) {
+				//just go through the whole stream
+			}
+			lines = in.getLineNumber();
+			isDone = true;
+			return new long[] {words, chars, lines};
+		}
+
 		// -1 is EOF
 		while ((c = in.read()) != -1) {
 			chars++;
