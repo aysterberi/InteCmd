@@ -32,10 +32,22 @@ public class WordCountTest {
 	@Test
 	public void fileOpenShouldFailGracefully() {
 		String s = "false file";
-		wordCount.openFile(s);
+		InputStream is = wordCount.openFile(s);
 		//trim because OS adds \n
+		assertEquals(null, is);
 		assertEquals("Could not open false file.", outContent.toString().trim());
 	}
+
+	@Test
+	public void helpShouldReturnCorrectly() throws Exception {
+		wordCount.in(new String[]{"help"});
+		String s = "\nwc - wordcount. \nThis program counts all words for a given file. " +
+				"\nWhitespace is used as the delimiter. Empty lines will not be counted." +
+				"\nFlags:\n-l\t\tCount all lines.\n-w\t\tCount all words.\n-c\t\tCount all 16-bit Unicode characters.\nDefault (no flags) shows all of these counts.\n\nFor example, to count the lines in file xyz.txt run:\n\t\t\twc -l xyz.txt";
+		System.out.print(wordCount.call()); //emulate Cmd call
+		assertEquals(s.trim(), outContent.toString().trim());
+	}
+
 	@Test
 	public void theLineCountAlternativeShouldWork() throws Exception {
 		wordCount.in(new String[]{"-l"}); //count only lines
@@ -44,36 +56,42 @@ public class WordCountTest {
 		assertEquals(4L, longs[2]); //fetch lines
 
 	}
+
 	@Test
 	public void theEmptyStringShouldCountAsZero() throws Exception {
 		testStream = new ByteArrayInputStream("".getBytes());
 		long[] longs = wordCount.processStream(testStream);
 		assertEquals(0L, longs[2]); //fetch lines
 	}
+
 	@Test
 	public void theCounterShouldCountLines() throws Exception {
 		testStream = new ByteArrayInputStream("this\r\nis\r\nfour\r\nlines.\r\n".getBytes());
 		long[] longs = wordCount.processStream(testStream);
 		assertEquals(4L, longs[2]); //fetch lines
 	}
+
 	@Test
 	public void theCounterShouldCountCharacters() throws Exception {
 		testStream = new ByteArrayInputStream("ῥῶ".getBytes());
 		long[] longs = wordCount.processStream(testStream);
 		assertEquals(2L, longs[1]); //fetch chars
 	}
+
 	@Test
 	public void theCounterShouldCountNonbreakingSpace() throws Exception {
 		testStream = new ByteArrayInputStream("\u00A0\u00A0\u00A0".getBytes());
 		long[] longs = wordCount.processStream(testStream);
 		assertEquals(3L, longs[1]);
 	}
+
 	@Test
 	public void theCounterShouldCountWords() throws Exception {
 		testStream = new ByteArrayInputStream("this is now five words.".getBytes());
 		long[] longs = wordCount.processStream(testStream);
 		assertEquals(5L, longs[0]); //fetch words
 	}
+
 	@After
 	public void cleanUpTests() {
 		System.setOut(oldOut);
