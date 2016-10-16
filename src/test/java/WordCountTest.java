@@ -19,8 +19,9 @@ public class WordCountTest {
 
 	@Test
 	public void theEmptyStringShouldCountAsZero() throws Exception {
-		wordCount.in(new String[]{"wc", "-w", "empty.txt"});
-		assertEquals("Words: 0.", wordCount.call());
+		InputStream testStream = new ByteArrayInputStream("".getBytes());
+		long[] longs = wordCount.processStream(testStream);
+		assertEquals(0L, longs[2]); //fetch lines
 	}
 	@Test
 	public void theCounterShouldCountLines() throws Exception {
