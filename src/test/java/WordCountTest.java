@@ -2,7 +2,9 @@ import intecmd.commands.WordCount;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,7 +32,12 @@ public class WordCountTest {
 		wordCount.in(new String[]{"wc", "-w", "empty.txt"});
 		assertEquals("Words: 0.", wordCount.call());
 	}
-
+	@Test
+	public void theCounterShouldCountLines() throws Exception {
+		InputStream testStream = new ByteArrayInputStream("this\r\nis\r\nfour\r\nlines.\r\n".getBytes());
+		long[] longs = wordCount.processStream(testStream);
+		assertEquals(4L, longs[2]);
+	}
 	@Test
 	public void theWordCountShouldBe15() throws Exception {
 		wordCount.in(new String[]{"wc", "-w", f.toString()});
@@ -54,9 +61,4 @@ public class WordCountTest {
 		assertEquals("Words: 0.", wordCount.call());
 	}
 
-	@Test
-	public void theNullStringShouldTriggerHelpMessage() throws Exception {
-		wordCount.in(new String[]{"wc", ""});
-		assertEquals(wordCount.help(), wordCount.call());
-	}
 }
