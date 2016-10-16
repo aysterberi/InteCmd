@@ -3,7 +3,6 @@ package intecmd.commands;
 import intecmd.CommandInterface;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.Callable;
@@ -13,7 +12,6 @@ public class WordCount implements CommandInterface, Callable {
 
 	private Logger log;
 	private State currentState = State.ALL;
-	private File file;
 	private String message;
 	private Long charCount = 0l;
 	private Long wordCount = 0l;
