@@ -1,7 +1,11 @@
-import java.io.File;
-import java.io.FilenameFilter;
-import java.util.Arrays;
+package intecmd;
+
+import intecmd.commands.ChangeDirectory;
+import intecmd.commands.LSCommand;
+import intecmd.commands.WordCount;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Cmd {
@@ -53,12 +57,32 @@ public class Cmd {
                 case "cd":
                     new ChangeDirectory(tokens);
                     break;
+	            case "wc":
+	            	WCCommand(tokens);
+		            break;
                 default:
                     System.out.println("Unrecognized command");
                     break;
             }
         }
     }
+
+	private void WCCommand(String[] tokens) {
+		WordCount wc = new WordCount();
+		wc.in(tokens);
+		try {
+			System.out.print(wc.call());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void lsCommand() {
+		// . is OS-independent (UNIX/ Windows) alias for "current directory" from the OS.
+		LSCommand ls = new LSCommand(".");
+		System.out.println(Arrays.toString(ls.getDirectories().toArray()));
+		System.out.println(Arrays.toString(ls.getFiles().toArray()));
+	}
 
     public void helpCommand() {
         System.out.println("Available commands:");
