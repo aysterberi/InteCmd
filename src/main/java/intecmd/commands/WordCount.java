@@ -73,7 +73,6 @@ public class WordCount implements CommandInterface, Callable {
 
 	private void count() throws Exception {
 		boolean whitespace = true;
-		StringBuilder sb = new StringBuilder();
 		String s;
 		while ((s = bufferedReader.readLine()) != null) {
 			s += " "; //handle omission of whitespace at beginning of line
