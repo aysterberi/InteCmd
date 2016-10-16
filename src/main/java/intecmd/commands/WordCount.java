@@ -13,15 +13,18 @@ public class WordCount implements CommandInterface, Callable {
 	private Logger log;
 	private State currentState = State.ALL;
 	private String message;
-	private Long charCount = 0l;
-	private Long wordCount = 0l;
-	private Long newlineCount = 0l;
-	private FileReader fileReader;
+	private Long charCount;
+	private Long wordCount;
+	private Long newlineCount;
 	private BufferedReader bufferedReader;
 	private boolean done;
 
 	public WordCount() {
 		log = Logger.getLogger(WordCount.class.getName());
+		message = "";
+		wordCount = 0L;
+		newlineCount = 0L;
+		charCount = 0L;
 	}
 
 	@Override
@@ -37,8 +40,8 @@ public class WordCount implements CommandInterface, Callable {
 			switch (data[i]) {
 				case "wc":
 					break; //fluff from the command interpreter
-				case " ":
-					break; //whitespace
+				case "":
+					return;
 				case "-c":
 					currentState = State.CHARS;
 					break;
@@ -48,6 +51,9 @@ public class WordCount implements CommandInterface, Callable {
 				case "-w":
 					currentState = State.WORDS;
 					break;
+				case "help":
+					System.out.print(help());
+					break;
 				default:
 					tryOpenFile(data[i]);
 			}
@@ -56,7 +62,7 @@ public class WordCount implements CommandInterface, Callable {
 
 	private void tryOpenFile(String s) {
 		try {
-			fileReader = new FileReader(s);
+			FileReader fileReader = new FileReader(s);
 			bufferedReader = new BufferedReader(fileReader);
 
 		} catch (IOException e) {
@@ -126,8 +132,8 @@ public class WordCount implements CommandInterface, Callable {
 			case ALL:
 				//fall through
 			default:
-				sb.append("Words: ").append(wordCount).append(".");
-				sb.append("Lines: ").append(newlineCount).append(".");
+				sb.append("Words: ").append(wordCount).append(".\n");
+				sb.append("Lines: ").append(newlineCount).append(".\n");
 				sb.append("Characters: ").append(charCount).append(".");
 		}
 		return sb.toString();
@@ -136,7 +142,11 @@ public class WordCount implements CommandInterface, Callable {
 	@Override
 	public String help() {
 		String s;
-		s = message + "\nwc - wordcount. \nThis program counts all words for a given input. \nWhitespace is used as the default delimiter.";
+		String general  = "\nwc - wordcount. \nThis program counts all words for a given file. " +
+				"\nWhitespace is used as the delimiter. Empty lines will not be counted." +
+				"\nFlags:\n-l\t\tCount all lines.\n-w\t\tCount all words.\n-c\t\tCount all 16-bit Unicode characters.\nDefault (no flags) shows all of these counts.\n\nFor example, to count the lines in file xyz.txt run:\n\t\t\twc -l xyz.txt";
+
+		s = message.isEmpty() ?  message + general : general;
 		return s;
 	}
 
@@ -154,7 +164,7 @@ public class WordCount implements CommandInterface, Callable {
 			return message;
 		}
 		if (!done) {
-			return message;
+			return help();
 		}
 		return format();
 	}
