@@ -212,7 +212,7 @@ public class WordCount implements CommandInterface, Callable {
 			}
 			if(!isWorking)
 			{
-				return "No valid input.\n";
+				return "No valid input. Run wc help for more information.\n";
 			}
 		}
 

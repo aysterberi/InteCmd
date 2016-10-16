@@ -102,8 +102,16 @@ public class WordCountTest {
 	public void nonsenseInput() throws Exception {
 		wordCount.in(new String[] {"wc", "", "-q"});
 		System.out.println(wordCount.call());
-		assertEquals("No valid input.", outContent.toString().trim());
+		assertEquals("No valid input. Run wc help for more information.", outContent.toString().trim());
 
+	}
+	@Test
+	public void theCallShouldExitWhenWrongFile() throws Exception {
+		wordCount.in(new String[] {"-l", "fauxfile.mp3"});
+		System.out.println(wordCount.call());
+		assertEquals("Could not open fauxfile.mp3.\n" +
+				"An error occurred when processing the stream.\n" +
+				"Exiting wc.", outContent.toString().trim().replaceAll("\\r\\n", "\n"));
 	}
 	@Test
 	public void formatShouldCorrectlyPrintAllThreeOptions() throws Exception{
