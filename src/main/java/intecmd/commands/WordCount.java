@@ -70,32 +70,9 @@ public class WordCount implements CommandInterface, Callable {
 		}
 
 	}
-
-	private void count() throws Exception {
-		boolean whitespace = true;
-		String s;
-		while ((s = bufferedReader.readLine()) != null) {
-			s += " "; //handle omission of whitespace at beginning of line
-			newlineCount++;
-			for (Character c : s.toCharArray()) {
-
-				if (Character.isWhitespace(c)) {
-					whitespace = true;
-					continue;
-				}
-				if ((whitespace) && !Character.isWhitespace(c)) {
-					wordCount++;
-					whitespace = false;
-					continue;
-				}
-			}
-
-		}
-		done = true;
+	private void processLine(String s) {
 		/*
-		So, we read in a line using a BufferedReader
-		and as long as we have another line
-		->
+				->
 		We walk the string as a char array
 		If the last character was a space (the whitespace flag)
 		and the current character is not a space
@@ -104,6 +81,33 @@ public class WordCount implements CommandInterface, Callable {
 		update last character
 		and take a step forward
 		thus reading a new character
+		 */
+		boolean whitespace = true;
+		newlineCount++;
+		for (Character c : s.toCharArray()) {
+
+			if (Character.isWhitespace(c)) {
+				whitespace = true;
+				continue;
+			}
+			if ((whitespace) && !Character.isWhitespace(c)) {
+				wordCount++;
+				whitespace = false;
+				continue;
+			}
+		}
+	}
+	private void count() throws Exception {
+		boolean whitespace = true;
+		String s;
+		while ((s = bufferedReader.readLine()) != null) {
+				processLine(s);
+		}
+		done = true;
+		/*
+		So, we read in a line using a BufferedReader
+		and as long as we have another line
+		we call processLine();
 
 		 */
 	}
@@ -162,9 +166,9 @@ public class WordCount implements CommandInterface, Callable {
 		} catch (Exception e) {
 			return message;
 		}
-		if (!done) {
-			return help();
-		}
+//		if (!done) {
+//			return help();
+//		}
 		return format();
 	}
 

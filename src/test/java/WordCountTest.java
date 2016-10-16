@@ -36,6 +36,11 @@ public class WordCountTest {
 		wordCount.in(new String[]{"wc", "-w", f.toString()});
 		assertEquals("Words: 15.", wordCount.call());
 	}
+	@Test
+	public void thisBigFileShouldWork() throws Exception {
+		wordCount.in(new String[] {"bigfile.txt"});
+		assertEquals("Words: 2097152.\nLines: 1048576.\nCharacters: 0.", wordCount.call());
+	}
 
 	@Test
 	public void theLineCountShouldBe3() throws Exception {
