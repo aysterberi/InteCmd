@@ -62,7 +62,7 @@ public class WordCount implements CommandInterface, Callable {
 			bufferedReader = new BufferedReader(fileReader);
 
 		} catch (IOException e) {
-			message = "Could not open " + file.toString() + ".\n";
+			message = "Could not open " + s + ".\n";
 			System.out.printf("Could not open %s.%n", file.toString());
 		}
 
