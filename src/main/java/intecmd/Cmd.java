@@ -4,6 +4,7 @@ import intecmd.commands.WordCount;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Cmd {
@@ -67,7 +68,11 @@ public class Cmd {
 	private void WCCommand(String[] tokens) {
 		WordCount wc = new WordCount();
 		wc.in(tokens);
-		System.out.print(wc.out());
+		try {
+			System.out.print(wc.call());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void lsCommand() {
