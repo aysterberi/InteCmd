@@ -33,7 +33,7 @@ public class GrepCommand implements CmdInterface {
                 String line = bufferedReader.readLine();
                 while (line != null) {
                     if (line.contains(tokens[1])) {
-                        stringBuilder.append(line);
+                        stringBuilder.append(tokens[1]);
                     }
                     line = bufferedReader.readLine();
                 }
@@ -44,7 +44,7 @@ public class GrepCommand implements CmdInterface {
         }
         if(stringBuilder.toString().isEmpty())
             return "error message";
-        return stringBuilder.toString();
+        return stringBuilder.toString().replace('"', ' ').replace('\'', ' ').trim();
     }
 
     @Override
