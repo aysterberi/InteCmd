@@ -21,11 +21,11 @@ public class ConcatenateTest {
 
 	@Test
 	public void theTwoInputsShouldConcatenate() throws IOException {
-		is = new ByteArrayInputStream("part1".getBytes());
+		is = new ByteArrayInputStream("part1".getBytes("UTF-8"));
 		cat.cat(is, "file_1");
-		is = new ByteArrayInputStream("part2".getBytes());
+		is = new ByteArrayInputStream("part2".getBytes("UTF-8"));
 		cat.cat(is, "file_2");
-		assertEquals("part1part2", outContent.toString());
+		assertEquals("part1part2".trim(), outContent.toString().trim());
 	}
 
 	@Test
@@ -36,7 +36,8 @@ public class ConcatenateTest {
 	}
 
 	@After
-	public void tearDownTests() {
+	public void tearDownTests() throws IOException {
 		System.setOut(oldOut);
+		is.close();
 	}
 }
