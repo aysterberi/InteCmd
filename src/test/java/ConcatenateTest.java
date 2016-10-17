@@ -21,18 +21,18 @@ public class ConcatenateTest {
 
 	@Test
 	public void theTwoInputsShouldConcatenate() throws IOException {
-		is = new ByteArrayInputStream("part1".getBytes("UTF-8"));
+		is = new ByteArrayInputStream("part1".getBytes());
 		cat.cat(is, "file_1");
-		is = new ByteArrayInputStream("part2".getBytes("UTF-8"));
+		is = new ByteArrayInputStream("part2".getBytes());
 		cat.cat(is, "file_2");
-		assertEquals("part1part2".trim(), outContent.toString().trim());
+		assertEquals("part1part2", outContent.toString());
 	}
 
 	@Test
 	public void theSingleInputShouldBePrinted() throws IOException {
 		is = new ByteArrayInputStream("this should appear".getBytes());
 		cat.cat(is, "file a");
-		assertEquals("this should appear", outContent.toString().trim());
+		assertEquals("this should appear", outContent.toString());
 	}
 
 	@After

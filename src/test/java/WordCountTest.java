@@ -3,10 +3,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,12 +27,13 @@ public class WordCountTest {
 	}
 
 	@Test
-	public void fileOpenShouldFailGracefully() {
+	public void fileOpenShouldFailGracefully() throws IOException {
 		String s = "false file";
 		InputStream is = wordCount.openFile(s);
 		//trim because OS adds \n
 		assertEquals(null, is);
 		assertEquals("Could not open false file.", outContent.toString().trim());
+		is.close();
 	}
 
 	@Test
@@ -125,8 +123,9 @@ public class WordCountTest {
 		assertEquals("Words: 3.\nCharacters: 12.\nLines: 2.\n", wordCount.call().toString());
 	}
 	@After
-	public void cleanUpTests() {
+	public void cleanUpTests() throws IOException {
 		System.setOut(oldOut);
+		testStream.close();
 	}
 
 }
