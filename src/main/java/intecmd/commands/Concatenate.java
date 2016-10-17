@@ -29,6 +29,7 @@ public class Concatenate implements CommandInterface {
 				continue;
 			} else if (s.equals("help")) {
 				System.out.println(help());
+				return; //exit
 			} else {
 				if(s.equals("cat"))
 				{
