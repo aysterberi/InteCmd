@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+
 import static org.junit.Assert.assertEquals;
 
 public class ConcatenateTest {
@@ -26,6 +27,13 @@ public class ConcatenateTest {
 		cat.cat(is, "file_1");
 		is = new ByteArrayInputStream("part2".getBytes());
 		cat.cat(is, "file_2");
-		assertEquals("partpart2", outContent.toString().trim());
+		assertEquals("part1part2", outContent.toString().trim());
+	}
+
+	@Test
+	public void theSingleInputShouldBePrinted() {
+		is = new ByteArrayInputStream("this should appear".getBytes());
+		cat.cat(is, "file a");
+		assertEquals("this should appear", outContent.toString().trim());
 	}
 }
