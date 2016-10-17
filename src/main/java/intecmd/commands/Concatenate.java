@@ -27,6 +27,8 @@ public class Concatenate implements CommandInterface {
 			{
 				isBuffered = false;
 				continue;
+			} else if (s.equals("help")) {
+				System.out.println(help());
 			} else {
 				try {
 					FileInputStream fis = new FileInputStream(s);
@@ -69,6 +71,8 @@ public class Concatenate implements CommandInterface {
 
 	@Override
 	public String help() {
-		return null;
+		String h = "cat - concatenate two more files and send to standard out.\n" +
+				"Flags: -u\t\tDo not buffer stream.";
+		return h;
 	}
 }
