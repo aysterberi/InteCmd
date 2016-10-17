@@ -19,6 +19,7 @@ public class GrepTest {
     private String[] correctTokenArray = {"grep", "test", "test.txt"};
     private String[] helpTokenArray = {"grep", "help"};
     private String[] tooLongTokenArray = {"grep", "test", "test.txt", "extra"};
+    private String[] sentenceArray = {"grep", "\"a longer\"", "testSentence.txt"};
 
     @Before
     public void setUp() {
@@ -27,11 +28,15 @@ public class GrepTest {
         try {
             String testFile = "this\nis\na\ntest\ndocument";
             String anotherTestFile = "this\nis\nanother\ntest\ndocument";
+            String testSentence = "search\nfor\n\"a longer\"\nword";
             PrintWriter printWriter = new PrintWriter("test.txt", "utf-8");
             printWriter.write(testFile);
             printWriter.close();
             printWriter = new PrintWriter("anotherTest.txt", "utf-8");
             printWriter.write(anotherTestFile);
+            printWriter.close();
+            printWriter = new PrintWriter("testSentence.txt", "utf-8");
+            printWriter.write(testSentence);
             printWriter.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -43,6 +48,7 @@ public class GrepTest {
         try {
             Files.deleteIfExists(Paths.get("test.txt"));
             Files.deleteIfExists(Paths.get("anotherTest.txt"));
+            Files.deleteIfExists(Paths.get("testSentence.txt"));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -88,5 +94,11 @@ public class GrepTest {
     public void anErrorMessageShouldBeReturnedIfNoMatchWasFound() {
         grep = new GrepCommand(correctTokenArray);
         assertEquals("error message", grep.executeSearch(anotherCorrectTokenArray));
+    }
+
+    @Test
+    public void executeSearchForSentenceInQuotationsShouldReturnTheSentence() {
+        grep = new GrepCommand(sentenceArray);
+        assertEquals("a longer", grep.executeSearch(sentenceArray));
     }
 }
