@@ -34,6 +34,22 @@ public class ConcatenateTest {
 	}
 
 	@Test
+	public void thebufferedAndUnbufferedModesShouldReturnSame() throws IOException {
+		String testString = "this should return the same";
+		cat.in(new String[]{"-u"}); //unbuffered
+		is = new ByteArrayInputStream(testString.getBytes());
+		cat.cat(is, "file 1");
+		String unbufOut = outContent.toString();
+		outContent.reset();
+
+		is = new ByteArrayInputStream(testString.getBytes());
+		cat = new Concatenate();
+		cat.cat(is, "file 2"); //8K buffered
+		String bufOut = outContent.toString();
+		assertEquals(unbufOut, bufOut);
+
+	}
+	@Test
 	public void theSingleInputShouldBePrinted() throws IOException {
 		is = new ByteArrayInputStream("this should appear".getBytes());
 		cat.cat(is, "file a");
