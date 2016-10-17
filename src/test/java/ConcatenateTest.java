@@ -20,6 +20,11 @@ public class ConcatenateTest {
 	}
 
 	@Test
+	public void helpShouldDisplay() {
+		cat.in(new String[]{"help"});
+		assertEquals("cat - concatenate two more files and send to standard out.\r\nFlags: -u\t\tDo not buffer stream.\r\n", outContent.toString());
+	}
+	@Test
 	public void theTwoInputsShouldConcatenate() throws IOException {
 		is = new ByteArrayInputStream("part1".getBytes());
 		cat.cat(is, "file_1");
