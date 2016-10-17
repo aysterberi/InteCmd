@@ -53,6 +53,9 @@ public class Cmd {
                 case "cd":
                     new ChangeDirectory(tokens);
                     break;
+                case "grep":
+                    new GrepCommand(tokens);
+                    break;
                 default:
                     System.out.println("Unrecognized command");
                     break;
