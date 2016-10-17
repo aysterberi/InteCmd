@@ -1,7 +1,26 @@
 import intecmd.commands.Concatenate;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+
 public class ConcatenateTest {
+	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+	private final PrintStream oldOut = System.out;
+	Concatenate cat;
+	InputStream is;
+
+	@Before
+	public void setUpTests() {
+		System.setOut(new PrintStream(outContent));
+		cat = new Concatenate();
+	}
+
+	@Test
+	public void theTwoInputsShouldConcatenate() {
+		is = new ByteArrayInputStream("part1".getBytes());
+	}
 }
