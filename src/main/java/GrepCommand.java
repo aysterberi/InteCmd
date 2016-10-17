@@ -44,7 +44,7 @@ public class GrepCommand implements CmdInterface {
         }
         if(stringBuilder.toString().isEmpty())
             return "error message";
-        return stringBuilder.toString().replace('"', ' ').replace('\'', ' ').trim();
+        return stringBuilder.toString().replace("\"", "").replace("'", "");
     }
 
     @Override
