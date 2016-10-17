@@ -23,7 +23,7 @@ public class Concatenate implements CommandInterface {
 
 	}
 
-	private void cat(InputStream is, String fileName) {
+	public void cat(InputStream is, String fileName) {
 
 	}
 	@Override
