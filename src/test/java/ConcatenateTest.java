@@ -1,11 +1,9 @@
 import intecmd.commands.Concatenate;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,18 +20,23 @@ public class ConcatenateTest {
 	}
 
 	@Test
-	public void theTwoInputsShouldConcatenate() {
+	public void theTwoInputsShouldConcatenate() throws IOException {
 		is = new ByteArrayInputStream("part1".getBytes());
 		cat.cat(is, "file_1");
 		is = new ByteArrayInputStream("part2".getBytes());
 		cat.cat(is, "file_2");
-		assertEquals("part1part2", outContent.toString().trim());
+		assertEquals("part1part2", outContent.toString());
 	}
 
 	@Test
-	public void theSingleInputShouldBePrinted() {
+	public void theSingleInputShouldBePrinted() throws IOException {
 		is = new ByteArrayInputStream("this should appear".getBytes());
 		cat.cat(is, "file a");
 		assertEquals("this should appear", outContent.toString().trim());
+	}
+
+	@After
+	public void tearDownTests() {
+		System.setOut(oldOut);
 	}
 }
