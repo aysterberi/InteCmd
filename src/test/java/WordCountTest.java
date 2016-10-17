@@ -33,7 +33,10 @@ public class WordCountTest {
 		//trim because OS adds \n
 		assertEquals(null, is);
 		assertEquals("Could not open false file.", outContent.toString().trim());
-		is.close();
+		try {
+		is.close(); } catch (Exception e ) {
+			//swallow;
+		}
 	}
 
 	@Test
@@ -125,7 +128,10 @@ public class WordCountTest {
 	@After
 	public void cleanUpTests() throws IOException {
 		System.setOut(oldOut);
-		testStream.close();
+		try {
+		testStream.close(); } catch (Exception e) {
+			//swallow
+		}
 	}
 
 }
