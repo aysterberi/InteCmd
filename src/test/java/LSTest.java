@@ -13,6 +13,7 @@ import static org.junit.Assert.assertEquals;
 public class LSTest {
     private LSCommand cmdLS;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    String osName = System.getProperty ("os.name");
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
@@ -20,6 +21,7 @@ public class LSTest {
     @Before
     public void setUpTests() {
         System.setOut(new PrintStream(outContent));
+
         
     }
 
@@ -27,8 +29,13 @@ public class LSTest {
     public void theFileShouldNotBeEmpty() {
         String command = "ls";
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
-        assertEquals("Directories: No directories in this directory\r\nFiles: No files in this directory",
-                outContent.toString().trim());
+        if (osName.startsWith("Windows")){
+            assertEquals("Directories: No directories in this directory\r\nFiles: No files in this directory",
+                    outContent.toString().trim());
+        }else {
+            assertEquals("Directories: No directories in this directory\nFiles: No files in this directory",
+                    outContent.toString().trim());
+        }
     }
 
     @Test (expected = NullPointerException.class)
@@ -95,9 +102,8 @@ public class LSTest {
         final File dir2 = temporaryFolder.newFolder("directory2");
         final File dir3 = temporaryFolder.newFolder("directory3");
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
-        String s = System.getProperty ("os.name");
         String expectedOutput = "Directories\r\ndirectory1\r\ndirectory2\r\ndirectory3\r\nFiles\r\nfile1.txt\r\nfile2.txt\r\nfile3.txt";
-        if (s.startsWith("Windows")){
+        if (osName.startsWith("Windows")){
             assertEquals(expectedOutput, outContent.toString().trim());
         }else {
             assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
