@@ -22,7 +22,7 @@ public class ConcatenateTest {
 	@Test
 	public void helpShouldDisplay() {
 		cat.in(new String[]{"help"});
-		assertEquals("cat - concatenate two more files and send to standard out.\r\nFlags: -u\t\tDo not buffer stream.\r\n", outContent.toString());
+		assertEquals("cat - concatenate two more files and send to standard out.\nFlags: -u\t\tDo not buffer stream.\n", outContent.toString().replaceAll("\\r\\n", "\n"));
 	}
 	@Test
 	public void theTwoInputsShouldConcatenate() throws IOException {
@@ -41,8 +41,12 @@ public class ConcatenateTest {
 	}
 
 	@After
-	public void tearDownTests() throws IOException {
+	public void tearDownTests(){
 		System.setOut(oldOut);
-		is.close();
+		try {
+		is.close(); } catch (Exception e)
+		{
+			//IS was not used in a test
+		}
 	}
 }
