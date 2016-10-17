@@ -30,13 +30,16 @@ public class Concatenate implements CommandInterface {
 			} else if (s.equals("help")) {
 				System.out.println(help());
 			} else {
+				if(s.equals("cat"))
+				{
+					continue; //do nothing
+				}
 				try {
 					FileInputStream fis = new FileInputStream(s);
 					cat(fis, s);
 					fis.close();
 				} catch (java.io.IOException e) {
 					System.out.println("Could not open " + s);
-					return;
 				}
 			}
 		}
