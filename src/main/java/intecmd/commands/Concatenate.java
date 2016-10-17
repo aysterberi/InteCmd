@@ -47,10 +47,10 @@ public class Concatenate implements CommandInterface {
 		int r;
 		try {
 		if(isBuffered){
-			while(is.read(buf) != -1){
+			while((r = is.read(buf)) != -1){
 				try {
-					System.out.write(buf);
-				} catch (IOException e) {
+					System.out.write(buf, 0, r);
+				} catch (Exception e) {
 					System.out.println("Error writing " + fileName);
 				}
 			}
