@@ -15,12 +15,17 @@ package intecmd.commands;
 
 import intecmd.CommandInterface;
 
+import java.io.InputStream;
+
 public class Concatenate implements CommandInterface {
 	@Override
 	public void in(String[] data) {
 
 	}
 
+	private void cat(InputStream is, String fileName) {
+
+	}
 	@Override
 	public String out() {
 		return null;
