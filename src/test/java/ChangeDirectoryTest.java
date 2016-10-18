@@ -13,9 +13,8 @@ public class ChangeDirectoryTest {
     private final String CD_COMMAND = "CD";
     private final String MOCK_PATH_WINDOWS = USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src";
     private final String MOCK_PATH_WINDOWS_ROOT = "C:";
-    private final String VALID_ROOT_1 = File.listRoots()[0].toString();
-    private final String VALID_ROOT_2 = File.listRoots()[1].toString();
 
+    private String validRoot1, validRoot2;
     private ChangeDirectory cd;
     private CurrentDirectory currentDirectory;
 
@@ -70,14 +69,23 @@ public class ChangeDirectoryTest {
 
     @Test
     public void changeToValidRoot() {
-        cd = new ChangeDirectory(new String[] {CD_COMMAND, VALID_ROOT_1});
-        assertEquals(VALID_ROOT_1, currentDirectory.toString());
+        validRoot1 = File.listRoots()[0].toString();
+        cd = new ChangeDirectory(new String[] {CD_COMMAND, validRoot1});
+        assertEquals(validRoot1, currentDirectory.toString());
     }
 
     @Test
-    public void changeFromCToDRoot() {
-        cd = new ChangeDirectory(new String[] {CD_COMMAND, VALID_ROOT_1});
-        cd = new ChangeDirectory(new String[] {CD_COMMAND, VALID_ROOT_2});
-        assertEquals(VALID_ROOT_2, currentDirectory.toString());
+    public void changeFromRoot1ToRoot2IfSystemHasTwoOrMoreRoots() {
+        validRoot1 = File.listRoots()[0].toString();
+        if(systemHasTwoOrMoreRoots()) {
+            validRoot2 = File.listRoots()[0].toString();
+            cd = new ChangeDirectory(new String[] {CD_COMMAND, validRoot2});
+        }
+        cd = new ChangeDirectory(new String[] {CD_COMMAND, validRoot1});
+        assertEquals(validRoot1, currentDirectory.toString());
+    }
+
+    private boolean systemHasTwoOrMoreRoots() {
+        return File.listRoots().length > 1;
     }
 }
