@@ -5,6 +5,7 @@ import intecmd.commands.Concatenate;
 import intecmd.commands.LSCommand;
 import intecmd.commands.WordCount;
 import intecmd.commands.GrepCommand;
+import intecmd.commands.MkdirCommand;
 
 import java.util.ArrayList;
 import java.util.Arrays;
