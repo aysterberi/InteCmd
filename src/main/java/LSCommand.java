@@ -26,14 +26,14 @@ public class LSCommand{
         if (commands.length > 1){
             switch (commands[1]){
                 case "-l":
-                    System.out.println("Directories");
+                    System.out.println("Directories:");
                     listDirectoriesTopDown();
-                    System.out.println("Files");
+                    System.out.println("Files:");
                     listFilesTopDown();
                     break;
                 case "-f":
-                    System.out.println("Files");
-                    System.out.println(getFiles());
+                    System.out.println("Files: ");
+                    printFiles();
                     break;
                 case "-lf":
                     System.out.println("Files:");
@@ -41,21 +41,28 @@ public class LSCommand{
                     break;
                 case "-d":
                     System.out.print("Directories: ");
-                    System.out.println(getDirectories());
+                    printDirectories();
                     break;
                 case "-ld":
                     System.out.println("Directories:");
                     listDirectoriesTopDown();
                     break;
                 default:
-                    System.out.println("are u retarded?");
+                    System.out.println("Flag not recognized");
             }
         }else {
             System.out.print("Directories: ");
-            System.out.println(getDirectories().size() > 0 ? getDirectories() :
-                    "No directories in this directory");
+            if (getDirectories().size() > 0){
+                printDirectories();
+            } else{
+                System.out.println("No directories in this directory");
+            }
             System.out.print("Files: ");
-            System.out.println(getFiles().size() > 0 ? getFiles(): "No files in this directory");
+            if (files.size() > 0){
+                printFiles();
+            }else {
+                System.out.println("No files in this directory");
+            }
         }
 
     }
@@ -82,6 +89,14 @@ public class LSCommand{
         }else{
             return directories;
         }
+    }
+
+    private void printFiles () {
+        files.forEach(file1 -> System.out.print(file1.getName() + " "));
+    }
+
+    private void printDirectories () {
+        directories.forEach(directories1 -> System.out.print(directories1.getName() + " "));
     }
 
     private void listFilesTopDown() {
