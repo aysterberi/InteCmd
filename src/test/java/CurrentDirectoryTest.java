@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 public class CurrentDirectoryTest {
 
-    private final String SEPARATOR = "\\";
-    private final String VALID_PATH = System.getProperty("user.dir") + SEPARATOR + "src";
-    CurrentDirectory currentDirectory;
+    private final String VALID_PATH = System.getProperty("user.dir") + CurrentDirectory.SEPARATOR + "src";
+    private final String INVALID_PATH = "C:/System/test";
+    private CurrentDirectory currentDirectory;
 
     @Before
     public void initialize() {
@@ -25,7 +25,7 @@ public class CurrentDirectoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void setCurrentDirectoryAsHigherThanRootShouldThrowIllegalArgumentException() {
-        currentDirectory.setCurrentDirectory("/");
+        currentDirectory.setCurrentDirectory(CurrentDirectory.SEPARATOR);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -35,7 +35,7 @@ public class CurrentDirectoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void ifPathDoesNotFollowRulesItShouldThrowIllegalArgumentException() {
-        currentDirectory.setCurrentDirectory("C:/System/test");
+        currentDirectory.setCurrentDirectory(INVALID_PATH);
     }
 
     @Test
