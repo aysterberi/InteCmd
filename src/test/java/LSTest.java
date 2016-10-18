@@ -45,37 +45,36 @@ public class LSTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void theFileListShouldNotBeNull() {
+    public void theFileListShouldBeNull() {
         cmdLS = new LSCommand("");
         cmdLS.getFiles();
     }
 
     @Test
+    public void theSetFileMethodShouldFindAllFiles () throws IOException {
+        setUpTempFiles();
+        cmdLS = new LSCommand(temporaryFolder.getRoot().getPath());
+        assertEquals(cmdLS.getFiles().size(), 3);
+    }
+
+    @Test
     public void theFileListShouldFindAllFiles () throws IOException {
-        final File file1 = temporaryFolder.newFile("file1.txt");
-        final File file2 = temporaryFolder.newFile("file2.txt");
-        final File file3 = temporaryFolder.newFile("file3.txt");
+        setUpTempFiles();
         cmdLS = new LSCommand(temporaryFolder.getRoot().getPath());
         assertEquals(3,cmdLS.getFiles().size());
     }
 
     @Test
     public void theDirectoryListShouldFindAllDirectories () throws IOException {
-        final File dir1 = temporaryFolder.newFolder("directory1");
-        final File dir2 = temporaryFolder.newFolder("directory2");
-        final File dir3 = temporaryFolder.newFolder("directory3");
+        setUpTempDirectories();
         cmdLS = new LSCommand(temporaryFolder.getRoot().getPath());
         assertEquals(3,cmdLS.getDirectories().size());
     }
 
     @Test
     public void theFileAndDirectoryListShouldFindAll () throws IOException {
-        final File file1 = temporaryFolder.newFile("file1.txt");
-        final File file2 = temporaryFolder.newFile("file2.txt");
-        final File file3 = temporaryFolder.newFile("file3.txt");
-        final File dir1 = temporaryFolder.newFolder("directory1");
-        final File dir2 = temporaryFolder.newFolder("directory2");
-        final File dir3 = temporaryFolder.newFolder("directory3");
+        setUpTempFiles();
+        setUpTempDirectories();
         cmdLS = new LSCommand(temporaryFolder.getRoot().getPath());
         assertEquals(6,cmdLS.getDirectories().size() + cmdLS.getFiles().size());
     }
@@ -90,12 +89,103 @@ public class LSTest {
         final File dir2 = temporaryFolder.newFolder("directory2");
         final File dir3 = temporaryFolder.newFolder("directory3");
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
-        String expectedOutput = "Directories\r\ndirectory1\r\ndirectory2\r\ndirectory3" +
-                "\r\nFiles\r\nfile1.txt\r\nfile2.txt\r\nfile3.txt";
+        String expectedOutput = "Directories:\r\ndirectory1\r\ndirectory2\r\ndirectory3" +
+                "\r\nFiles:\r\nfile1.txt\r\nfile2.txt\r\nfile3.txt";
         if (osName.startsWith("Windows")){
             assertEquals(expectedOutput, outContent.toString().trim());
         }else {
             assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
         }
     }
+
+    @Test
+    public void theFFlagShouldListAllContent () throws IOException {
+        String command = "ls -f";
+        setUpTempFiles();
+        cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
+        String expectedOutput = "Files: \r\nfile1.txt file2.txt file3.txt";
+        if (osName.startsWith("Windows")){
+            assertEquals(expectedOutput, outContent.toString().trim());
+        }else {
+            assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
+        }
+    }
+    @Test
+    public void theLFFlagShouldListAllContent () throws IOException {
+        String command = "ls -lf";
+        setUpTempFiles();
+        cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
+        String expectedOutput = "Files:\r\nfile1.txt\r\nfile2.txt\r\nfile3.txt";
+        if (osName.startsWith("Windows")){
+            assertEquals(expectedOutput, outContent.toString().trim());
+        }else {
+            assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
+        }
+    }
+    @Test
+    public void theDFlagShouldListAllContent () throws IOException {
+        String command = "ls -d";
+        setUpTempDirectories();
+        cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
+        String expectedOutput = "Directories: directory1 directory2 directory3";
+        if (osName.startsWith("Windows")){
+            assertEquals(expectedOutput, outContent.toString().trim());
+        }else {
+            assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
+        }
+    }
+
+    @Test
+    public void theLdFlagShouldListAllContent () throws IOException {
+        String command = "ls -ld";
+        setUpTempFiles();
+        setUpTempDirectories();
+        cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
+        String expectedOutput = "Directories:\r\ndirectory1\r\ndirectory2\r\ndirectory3";
+        if (osName.startsWith("Windows")){
+            assertEquals(expectedOutput, outContent.toString().trim());
+        }else {
+            assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
+        }
+    }
+
+    @Test
+    public void theResultForWhenFlagNotRecognized () throws IOException {
+        String command = "ls -";
+        setUpTempFiles();
+        setUpTempDirectories();
+        cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
+        String expectedOutput = "Flag not recognized";
+        if (osName.startsWith("Windows")){
+            assertEquals(expectedOutput, outContent.toString().trim());
+        }else {
+            assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
+        }
+    }
+    @Test
+    public void theDefaultOutputIfNoFlagShouldBe () throws IOException {
+        String command = "ls";
+        setUpTempFiles();
+        setUpTempDirectories();
+        cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
+        String expectedOutput = "Directories: directory1 directory2 directory3 Files: file1.txt file2.txt file3.txt";
+        if (osName.startsWith("Windows")){
+            assertEquals(expectedOutput, outContent.toString().trim());
+        }else {
+            assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
+        }
+    }
+
+    private void setUpTempFiles() throws IOException {
+        final File file1 = temporaryFolder.newFile("file1.txt");
+        final File file2 = temporaryFolder.newFile("file2.txt");
+        final File file3 = temporaryFolder.newFile("file3.txt");
+    }
+
+    private void setUpTempDirectories() throws IOException {
+        final File dir1 = temporaryFolder.newFolder("directory1");
+        final File dir2 = temporaryFolder.newFolder("directory2");
+        final File dir3 = temporaryFolder.newFolder("directory3");
+    }
+
 }
