@@ -22,8 +22,7 @@ public class CurrentDirectory {
     }
 
     private boolean pathExists(String path) {
-        File directory = new File(path);
-        return directory.exists();
+        return new File(path).exists();
     }
 
     public String toString() {
