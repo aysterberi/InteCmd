@@ -1,4 +1,3 @@
-import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -12,7 +11,7 @@ public class ChangeDirectory {
                 case "..":
                     moveUp(currentDirectory.toString());
                     break;
-                case "C:": case "D:":
+                case "C:\\": case "D:\\":
                     changeRoot(options[1]);
                     break;
                 default:
@@ -59,7 +58,7 @@ public class ChangeDirectory {
 
     private void changeRoot(String root) {
         for(File file : File.listRoots()) {
-            if(file.toString().equals(root + CurrentDirectory.SEPARATOR)) {
+            if(file.toString().equals(root)) {
                 currentDirectory.setCurrentDirectory(root);
                 return;
             }

@@ -1,5 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
+
 import static org.junit.Assert.*;
 
 public class ChangeDirectoryTest {
@@ -10,8 +13,8 @@ public class ChangeDirectoryTest {
     private final String CD_COMMAND = "CD";
     private final String MOCK_PATH_WINDOWS = USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src";
     private final String MOCK_PATH_WINDOWS_ROOT = "C:";
-    private final String VALID_WINDOWS_ROOT_C = "C:";
-    private final String VALID_WINDOWS_ROOT_D = "D:";
+    private final String VALID_ROOT_1 = File.listRoots()[0].toString();
+    private final String VALID_ROOT_2 = File.listRoots()[1].toString();
 
     private ChangeDirectory cd;
     private CurrentDirectory currentDirectory;
@@ -67,14 +70,14 @@ public class ChangeDirectoryTest {
 
     @Test
     public void changeToValidRoot() {
-        cd = new ChangeDirectory(new String[] {CD_COMMAND, VALID_WINDOWS_ROOT_C});
-        assertEquals(VALID_WINDOWS_ROOT_C, currentDirectory.toString());
+        cd = new ChangeDirectory(new String[] {CD_COMMAND, VALID_ROOT_1});
+        assertEquals(VALID_ROOT_1, currentDirectory.toString());
     }
 
     @Test
     public void changeFromCToDRoot() {
-        cd = new ChangeDirectory(new String[] {CD_COMMAND, VALID_WINDOWS_ROOT_C});
-        cd = new ChangeDirectory(new String[] {CD_COMMAND, VALID_WINDOWS_ROOT_D});
-        assertEquals(VALID_WINDOWS_ROOT_D, currentDirectory.toString());
+        cd = new ChangeDirectory(new String[] {CD_COMMAND, VALID_ROOT_1});
+        cd = new ChangeDirectory(new String[] {CD_COMMAND, VALID_ROOT_2});
+        assertEquals(VALID_ROOT_2, currentDirectory.toString());
     }
 }
