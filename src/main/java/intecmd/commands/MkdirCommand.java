@@ -1,5 +1,7 @@
 package intecmd.commands;
 
+import intecmd.CurrentDirectory;
+
 import java.io.File;
 
 
