@@ -8,19 +8,21 @@ import java.util.Arrays;
 public class LSCommand{
     private final String DEFAULTPATH = ".";
     private File file = new File(DEFAULTPATH);
-    private ArrayList<File> directories = new ArrayList<>();
-    private ArrayList<File> files = new ArrayList<>();
+    private ArrayList<File> directories;
+    private ArrayList<File> files;
 
     public LSCommand (String pathToFile){
-        this.file = new File(pathToFile);
-        setDirectories();
-        setFiles();
+        file = new File(pathToFile);
+        if (!file.getName().equals("")){
+            files = new ArrayList<>();
+            directories = new ArrayList<>();
+            setDirectories();
+            setFiles();
+        }
     }
 
     public LSCommand(String[] commands, String pathToFile) {
-        this.file = new File(pathToFile);
-        setDirectories();
-        setFiles();
+        this(pathToFile);
         if (commands.length > 1){
             switch (commands[1]){
                 case "-l":
