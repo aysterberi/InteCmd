@@ -1,3 +1,4 @@
+import com.sun.org.apache.xpath.internal.SourceTree;
 package intecmd.commands;
 
 import intecmd.CurrentDirectory;
@@ -10,70 +11,71 @@ import java.util.Arrays;
 public class LSCommand{
     private final String DEFAULTPATH = ".";
     private File file = new File(DEFAULTPATH);
-    private CurrentDirectory currentDirectory = new CurrentDirectory();
-    private ArrayList<File> directories = new ArrayList<>();
-    private ArrayList<File> files = new ArrayList<>();
+    private ArrayList<File> directories;
+    private ArrayList<File> files;
 
     public LSCommand (String pathToFile){
-        this.file = new File(pathToFile);
-        setDirectories();
-        setFiles();
+        file = new File(pathToFile);
+        if (!file.getName().equals("")){
+            files = new ArrayList<>();
+            directories = new ArrayList<>();
+            setDirectories();
+            setFiles();
+        }
     }
 
-    public LSCommand(String[] commands, CurrentDirectory currentDirectory) {
-        this.currentDirectory = currentDirectory;
-        this.file = new File(currentDirectory.toString());
-        setDirectories();
-        setFiles();
+    public LSCommand(String[] commands, String pathToFile) {
+        this(pathToFile);
         if (commands.length > 1){
             switch (commands[1]){
                 case "-l":
+                    System.out.println("Directories:");
                     listDirectoriesTopDown();
+                    System.out.println("Files:");
                     listFilesTopDown();
                     break;
                 case "-f":
-                    System.out.println("Files");
-                    getFiles();
+                    System.out.println("Files: ");
+                    printFiles();
                     break;
                 case "-lf":
-                    System.out.println("Files");
+                    System.out.println("Files:");
                     listFilesTopDown();
                     break;
                 case "-d":
-                    System.out.println("Directories");
-                    getDirectories();
+                    System.out.print("Directories: ");
+                    printDirectories();
                     break;
                 case "-ld":
-                    System.out.println("Directories");
+                    System.out.println("Directories:");
                     listDirectoriesTopDown();
                     break;
                 default:
-                    System.out.println("are u retarded?");
+                    System.out.println("Flag not recognized");
             }
         }else {
-            System.out.println(getDirectories().size() > 0 ? getDirectories() :
-                    "No directories in this directory");
-            System.out.println(getFiles().size() > 0 ? getFiles(): "No files in this directory");
+            System.out.print("Directories: ");
+            if (getDirectories().size() > 0){
+                printDirectories();
+            } else{
+                System.out.println("No directories in this directory");
+            }
+            System.out.print("Files: ");
+            if (files.size() > 0){
+                printFiles();
+            }else {
+                System.out.println("No files in this directory");
+            }
         }
 
     }
 
     public void setDirectories (){
-        directories.addAll(Arrays.asList(file.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return new File(dir, name).isDirectory();
-            }
-        })));
+        directories.addAll(Arrays.asList(file.listFiles((dir, name) -> new File(dir, name).isDirectory())));
     }
 
     public void setFiles () {
-        files.addAll(Arrays.asList(file.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File current, String name) {
-                return new File(current, name).isFile();
-            }
-        })));
+        files.addAll(Arrays.asList(file.listFiles((current, name) -> new File(current, name).isFile())));
     }
 
     public ArrayList<File> getFiles() {
@@ -84,24 +86,20 @@ public class LSCommand{
         }
     }
 
-    public File getFile() {
-        if (file == null || file.length() == 0){
-            throw new NullPointerException();
-        }else{
-        return file;
-        }
-    }
-
     public ArrayList<File> getDirectories() {
-        if (directories == null || directories.size() == 0){
+        if (directories == null){
             throw new NullPointerException();
         }else{
             return directories;
         }
     }
 
-    public void setFile(File file) {
-        this.file = file;
+    private void printFiles () {
+        files.forEach(file1 -> System.out.print(file1.getName() + " "));
+    }
+
+    private void printDirectories () {
+        directories.forEach(directories1 -> System.out.print(directories1.getName() + " "));
     }
 
     private void listFilesTopDown() {
