@@ -8,7 +8,7 @@ public class CurrentDirectory {
     public void setCurrentDirectory(String path) {
         verifyPath(path);
         if(!pathExists(path))
-            throw new IllegalArgumentException("Path does not exist.");
+            throw new IllegalArgumentException("Path " + path + " does not exist.");
         currentDirectory = path;
     }
 
