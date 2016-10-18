@@ -24,6 +24,7 @@ public class GrepTest {
     private String[] helpTokenArray = {"grep", "help"};
     private String[] tooLongTokenArray = {"grep", "test", "test.txt", "extra"};
     private String[] sentenceArray = {"grep", "\"a longer\"", "testSentence.txt"};
+    private String[] nonExsistingFileArray = {"grep", "test", "doesNotExist.txt"};
 
     @Before
     public void setUp() {
@@ -104,5 +105,11 @@ public class GrepTest {
     public void executeSearchForSentenceInQuotationsShouldReturnTheSentence() {
         grep = new GrepCommand(sentenceArray);
         assertEquals("a longer", grep.executeSearch(sentenceArray));
+    }
+
+    @Test
+    public void searchingForNonExistingFileShouldReturnErrorMessage() {
+        grep = new GrepCommand(nonExsistingFileArray);
+        assertEquals("No files with that name", grep.executeSearch(nonExsistingFileArray));
     }
 }
