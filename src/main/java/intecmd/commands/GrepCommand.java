@@ -1,6 +1,11 @@
-import java.io.*;
+package intecmd.commands;
 
-public class GrepCommand implements CmdInterface {
+import java.io.*;
+import intecmd.CommandInterface;
+import intecmd.CurrentDirectory;
+
+
+public class GrepCommand implements CommandInterface {
 
     String[] tokens;
     private CurrentDirectory currentDirectory = new CurrentDirectory();
@@ -45,6 +50,16 @@ public class GrepCommand implements CmdInterface {
         if(stringBuilder.toString().isEmpty())
             return "error message";
         return stringBuilder.toString().replace("\"", "").replace("'", "");
+    }
+
+    @Override
+    public void in(String[] data) {
+
+    }
+
+    @Override
+    public String out() {
+        return null;
     }
 
     @Override
