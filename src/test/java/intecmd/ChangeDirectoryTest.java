@@ -1,3 +1,5 @@
+package intecmd;
+
 import intecmd.commands.ChangeDirectory;
 import intecmd.CurrentDirectory;
 import org.junit.Before;

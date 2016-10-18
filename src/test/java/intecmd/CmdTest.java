@@ -1,3 +1,5 @@
+package intecmd;
+
 import intecmd.Cmd;
 import org.junit.Before;
 import org.junit.Rule;

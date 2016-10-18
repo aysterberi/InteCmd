@@ -1,3 +1,5 @@
+package intecmd;
+
 import intecmd.CurrentDirectory;
 import intecmd.commands.GrepCommand;
 import org.junit.After;

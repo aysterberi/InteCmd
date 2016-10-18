@@ -1,3 +1,5 @@
+package intecmd;
+
 import intecmd.commands.WordCount;
 import org.junit.After;
 import org.junit.Before;
