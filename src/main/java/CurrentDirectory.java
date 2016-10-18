@@ -1,5 +1,3 @@
-import com.sun.deploy.util.SystemUtils;
-
 import java.io.File;
 
 public class CurrentDirectory {
