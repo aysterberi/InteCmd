@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import static org.junit.Assert.*;
 
@@ -13,8 +14,9 @@ public class ChangeDirectoryTest {
     private final String CD_COMMAND = "CD";
     private final String MOCK_PATH_WINDOWS = USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src";
     private final String MOCK_PATH_WINDOWS_ROOT = "C:";
+    private final String VALID_ROOT = File.listRoots()[0].toString();
+    private final String INVALID_ROOT = "XE:/";
 
-    private String validRoot1, validRoot2;
     private ChangeDirectory cd;
     private CurrentDirectory currentDirectory;
 
@@ -69,23 +71,13 @@ public class ChangeDirectoryTest {
 
     @Test
     public void changeToValidRoot() {
-        validRoot1 = File.listRoots()[0].toString();
-        cd = new ChangeDirectory(new String[] {CD_COMMAND, validRoot1});
-        assertEquals(validRoot1, currentDirectory.toString());
+        cd = new ChangeDirectory(new String[] {CD_COMMAND, VALID_ROOT});
+        assertEquals(VALID_ROOT, currentDirectory.toString());
     }
 
     @Test
-    public void changeFromRoot1ToRoot2IfSystemHasTwoOrMoreRoots() {
-        validRoot1 = File.listRoots()[0].toString();
-        if(systemHasTwoOrMoreRoots()) {
-            validRoot2 = File.listRoots()[0].toString();
-            cd = new ChangeDirectory(new String[] {CD_COMMAND, validRoot2});
-        }
-        cd = new ChangeDirectory(new String[] {CD_COMMAND, validRoot1});
-        assertEquals(validRoot1, currentDirectory.toString());
-    }
-
-    private boolean systemHasTwoOrMoreRoots() {
-        return File.listRoots().length > 1;
+    public void shouldNotBeAbleToChangeToRootThatDoesNotExist() {
+        cd = new ChangeDirectory(new String[] {CD_COMMAND, INVALID_ROOT});
+        assertEquals(currentDirectory.toString(), USER_DIRECTORY);
     }
 }
