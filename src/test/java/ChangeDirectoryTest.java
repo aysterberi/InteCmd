@@ -45,7 +45,7 @@ public class ChangeDirectoryTest {
 
     @Test
     public void moveUpOneDirectory() {
-        currentDirectory.setCurrentDirectory(MOCK_PATH_WINDOWS);
+        currentDirectory.setCurrentDirectory(USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src");
         cd = new ChangeDirectory(new String[] {"cd", ".."});
         assertEquals(USER_DIRECTORY, currentDirectory.toString());
     }
@@ -53,9 +53,9 @@ public class ChangeDirectoryTest {
     @Test
     public void shouldNotBeAbleToMoveUpFurtherThanHighestLevel() {
         currentDirectory.setCurrentDirectory(HOME_DIRECTORY);
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 30; i++)
             cd = new ChangeDirectory(new String[] {"cd", ".."});
-        assertEquals(MOCK_PATH_WINDOWS_ROOT, currentDirectory.toString());
+        assertEquals(VALID_ROOT, currentDirectory.toString() + CurrentDirectory.SEPARATOR);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class ChangeDirectoryTest {
     @Test
     public void moveDownOneDirectoryPathIsCorrect() {
         cd.moveDown("src");
-        assertEquals(USER_DIRECTORY + "\\src", currentDirectory.toString());
+        assertEquals(USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src", currentDirectory.toString());
     }
 
     @Test

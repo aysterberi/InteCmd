@@ -25,7 +25,10 @@ public class CurrentDirectoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void setCurrentDirectoryAsHigherThanRootShouldThrowIllegalArgumentException() {
-        currentDirectory.setCurrentDirectory(CurrentDirectory.SEPARATOR);
+        if(System.getProperty("os.name").startsWith("Windows"))
+            currentDirectory.setCurrentDirectory(CurrentDirectory.SEPARATOR);
+        else
+            currentDirectory.setCurrentDirectory("");
     }
 
     @Test(expected = IllegalArgumentException.class)
