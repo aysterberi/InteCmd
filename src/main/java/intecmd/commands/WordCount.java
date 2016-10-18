@@ -187,11 +187,6 @@ public class WordCount implements CommandInterface, Callable {
 		isDone = true;
 	}
 
-	@Override
-	@Deprecated
-	public String out() {
-		return format();
-	}
 
 	private String format() {
 		StringBuilder sb = new StringBuilder();
