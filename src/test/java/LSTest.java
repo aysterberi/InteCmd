@@ -21,37 +21,25 @@ public class LSTest {
     @Before
     public void setUpTests() {
         System.setOut(new PrintStream(outContent));
-
-        
     }
 
     @Test
-    public void theFileShouldNotBeEmpty() {
+    public void theFileorDirectoryShouldNotBeEmpty() {
         String command = "ls";
+        String expectedOutput = "Directories: No directories in this directory\r" +
+                "\nFiles: No files in this directory";
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
         if (osName.startsWith("Windows")){
-            assertEquals("Directories: No directories in this directory\r\nFiles: No files in this directory",
+            assertEquals(expectedOutput,
                     outContent.toString().trim());
         }else {
-            assertEquals("Directories: No directories in this directory\nFiles: No files in this directory",
+            assertEquals(expectedOutput.replaceAll("\r\n", "\n"),
                     outContent.toString().trim());
         }
     }
 
-    @Test (expected = NullPointerException.class)
-    public void theFileShouldNotBeNull() {
-        cmdLS = new LSCommand("");
-        cmdLS.getFile();
-    }
-
     @Test(expected = NullPointerException.class)
     public void theDirectoryListShouldNotBeNull() {
-        cmdLS = new LSCommand("");
-        cmdLS.getDirectories();
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void theDirectoryListShouldNotBeEmpty() {
         cmdLS = new LSCommand("");
         cmdLS.getDirectories();
     }
@@ -102,7 +90,8 @@ public class LSTest {
         final File dir2 = temporaryFolder.newFolder("directory2");
         final File dir3 = temporaryFolder.newFolder("directory3");
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
-        String expectedOutput = "Directories\r\ndirectory1\r\ndirectory2\r\ndirectory3\r\nFiles\r\nfile1.txt\r\nfile2.txt\r\nfile3.txt";
+        String expectedOutput = "Directories\r\ndirectory1\r\ndirectory2\r\ndirectory3" +
+                "\r\nFiles\r\nfile1.txt\r\nfile2.txt\r\nfile3.txt";
         if (osName.startsWith("Windows")){
             assertEquals(expectedOutput, outContent.toString().trim());
         }else {
