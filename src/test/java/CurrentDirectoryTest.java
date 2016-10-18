@@ -25,4 +25,9 @@ public class CurrentDirectoryTest {
     public void setCurrentDirectoryAsHigherThanRootShouldThrowIllegalArgumentException() {
         currentDirectory.setCurrentDirectory("/");
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setCurrentDirectoryWithEmptyStringShouldThrowIllegalArgumentException() {
+        currentDirectory.setCurrentDirectory("");
+    }
 }
