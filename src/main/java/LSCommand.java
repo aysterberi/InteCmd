@@ -8,7 +8,6 @@ import java.util.Arrays;
 public class LSCommand{
     private final String DEFAULTPATH = ".";
     private File file = new File(DEFAULTPATH);
-    private CurrentDirectory currentDirectory = new CurrentDirectory();
     private ArrayList<File> directories = new ArrayList<>();
     private ArrayList<File> files = new ArrayList<>();
 
@@ -75,24 +74,12 @@ public class LSCommand{
         }
     }
 
-    public File getFile() {
-        if (file == null || file.length() == 0){
-            throw new NullPointerException();
-        }else{
-        return file;
-        }
-    }
-
     public ArrayList<File> getDirectories() {
         if (directories == null){
             throw new NullPointerException();
         }else{
             return directories;
         }
-    }
-
-    public void setFile(File file) {
-        this.file = file;
     }
 
     private void listFilesTopDown() {
