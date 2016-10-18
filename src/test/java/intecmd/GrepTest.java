@@ -1,6 +1,5 @@
 package intecmd;
 
-import intecmd.CurrentDirectory;
 import intecmd.commands.GrepCommand;
 import org.junit.After;
 import org.junit.Before;
@@ -24,7 +23,7 @@ public class GrepTest {
     private String[] helpTokenArray = {"grep", "help"};
     private String[] tooLongTokenArray = {"grep", "test", "test.txt", "extra"};
     private String[] sentenceArray = {"grep", "\"a longer\"", "testSentence.txt"};
-    private String[] nonExsistingFileArray = {"grep", "test", "doesNotExist.txt"};
+    private String[] nonExistingFileArray = {"grep", "test", "doesNotExist.txt"};
 
     @Before
     public void setUp() {
@@ -109,7 +108,7 @@ public class GrepTest {
 
     @Test
     public void searchingForNonExistingFileShouldReturnErrorMessage() {
-        grep = new GrepCommand(nonExsistingFileArray);
-        assertEquals("No files with that name", grep.executeSearch(nonExsistingFileArray));
+        grep = new GrepCommand(nonExistingFileArray);
+        assertEquals("No files with that name", grep.executeSearch(nonExistingFileArray));
     }
 }
