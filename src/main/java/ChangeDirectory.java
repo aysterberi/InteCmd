@@ -73,7 +73,7 @@ public class ChangeDirectory {
 
     private boolean rootExists(String root) {
         for(File file : File.listRoots()) {
-            if(file.toString().toLowerCase().equals(root.toLowerCase()))
+            if(file.toString().toLowerCase().equals(root.toLowerCase()) || file.toString().toLowerCase().equals(root.toLowerCase() + CurrentDirectory.SEPARATOR))
                 return true;
         }
         return false;
