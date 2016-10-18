@@ -1,8 +1,7 @@
-import com.sun.org.apache.xpath.internal.SourceTree;
 package intecmd.commands;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import intecmd.CurrentDirectory;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
