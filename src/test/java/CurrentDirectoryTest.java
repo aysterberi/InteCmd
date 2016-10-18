@@ -30,4 +30,9 @@ public class CurrentDirectoryTest {
     public void setCurrentDirectoryWithEmptyStringShouldThrowIllegalArgumentException() {
         currentDirectory.setCurrentDirectory("");
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ifPathDoesNotFollowRulesItShouldThrowIllegalArgumentException() {
+        currentDirectory.setCurrentDirectory("C:/System/test");
+    }
 }
