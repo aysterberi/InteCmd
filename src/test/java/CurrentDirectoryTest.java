@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 public class CurrentDirectoryTest {
 
+    private final String SEPARATOR = "\\";
+    private final String VALID_PATH = System.getProperty("user.dir") + SEPARATOR + "src";
     CurrentDirectory currentDirectory;
 
     @Before
@@ -34,5 +36,10 @@ public class CurrentDirectoryTest {
     @Test(expected = IllegalArgumentException.class)
     public void ifPathDoesNotFollowRulesItShouldThrowIllegalArgumentException() {
         currentDirectory.setCurrentDirectory("C:/System/test");
+    }
+
+    @Test
+    public void setCurrentDirectoryShouldAcceptValidPath() {
+        currentDirectory.setCurrentDirectory(VALID_PATH);
     }
 }
