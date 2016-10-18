@@ -20,4 +20,9 @@ public class CurrentDirectoryTest {
     public void setCurrentDirectoryAsNullShouldThrowIllegalArgumentException() {
         currentDirectory.setCurrentDirectory(null);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setCurrentDirectoryAsHigherThanRootShouldThrowIllegalArgumentException() {
+        currentDirectory.setCurrentDirectory("/");
+    }
 }
