@@ -10,4 +10,14 @@ public class CurrentDirectoryTest {
     public void initialize() {
         currentDirectory = new CurrentDirectory();
     }
+
+    @Test
+    public void getCurrentDirectoryAsString() {
+        assertTrue(currentDirectory.toString() instanceof String);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void setCurrentDirectoryAsNullShouldThrowIllegalArgumentException() {
+        currentDirectory.setCurrentDirectory(null);
+    }
 }
