@@ -7,7 +7,7 @@ import intecmd.CurrentDirectory;
 
 public class GrepCommand implements CommandInterface {
 
-    String[] tokens;
+    public String[] tokens;
     private CurrentDirectory currentDirectory = new CurrentDirectory();
 
     public GrepCommand(String[] tokens) {

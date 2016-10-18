@@ -1,3 +1,5 @@
+import intecmd.CurrentDirectory;
+import intecmd.commands.GrepCommand;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
