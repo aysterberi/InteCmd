@@ -68,6 +68,8 @@ public class Cmd {
                 case "cat":
                     catCommand(tokens);
                     break;
+                case "mkdir":
+                    new MkdirCommand(tokens);
                 default:
                     System.out.println("Unrecognized command");
                     break;
