@@ -4,11 +4,14 @@ import static org.junit.Assert.*;
 
 public class ChangeDirectoryTest {
 
-    private final String MOCK_PATH_WINDOWS = "C:\\Users\\Test User\\AppData";
-    private final String MOCK_PATH_WINDOWS_ROOT = "C:";
-    private final String MOCK_PATH_WINDOWS_UP_ONE_LEVEL = "C:\\Users\\Test User";
+
     private final String USER_DIRECTORY = System.getProperty("user.dir");
     private final String HOME_DIRECTORY = System.getProperty("user.home");
+    private final String CD_COMMAND = "CD";
+    private final String MOCK_PATH_WINDOWS = USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src";
+    private final String MOCK_PATH_WINDOWS_ROOT = "C:";
+    private final String VALID_WINDOWS_ROOT_C = "C:";
+    private final String VALID_WINDOWS_ROOT_D = "D:";
 
     private ChangeDirectory cd;
     private CurrentDirectory currentDirectory;
@@ -38,15 +41,16 @@ public class ChangeDirectoryTest {
 
     @Test
     public void moveUpOneDirectory() {
-        cd.moveUp(MOCK_PATH_WINDOWS);
-        assertEquals(MOCK_PATH_WINDOWS_UP_ONE_LEVEL, currentDirectory.toString());
+        currentDirectory.setCurrentDirectory(MOCK_PATH_WINDOWS);
+        cd = new ChangeDirectory(new String[] {"cd", ".."});
+        assertEquals(USER_DIRECTORY, currentDirectory.toString());
     }
 
     @Test
     public void shouldNotBeAbleToMoveUpFurtherThanHighestLevel() {
-        currentDirectory.setCurrentDirectory(MOCK_PATH_WINDOWS);
+        currentDirectory.setCurrentDirectory(HOME_DIRECTORY);
         for(int i = 0; i < 10; i++)
-            cd.moveUp(currentDirectory.toString());
+            cd = new ChangeDirectory(new String[] {"cd", ".."});
         assertEquals(MOCK_PATH_WINDOWS_ROOT, currentDirectory.toString());
     }
 
@@ -59,5 +63,18 @@ public class ChangeDirectoryTest {
     public void moveDownOneDirectoryPathIsCorrect() {
         cd.moveDown("src");
         assertEquals(USER_DIRECTORY + "\\src", currentDirectory.toString());
+    }
+
+    @Test
+    public void changeToValidRoot() {
+        cd = new ChangeDirectory(new String[] {CD_COMMAND, VALID_WINDOWS_ROOT_C});
+        assertEquals(VALID_WINDOWS_ROOT_C, currentDirectory.toString());
+    }
+
+    @Test
+    public void changeFromCToDRoot() {
+        cd = new ChangeDirectory(new String[] {CD_COMMAND, VALID_WINDOWS_ROOT_C});
+        cd = new ChangeDirectory(new String[] {CD_COMMAND, VALID_WINDOWS_ROOT_D});
+        assertEquals(VALID_WINDOWS_ROOT_D, currentDirectory.toString());
     }
 }
