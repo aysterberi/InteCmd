@@ -1,6 +1,7 @@
 package intecmd;
 
 import intecmd.commands.ChangeDirectory;
+import intecmd.commands.Concatenate;
 import intecmd.commands.LSCommand;
 import intecmd.commands.WordCount;
 import intecmd.commands.GrepCommand;
@@ -64,13 +65,19 @@ public class Cmd {
 	            case "wc":
 	            	WCCommand(tokens);
 		            break;
+                case "cat":
+                    catCommand(tokens);
+                    break;
                 default:
                     System.out.println("Unrecognized command");
                     break;
             }
         }
     }
-
+    private void catCommand(String[] tokens) {
+        Concatenate cat = new Concatenate();
+        cat.in(tokens);
+    }
 	private void WCCommand(String[] tokens) {
 		WordCount wc = new WordCount();
 		wc.in(tokens);
