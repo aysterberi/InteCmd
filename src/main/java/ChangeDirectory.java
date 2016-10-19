@@ -47,12 +47,9 @@ public class ChangeDirectory {
         currentDirectory.setCurrentDirectory(path);
     }
 
-    public boolean moveDown(String directory) {
-        if (directoryExists(directory)) {
+    public void moveDown(String directory) {
+        if (directoryExists(directory))
             currentDirectory.setCurrentDirectory(currentDirectory.toString() + CurrentDirectory.SEPARATOR + directory);
-            return true;
-        }
-        return false;
     }
 
     private boolean directoryExists(String directory) {
