@@ -50,3 +50,4 @@ fabric.properties
 target/
 .idea/.name
 inte-cmd.iml
+.idea/findbugs-idea.xml
