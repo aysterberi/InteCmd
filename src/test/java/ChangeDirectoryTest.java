@@ -11,6 +11,7 @@ public class ChangeDirectoryTest {
 
     private final String USER_DIRECTORY = System.getProperty("user.dir");
     private final String HOME_DIRECTORY = System.getProperty("user.home");
+    private final String USER_DIRECTORY_SRC = USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src";
     private final String CD_COMMAND = "CD";
     private final String MOCK_PATH_WINDOWS = USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src";
     private final String MOCK_PATH_WINDOWS_ROOT = "C:";
@@ -45,7 +46,7 @@ public class ChangeDirectoryTest {
 
     @Test
     public void moveUpOneDirectory() {
-        currentDirectory.setCurrentDirectory(USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src");
+        currentDirectory.setCurrentDirectory(USER_DIRECTORY_SRC);
         cd = new ChangeDirectory(new String[] {"cd", ".."});
         assertEquals(USER_DIRECTORY, currentDirectory.toString());
     }
@@ -60,7 +61,8 @@ public class ChangeDirectoryTest {
 
     @Test
     public void moveDownOneDirectory() {
-        assertTrue(cd.moveDown("src"));
+        cd = new ChangeDirectory(new String[] {CD_COMMAND, "src"});
+        assertEquals(USER_DIRECTORY_SRC, currentDirectory.toString());
     }
 
     @Test
