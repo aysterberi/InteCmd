@@ -12,6 +12,7 @@ public class LSCommand{
     private File file = new File(DEFAULTPATH);
     private ArrayList<File> directories;
     private ArrayList<File> files;
+    public String helpString;
 
     public LSCommand (String pathToFile){
         file = new File(pathToFile);
@@ -49,8 +50,11 @@ public class LSCommand{
                     System.out.println("Directories:");
                     listDirectoriesTopDown();
                     break;
+                case "-help":
+                    getHelp();
+                    break;
                 default:
-                    System.out.println("Flag not recognized");
+                    System.out.println("Flag not recognized. Try -help");
             }
         }else {
             System.out.print("Directories: ");
@@ -67,6 +71,13 @@ public class LSCommand{
             }
         }
 
+    }
+
+    private void getHelp() {
+        helpString = "-l lists all directories and filed in currentfolder \n-f show all files in the currentfolder" +
+                "\n-fl lists all files in the currentfolder\n-d show all directories in the currentfolder\n" +
+                "-ld lists all directories in the currentfolder";
+        System.out.println(helpString);
     }
 
     public void setDirectories (){
