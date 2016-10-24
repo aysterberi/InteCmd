@@ -26,7 +26,7 @@ public class LSCommand implements CommandInterface{
 
     public LSCommand(String[] commands, String pathToFile) {
         this(pathToFile);
-        if (commands.length > 1){
+        if (commands.length == 1){
             switch (commands[1]){
                 case "-l":
                     System.out.println("Directories:");
@@ -56,6 +56,8 @@ public class LSCommand implements CommandInterface{
                 default:
                     System.out.println("Flag not recognized. Try -help");
             }
+        }else if (commands.length > 1){
+            System.out.println("Too many flags. Try -help");
         }else {
             System.out.print("Directories: ");
             if (getDirectories().size() > 0){
