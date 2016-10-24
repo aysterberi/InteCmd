@@ -158,7 +158,7 @@ public class LSTest {
         setUpTempFiles();
         setUpTempDirectories();
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
-        String expectedOutput = "Flag not recognized";
+        String expectedOutput = "Flag not recognized. Try -help";
         if (osName.startsWith("Windows")){
             assertEquals(expectedOutput, outContent.toString().trim());
         }else {
@@ -183,7 +183,7 @@ public class LSTest {
     public void theHelpFlagShouldHaveDefaultOutput() {
         String command = "ls -help";
         cmdLS = new LSCommand(command.split(" "), temporaryFolder.getRoot().getPath());
-        assertEquals(cmdLS.helpString, outContent.toString());
+        assertEquals(cmdLS.helpString, outContent.toString().trim());
     }
 
     private void setUpTempFiles() throws IOException {
