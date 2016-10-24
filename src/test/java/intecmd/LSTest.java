@@ -32,13 +32,7 @@ public class LSTest {
         String expectedOutput = "Directories: No directories in this directory\r" +
                 "\nFiles: No files in this directory";
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
-        if (osName.startsWith("Windows")){
-            assertEquals(expectedOutput,
-                    outContent.toString().trim());
-        }else {
-            assertEquals(expectedOutput.replaceAll("\r\n", "\n"),
-                    outContent.toString().trim());
-        }
+        osDependent(expectedOutput);
     }
 
     @Test(expected = NullPointerException.class)
