@@ -13,7 +13,6 @@ public class LSCommand implements CommandInterface{
     private File file = new File(DEFAULTPATH);
     private ArrayList<File> directories;
     private ArrayList<File> files;
-    public String helpString;
 
     public LSCommand (String pathToFile){
         file = new File(pathToFile);
@@ -126,9 +125,10 @@ public class LSCommand implements CommandInterface{
 
     @Override
     public String help() {
-        helpString = "-l lists all directories and files in the current folder \n-f show all files in the current folder" +
-                "\n-fl lists all files in the current folder\n-d show all directories in the current folder\n" +
-                "-ld lists all directories in the current folder";
-        return helpString;
+        return "-l lists all directories and files in the current folder " +
+                "\n-f show all files in the current folder" +
+                "\n-fl lists all files in the current folder" +
+                "\n-d show all directories in the current folder" +
+                "\n-ld lists all directories in the current folder";
     }
 }
