@@ -179,6 +179,13 @@ public class LSTest {
         }
     }
 
+    @Test
+    public void theHelpFlagShouldHaveDefaultOutput() {
+        String command = "ls -help";
+        cmdLS = new LSCommand(command.split(" "), temporaryFolder.getRoot().getPath());
+        assertEquals(cmdLS.helpString, outContent.toString());
+    }
+
     private void setUpTempFiles() throws IOException {
         final File file1 = temporaryFolder.newFile("file1.txt");
         final File file2 = temporaryFolder.newFile("file2.txt");
