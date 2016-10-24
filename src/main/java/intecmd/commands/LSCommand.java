@@ -74,9 +74,9 @@ public class LSCommand{
     }
 
     private void getHelp() {
-        helpString = "-l lists all directories and filed in currentfolder \n-f show all files in the currentfolder" +
-                "\n-fl lists all files in the currentfolder\n-d show all directories in the currentfolder\n" +
-                "-ld lists all directories in the currentfolder";
+        helpString = "-l lists all directories and files in the current folder \n-f show all files in the current folder" +
+                "\n-fl lists all files in the current folder\n-d show all directories in the current folder\n" +
+                "-ld lists all directories in the current folder";
         System.out.println(helpString);
     }
 
