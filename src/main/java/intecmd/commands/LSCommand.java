@@ -1,13 +1,14 @@
 package intecmd.commands;
 
 import com.sun.org.apache.xpath.internal.SourceTree;
+import intecmd.CommandInterface;
 import intecmd.CurrentDirectory;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class LSCommand{
+public class LSCommand implements CommandInterface{
     private final String DEFAULTPATH = ".";
     private File file = new File(DEFAULTPATH);
     private ArrayList<File> directories;
@@ -51,7 +52,7 @@ public class LSCommand{
                     listDirectoriesTopDown();
                     break;
                 case "-help":
-                    getHelp();
+                    System.out.println(help());
                     break;
                 default:
                     System.out.println("Flag not recognized. Try -help");
@@ -71,13 +72,6 @@ public class LSCommand{
             }
         }
 
-    }
-
-    private void getHelp() {
-        helpString = "-l lists all directories and files in the current folder \n-f show all files in the current folder" +
-                "\n-fl lists all files in the current folder\n-d show all directories in the current folder\n" +
-                "-ld lists all directories in the current folder";
-        System.out.println(helpString);
     }
 
     public void setDirectories (){
@@ -118,5 +112,23 @@ public class LSCommand{
 
     private void listDirectoriesTopDown() {
         directories.forEach(directories1 -> System.out.println(directories1.getName()));
+    }
+
+    @Override
+    public void in(String[] data) {
+
+    }
+
+    @Override
+    public String out() {
+        return null;
+    }
+
+    @Override
+    public String help() {
+        helpString = "-l lists all directories and files in the current folder \n-f show all files in the current folder" +
+                "\n-fl lists all files in the current folder\n-d show all directories in the current folder\n" +
+                "-ld lists all directories in the current folder";
+        return helpString;
     }
 }
