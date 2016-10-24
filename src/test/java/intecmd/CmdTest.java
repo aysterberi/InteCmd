@@ -1,10 +1,12 @@
 package intecmd;
 
-import intecmd.Cmd;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -12,13 +14,16 @@ import static org.junit.Assert.assertNotNull;
 
 public class CmdTest {
 
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private Cmd cmd;
+    private String[] grepCommandArray = {"grep", "nonExistantString", "nonExistantFile.txt"};
 
     @Rule
     public final ExpectedSystemExit expectedSystemExit = ExpectedSystemExit.none();
 
     @Before
     public void setUpTests() {
+        System.setOut(new PrintStream(outContent));
         cmd = new Cmd();
     }
 
@@ -52,5 +57,11 @@ public class CmdTest {
     public void theExitCommandShouldCloseTheApplication() {
         expectedSystemExit.expectSystemExit();
         cmd.exitCommand();
+    }
+
+    @Test
+    public void theGrepCommandShouldBeExecuted() {
+        cmd.commandSwitch(grepCommandArray);
+        assertEquals("No files with that name", outContent.toString().trim());
     }
 }
