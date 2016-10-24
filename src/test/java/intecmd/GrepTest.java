@@ -24,6 +24,7 @@ public class GrepTest {
     private String[] tooLongTokenArray = {"grep", "test", "test.txt", "extra"};
     private String[] sentenceArray = {"grep", "\"a longer\"", "testSentence.txt"};
     private String[] nonExistingFileArray = {"grep", "test", "doesNotExist.txt"};
+    private String[] multipleHitsArray = {"grep", "multiple", "*.txt"};
 
     @Before
     public void setUp() {
@@ -33,6 +34,8 @@ public class GrepTest {
             String testFile = "this\nis\na\ntest\ndocument";
             String anotherTestFile = "this\nis\nanother\ntest\ndocument";
             String testSentence = "search\nfor\n\"a longer\"\nword";
+            String testMultipleHitsOne = "multiple\nhits\none";
+            String testMultipleHitsTwo = "multiple\nhits\ntwo";
             PrintWriter printWriter = new PrintWriter("test.txt", "utf-8");
             printWriter.write(testFile);
             printWriter.close();
@@ -41,6 +44,12 @@ public class GrepTest {
             printWriter.close();
             printWriter = new PrintWriter("testSentence.txt", "utf-8");
             printWriter.write(testSentence);
+            printWriter.close();
+            printWriter = new PrintWriter("mulOne.txt", "utf-8");
+            printWriter.write(testMultipleHitsOne);
+            printWriter.close();
+            printWriter = new PrintWriter("mulTwo.txt", "utf-8");
+            printWriter.write(testMultipleHitsTwo);
             printWriter.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -53,6 +62,8 @@ public class GrepTest {
             Files.deleteIfExists(Paths.get("test.txt"));
             Files.deleteIfExists(Paths.get("anotherTest.txt"));
             Files.deleteIfExists(Paths.get("testSentence.txt"));
+            Files.deleteIfExists(Paths.get("mulOne.txt"));
+            Files.deleteIfExists(Paths.get("mulTwo.txt"));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -110,5 +121,11 @@ public class GrepTest {
     public void searchingForNonExistingFileShouldReturnErrorMessage() {
         grep = new GrepCommand(nonExistingFileArray);
         assertEquals("No files with that name", grep.executeSearch(nonExistingFileArray));
+    }
+
+    @Test
+    public void searchingInAllFilesShouldReturnMultipleHits() {
+        grep = new GrepCommand(multipleHitsArray);
+        assertEquals("multiplemultiple", grep.executeSearch(multipleHitsArray));
     }
 }
