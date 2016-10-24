@@ -16,8 +16,9 @@ public class GrepCommand implements CommandInterface {
             tooManyArguments();
         if (tokens[1].equals("help"))
             help();
-        else
-            executeSearch(tokens);
+        else {
+            System.out.println(executeSearch(tokens));
+        }
     }
 
     public String tooManyArguments() {
