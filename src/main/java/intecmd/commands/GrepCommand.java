@@ -70,6 +70,8 @@ public class GrepCommand implements CommandInterface {
 
     public File[] fileFinder(String directory) {
         File dir = new File(directory);
-        return dir.listFiles((dir1, name) -> name.equals(this.tokens[2]));
+        if(!this.tokens[2].startsWith("*"))
+            return dir.listFiles((dir1, name) -> name.equals(this.tokens[2]));
+        return dir.listFiles((dir1, name) -> name.endsWith(".txt"));
     }
 }
