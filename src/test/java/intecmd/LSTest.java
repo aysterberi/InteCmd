@@ -155,7 +155,7 @@ public class LSTest {
     public void theHelpFlagShouldHaveDefaultOutput() {
         String command = "ls -help";
         cmdLS = new LSCommand(command.split(" "), temporaryFolder.getRoot().getPath());
-        assertEquals(cmdLS.helpString, outContent.toString().trim());
+        assertEquals(cmdLS.help(), outContent.toString().trim());
     }
 
     private void osDependent(String expectedOutput) {
