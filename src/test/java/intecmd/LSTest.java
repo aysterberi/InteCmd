@@ -94,11 +94,7 @@ public class LSTest {
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
         String expectedOutput = "Directories:\r\ndirectory1\r\ndirectory2\r\ndirectory3" +
                 "\r\nFiles:\r\nfile1.txt\r\nfile2.txt\r\nfile3.txt";
-        if (osName.startsWith("Windows")){
-            assertEquals(expectedOutput, outContent.toString().trim());
-        }else {
-            assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
-        }
+        osDependent(expectedOutput);
     }
 
     @Test
@@ -107,11 +103,7 @@ public class LSTest {
         setUpTempFiles();
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
         String expectedOutput = "Files: \r\nfile1.txt file2.txt file3.txt";
-        if (osName.startsWith("Windows")){
-            assertEquals(expectedOutput, outContent.toString().trim());
-        }else {
-            assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
-        }
+        osDependent(expectedOutput);
     }
     @Test
     public void theLFFlagShouldListAllContent () throws IOException {
@@ -119,11 +111,7 @@ public class LSTest {
         setUpTempFiles();
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
         String expectedOutput = "Files:\r\nfile1.txt\r\nfile2.txt\r\nfile3.txt";
-        if (osName.startsWith("Windows")){
-            assertEquals(expectedOutput, outContent.toString().trim());
-        }else {
-            assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
-        }
+        osDependent(expectedOutput);
     }
     @Test
     public void theDFlagShouldListAllContent () throws IOException {
@@ -131,11 +119,7 @@ public class LSTest {
         setUpTempDirectories();
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
         String expectedOutput = "Directories: directory1 directory2 directory3";
-        if (osName.startsWith("Windows")){
-            assertEquals(expectedOutput, outContent.toString().trim());
-        }else {
-            assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
-        }
+        osDependent(expectedOutput);
     }
 
     @Test
@@ -145,11 +129,7 @@ public class LSTest {
         setUpTempDirectories();
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
         String expectedOutput = "Directories:\r\ndirectory1\r\ndirectory2\r\ndirectory3";
-        if (osName.startsWith("Windows")){
-            assertEquals(expectedOutput, outContent.toString().trim());
-        }else {
-            assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
-        }
+        osDependent(expectedOutput);
     }
 
     @Test
@@ -159,11 +139,7 @@ public class LSTest {
         setUpTempDirectories();
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
         String expectedOutput = "Flag not recognized. Try -help";
-        if (osName.startsWith("Windows")){
-            assertEquals(expectedOutput, outContent.toString().trim());
-        }else {
-            assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
-        }
+        osDependent(expectedOutput);
     }
     @Test
     public void theDefaultOutputIfNoFlagShouldBe () throws IOException {
@@ -172,11 +148,7 @@ public class LSTest {
         setUpTempDirectories();
         cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
         String expectedOutput = "Directories: directory1 directory2 directory3 Files: file1.txt file2.txt file3.txt";
-        if (osName.startsWith("Windows")){
-            assertEquals(expectedOutput, outContent.toString().trim());
-        }else {
-            assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
-        }
+        osDependent(expectedOutput);
     }
 
     @Test
@@ -184,6 +156,14 @@ public class LSTest {
         String command = "ls -help";
         cmdLS = new LSCommand(command.split(" "), temporaryFolder.getRoot().getPath());
         assertEquals(cmdLS.helpString, outContent.toString().trim());
+    }
+
+    private void osDependent(String expectedOutput) {
+        if (osName.startsWith("Windows")){
+            assertEquals(expectedOutput, outContent.toString().trim());
+        }else {
+            assertEquals(expectedOutput.toString().replaceAll("\r\n", "\n"), outContent.toString().trim());
+        }
     }
 
     private void setUpTempFiles() throws IOException {
