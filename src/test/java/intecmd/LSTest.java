@@ -127,6 +127,13 @@ public class LSTest {
     }
 
     @Test
+    public void theLdCommandShouldOnlyAllowOneFlag () throws IOException {
+        String command = "ls -ld -lf";
+        cmdLS = new LSCommand(command.split(" ") , temporaryFolder.getRoot().getPath());
+        assertEquals("Too many flags. Try -help", outContent.toString().trim());
+    }
+
+    @Test
     public void theResultForWhenFlagNotRecognized () throws IOException {
         String command = "ls -";
         setUpTempFiles();
@@ -135,6 +142,7 @@ public class LSTest {
         String expectedOutput = "Flag not recognized. Try -help";
         osDependent(expectedOutput);
     }
+
     @Test
     public void theDefaultOutputIfNoFlagShouldBe () throws IOException {
         String command = "ls";
