@@ -1,15 +1,15 @@
 package intecmd.commands;
 
-import intecmd.CurrentDirectory;
 
+import intecmd.CurrentDirectory;
 import java.io.File;
+
 
 
 public class MkdirCommand {
 
     private File dir;
     private CurrentDirectory currentDirectory = new CurrentDirectory();
-
 
 
     public MkdirCommand(String[] directory) {
@@ -26,21 +26,20 @@ public class MkdirCommand {
     }
 
 
-    public MkdirCommand (String path){
+    public MkdirCommand(String path) {
         this.dir = new File(path);
         createDirectory();
     }
 
 
-    public void createDirectory() {
+    private void createDirectory() {
         if (dir.exists() && dir.isDirectory()) {
             System.out.println("Directory already exists!");
         } else {
             System.out.println("Directory do not exists, creating now...");
             boolean success = dir.mkdirs();
-            if (success) {
-                System.out.printf("Successfully created new directory: %s%n", dir);
-            } else {
+            System.out.printf("Successfully created new directory: %s%n", dir);
+            if (!success) {
                 System.out.printf("Error, unable to create new directory: %s%n", dir);
 
             }
@@ -50,21 +49,22 @@ public class MkdirCommand {
 
     public File getDirectory() {
         if (dir.getName().isEmpty()) {
-                throw new NullPointerException();
+            throw new NullPointerException();
         } else {
             return dir;
         }
     }
 
-    public boolean getLineWithoutBackslash(String[] line){
+
+    public boolean getLineWithoutBackslash(String[] line) {
         String s = getLine(line).trim();
         return !s.contains("\\");
     }
 
 
-    private void multipleDirectories(String[] line){
-        if (getLineWithoutBackslash(line)){
-            String[]tokens = getLine(line).split(" ");
+    private void multipleDirectories(String[] line) {
+        if (getLineWithoutBackslash(line)) {
+            String[] tokens = getLine(line).split(" ");
             for (String directory : tokens) {
                 this.dir = new File(currentDirectory.toString() + "\\" + directory);
                 createDirectory();
@@ -72,8 +72,8 @@ public class MkdirCommand {
         }
     }
 
-    private void multipleParentDirectories(String[] line){
-        String[]tokens = getParentLine(line).trim().split(" ");
+    private void multipleParentDirectories(String[] line) {
+        String[] tokens = getParentLine(line).trim().split(" ");
         for (String directory : tokens) {
             this.dir = new File("\\" + directory);
             createDirectory();
@@ -109,9 +109,6 @@ public class MkdirCommand {
     }
 
 
-    public String toString() {
-        return dir.getName();
-    }
 }
 
 
