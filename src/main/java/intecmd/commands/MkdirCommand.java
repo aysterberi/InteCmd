@@ -13,16 +13,13 @@ public class MkdirCommand {
 
 
     public MkdirCommand(String[] directory) {
-        this.dir = new File(currentDirectory.toString());
         if (directory.length > 1) {
             switch (directory[1]) {
                 case "-p":
-                    this.dir = new File(getParentLine(directory));
-                    createDirectory();
+                    multipleParentDirectories(directory);
                     break;
                 default:
-                    this.dir = new File(getRegularLine(directory));
-                    createDirectory();
+                    multipleDirectories(directory);
                     break;
             }
         }
@@ -56,6 +53,31 @@ public class MkdirCommand {
                 throw new NullPointerException();
         } else {
             return dir;
+        }
+    }
+
+    public boolean getLineWithoutBackslash(String[] line){
+        String s = getLine(line).trim();
+        return !s.contains("\\");
+    }
+
+
+    private void multipleDirectories(String[] line){
+        if (getLineWithoutBackslash(line)){
+            String[]tokens = getLine(line).split(" ");
+            for (String directory : tokens) {
+                this.dir = new File(currentDirectory.toString() + "\\" + directory);
+                createDirectory();
+            }
+        }
+    }
+
+    private void multipleParentDirectories(String[] line){
+        String[]tokens = getParentLine(line).trim().split(" ");
+        for (String directory : tokens) {
+            this.dir = new File("\\" + directory);
+            createDirectory();
+
         }
     }
 
