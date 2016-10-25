@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -26,6 +27,7 @@ public class GrepTest {
     private String[] nonExistingFileArray = {"grep", "test", "doesNotExist.txt"};
     private String[] multipleHitsArray = {"grep", "multiple", "*.txt"};
     private String[] sameFileMultipleHitsArray = {"grep", "two", "twoHits.txt"};
+    private String[] unsupportedArray = {"grep", "test", "unsupported.exe"};
 
     @Before
     public void setUp() {
@@ -57,6 +59,7 @@ public class GrepTest {
             printWriter = new PrintWriter("twoHits.txt", "utf-8");
             printWriter.write(multipleHitsSameFile);
             printWriter.close();
+            File unsupportedFile = new File("unsupported.exe");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -71,6 +74,7 @@ public class GrepTest {
             Files.deleteIfExists(Paths.get("mulOne.txt"));
             Files.deleteIfExists(Paths.get("mulTwo.txt"));
             Files.deleteIfExists(Paths.get("twoHits.txt"));
+            Files.deleteIfExists(Paths.get("unsupported.exe"));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -140,5 +144,11 @@ public class GrepTest {
     public void multipleMatchesInOneFileShouldReturnAllHits() {
         grep = new GrepCommand(sameFileMultipleHitsArray);
         assertEquals("twotwo", grep.executeSearch(sameFileMultipleHitsArray));
+    }
+
+    @Test
+    public void unsupportedFileEndingShouldReturnErrorMessage() {
+        grep = new GrepCommand(unsupportedArray);
+        assertEquals("Unsupported file format", grep.executeSearch(unsupportedArray));
     }
 }
