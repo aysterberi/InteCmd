@@ -8,7 +8,7 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class LSCommand implements CommandInterface{
+public class LSCommand {
     private final String DEFAULTPATH = ".";
     private File file = new File(DEFAULTPATH);
     private ArrayList<File> directories;
@@ -115,12 +115,6 @@ public class LSCommand implements CommandInterface{
         directories.forEach(directories1 -> System.out.println(directories1.getName()));
     }
 
-    @Override
-    public void in(String[] data) {
-
-    }
-
-    @Override
     public String help() {
         return "-l lists all directories and files in the current folder " +
                 "\n-f show all files in the current folder" +
