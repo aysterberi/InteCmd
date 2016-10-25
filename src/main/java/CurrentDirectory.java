@@ -8,8 +8,8 @@ public class CurrentDirectory {
 
     public void setCurrentDirectory(String path) {
         verifyPath(path);
-        if(!pathExists(path))
-            throw new IllegalArgumentException("Path " + path + " does not exist.");
+        //if(!pathExists(path))
+        //    throw new IllegalArgumentException("Path " + path + " does not exist.");
         currentDirectory = path;
     }
 
@@ -22,9 +22,9 @@ public class CurrentDirectory {
             throw new IllegalArgumentException("Path can't be empty.");
     }
 
-    private boolean pathExists(String path) {
-        return new File(path).exists();
-    }
+    //private boolean pathExists(String path) {
+    //    return new File(path).exists();
+    //}
 
     public String toString() {
         return currentDirectory;
