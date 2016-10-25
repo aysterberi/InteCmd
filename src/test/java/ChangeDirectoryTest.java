@@ -51,6 +51,9 @@ public class ChangeDirectoryTest {
         assertEquals(HOME_DIRECTORY, currentDirectory.toString());
     }
 
+    /**
+     * Requires mock up.
+     */
     @Test
     public void moveUpOneDirectory() {
         currentDirectory.setCurrentDirectory(USER_DIRECTORY_SRC);
@@ -58,6 +61,9 @@ public class ChangeDirectoryTest {
         assertEquals(USER_DIRECTORY, currentDirectory.toString());
     }
 
+    /**
+     * Requires mock up.
+     */
     @Test
     public void shouldNotBeAbleToMoveUpFurtherThanHighestLevel() {
         currentDirectory.setCurrentDirectory(HOME_DIRECTORY);
@@ -72,10 +78,9 @@ public class ChangeDirectoryTest {
         assertEquals(USER_DIRECTORY_SRC, currentDirectory.toString());
     }
 
-    @Test
-    public void moveDownOneDirectoryPathIsCorrect() {
-        cd.moveDown("src");
-        assertEquals(USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src", currentDirectory.toString());
+    @Test(expected = IllegalArgumentException.class)
+    public void moveDownOneDirectoryPathDoesNotExistShouldThorIllegalArgumentException() {
+        cd.moveDown("jansdljasdlkjakd");
     }
 
     @Test
