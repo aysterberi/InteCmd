@@ -1,3 +1,7 @@
+package intecmd;
+
+import intecmd.CurrentDirectory;
+import intecmd.commands.MkdirCommand;
 
 import static org.junit.Assert.*;
 
