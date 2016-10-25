@@ -49,11 +49,19 @@ public class ChangeDirectory {
     }
 
     private void moveUp() {
-        String[] directories = System.getProperty("os.name").startsWith("Windows") ? currentDirectory.toString().split(CurrentDirectory.SEPARATOR+CurrentDirectory.SEPARATOR) : currentDirectory.toString().split("/");
-        String path = directories[0];
-        for(int i = 1; i < directories.length - 1; i++)
-            path += CurrentDirectory.SEPARATOR + directories[i];
-        currentDirectory.setCurrentDirectory(path);
+        if(System.getProperty("os.name").startsWith("Windows")) {
+            String[] directories = currentDirectory.toString().split(CurrentDirectory.SEPARATOR+CurrentDirectory.SEPARATOR);
+            String path = directories[0];
+            for(int i = 1; i < directories.length - 1; i++)
+                path += CurrentDirectory.SEPARATOR + directories[i];
+            currentDirectory.setCurrentDirectory(path);
+        } else {
+            String[] directories = currentDirectory.toString().split("/");
+            String path = PATTERN_ROOT_UNIX;
+            for(int i = 0; i < directories.length - 1; i++)
+                path += CurrentDirectory.SEPARATOR + directories[i];
+            currentDirectory.setCurrentDirectory(path);
+        }
     }
 
     public void moveDown(String[] splitDirectory) {
