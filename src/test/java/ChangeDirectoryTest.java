@@ -76,7 +76,10 @@ public class ChangeDirectoryTest {
         setupMockSystem();
         currentDirectory.setCurrentDirectory(MOCK_FULL_PATH);
         cd = new ChangeDirectory(new String[] {"cd", ".."});
-        assertEquals(MOCK_SHORT_PATH, currentDirectory.toString());
+        if (System.getProperty("os.name").startsWith("Windows"))
+            assertEquals(MOCK_SHORT_PATH, currentDirectory.toString());
+        else
+            assertEquals("/" + MOCK_SHORT_PATH, currentDirectory.toString());
     }
 
     /**
