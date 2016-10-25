@@ -27,7 +27,6 @@ public class MkdirCommandTest {
 
     private String[] mkdirArray = {MKDIR, DIR_NAME_1, DIR_NAME_2, DIR_NAME_3};
     private String[] arrParent = {MKDIR, P, DIR_NAME_1, DIR_NAME_2, DIR_NAME_3};
->>>>>>> mkdir
 
 
 
