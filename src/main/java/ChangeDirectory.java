@@ -58,8 +58,9 @@ public class ChangeDirectory {
         } else {
             String[] directories = currentDirectory.toString().split("/");
             String path = PATTERN_ROOT_UNIX;
-            for(int i = 1; i < directories.length - 1; i++)
-                path += CurrentDirectory.SEPARATOR + directories[i];
+            for(int i = 1; i < directories.length - 2; i++)
+                path +=  directories[i] + CurrentDirectory.SEPARATOR;
+            path += directories[directories.length-2];
             currentDirectory.setCurrentDirectory(path);
         }
     }

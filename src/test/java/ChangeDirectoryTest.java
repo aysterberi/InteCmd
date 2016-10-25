@@ -149,7 +149,6 @@ public class ChangeDirectoryTest {
         try {
             File directory = temporaryFolder.newFolder("Test Test Test");
             String path = directory.getAbsolutePath();
-            path = path.substring(1, path.length()-1);
             currentDirectory.setCurrentDirectory(path);
             new ChangeDirectory(new String[] {CD_COMMAND, ".."});
             cd = new ChangeDirectory(new String[] {CD_COMMAND, "Test", "Test", "Test"});
