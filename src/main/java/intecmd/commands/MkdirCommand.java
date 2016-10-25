@@ -1,9 +1,8 @@
 package intecmd.commands;
 
 import intecmd.CurrentDirectory;
-
-
 import java.io.File;
+
 
 
 public class MkdirCommand {
@@ -38,9 +37,8 @@ public class MkdirCommand {
         } else {
             System.out.println("Directory do not exists, creating now...");
             boolean success = dir.mkdirs();
-            if (success) {
-                System.out.printf("Successfully created new directory: %s%n", dir);
-            } else {
+            System.out.printf("Successfully created new directory: %s%n", dir);
+            if (!success) {
                 System.out.printf("Error, unable to create new directory: %s%n", dir);
 
             }
@@ -107,11 +105,6 @@ public class MkdirCommand {
         }
         return line.replace("-p", "");
 
-    }
-
-
-    public String toString() {
-        return dir.getName();
     }
 
 }
