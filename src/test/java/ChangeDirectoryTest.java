@@ -150,11 +150,8 @@ public class ChangeDirectoryTest {
         try {
             File directory = temporaryFolder.newFolder("Test Test Test");
             currentDirectory.setCurrentDirectory(directory.getAbsolutePath());
-            System.out.println("Current path: " + currentDirectory.toString());
             new ChangeDirectory(new String[] {CD_COMMAND, ".."});
-            System.out.println("Current path: " + currentDirectory.toString());
             cd = new ChangeDirectory(new String[] {CD_COMMAND, "Test", "Test", "Test"});
-            System.out.println("Current path: " + currentDirectory.toString());
             assertEquals(directory.getAbsolutePath(), currentDirectory.toString());
         } catch(Exception e) {
             System.err.println(e.getMessage());
