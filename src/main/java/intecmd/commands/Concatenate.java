@@ -69,11 +69,6 @@ public class Concatenate implements CommandInterface {
 		}
 	}
 	@Override
-	public String out() {
-		return null;
-	}
-
-	@Override
 	public String help() {
 		String h = "cat - concatenate two more files and send to standard out.\n" +
 				"Flags: -u\t\tDo not buffer stream.";
