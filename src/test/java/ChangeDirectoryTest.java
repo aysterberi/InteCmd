@@ -86,7 +86,6 @@ public class ChangeDirectoryTest {
             setupMockWindowsSystem();
         else
             setupMockUnixSystem();
-        currentDirectory.setCurrentDirectory(MOCK_FULL_PATH);
         cd = new ChangeDirectory(new String[] {"cd", ".."});
         if (System.getProperty("os.name").startsWith("Windows"))
             assertEquals(MOCK_SHORT_PATH, currentDirectory.toString());
@@ -149,7 +148,9 @@ public class ChangeDirectoryTest {
     public void fileNameHasWhiteSpaces() {
         try {
             File directory = temporaryFolder.newFolder("Test Test Test");
-            currentDirectory.setCurrentDirectory(directory.getAbsolutePath());
+            String path = directory.getAbsolutePath();
+            path = path.substring(1, path.length()-1);
+            currentDirectory.setCurrentDirectory(path);
             new ChangeDirectory(new String[] {CD_COMMAND, ".."});
             cd = new ChangeDirectory(new String[] {CD_COMMAND, "Test", "Test", "Test"});
             assertEquals(directory.getAbsolutePath(), currentDirectory.toString());
