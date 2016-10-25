@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class LSCommand implements CommandInterface {
-    private final String DEFAULTPATH = ".";
-    private File file = new File(DEFAULTPATH);
+    private File file;
     private ArrayList<File> directories;
     private ArrayList<File> files;
 
