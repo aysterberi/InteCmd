@@ -130,7 +130,15 @@ public class ChangeDirectoryTest {
      */
     @Test
     public void fileNameHasWhiteSpaces() {
-        cd = new ChangeDirectory(new String[] {CD_COMMAND, "Test", "Test", "Test"});
-        assertEquals(USER_DIRECTORY + CurrentDirectory.SEPARATOR + "Test Test Test", currentDirectory.toString());
+        try {
+            File directory = temporaryFolder.newFolder("Test Test Test");
+            currentDirectory.setCurrentDirectory(directory.getAbsolutePath());
+            new ChangeDirectory(new String[] {CD_COMMAND, ".."});
+            System.out.println("Path:" + directory.getAbsolutePath());
+            cd = new ChangeDirectory(new String[] {CD_COMMAND, "Test", "Test", "Test"});
+            assertEquals(directory.getAbsolutePath(), currentDirectory.toString());
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 }
