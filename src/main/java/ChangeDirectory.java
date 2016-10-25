@@ -50,8 +50,7 @@ public class ChangeDirectory {
 
     private void moveUp() {
         String[] directories = currentDirectory.toString().split(CurrentDirectory.SEPARATOR+CurrentDirectory.SEPARATOR);
-        String path;
-        path = directories[0];
+        String path = directories[0];
         for(int i = 1; i < directories.length - 1; i++)
             path += CurrentDirectory.SEPARATOR + directories[i];
         currentDirectory.setCurrentDirectory(path);
