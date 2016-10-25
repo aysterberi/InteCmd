@@ -1,6 +1,7 @@
 package intecmd.commands;
 
 import java.io.*;
+
 import intecmd.CommandInterface;
 import intecmd.CurrentDirectory;
 
@@ -30,7 +31,7 @@ public class GrepCommand implements CommandInterface {
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader;
 
-        if(!tokens[2].endsWith(".txt"))
+        if (!tokens[2].endsWith(".txt"))
             return "Unsupported file format";
         if (files.length == 0)
             return "No files with that name";
@@ -51,25 +52,18 @@ public class GrepCommand implements CommandInterface {
                 ioe.printStackTrace();
             }
         }
-        if(stringBuilder.toString().isEmpty())
+        if (stringBuilder.toString().isEmpty())
             return "error message";
         return stringBuilder.toString().replace("\"", "").replace("'", "");
     }
 
-    @Override
-    public void in(String[] data) {
-
-    }
-
-
-    @Override
     public String help() {
         return "test help";
     }
 
     public File[] fileFinder(String directory) {
         File dir = new File(directory);
-        if(!this.tokens[2].startsWith("*"))
+        if (!this.tokens[2].startsWith("*"))
             return dir.listFiles((dir1, name) -> name.equals(this.tokens[2]));
         return dir.listFiles((dir1, name) -> name.endsWith(".txt"));
     }

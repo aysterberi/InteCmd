@@ -26,7 +26,7 @@ public class ChangeDirectory {
     }
 
     public ChangeDirectory() {
-        this(new String[] {""});
+        this(new String[]{""});
     }
 
     public String currentDirectory() {
@@ -40,7 +40,7 @@ public class ChangeDirectory {
     public void moveUp() {
         String[] directories = currentDirectory.toString().split("\\\\");
         String path = directories[0];
-        for(int i = 1; i < directories.length - 1; i++)
+        for (int i = 1; i < directories.length - 1; i++)
             path += "\\" + directories[i];
         currentDirectory.setCurrentDirectory(path);
     }
@@ -55,7 +55,7 @@ public class ChangeDirectory {
 
     private boolean directoryExists(String directory) {
         ArrayList<File> files = new LSCommand(currentDirectory.toString()).getDirectories();
-        for(File file : files)
+        for (File file : files)
             if (file.getName().equals(directory))
                 return true;
         return false;

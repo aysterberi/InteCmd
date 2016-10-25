@@ -6,7 +6,6 @@ import intecmd.CurrentDirectory;
 import java.io.File;
 
 
-
 public class MkdirCommand {
 
     private File dir;

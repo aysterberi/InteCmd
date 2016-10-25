@@ -24,7 +24,6 @@ public class WordCount implements CommandInterface, Callable {
 		charCount = 0L;
 	}
 
-	@Override
 	public void in(String[] data) {
 		if (data == null) {
 			System.out.println("No input detected. Run wc help for more information.");

@@ -3,20 +3,21 @@ package intecmd.commands;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import intecmd.CommandInterface;
 import intecmd.CurrentDirectory;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class LSCommand {
+public class LSCommand implements CommandInterface {
     private final String DEFAULTPATH = ".";
     private File file = new File(DEFAULTPATH);
     private ArrayList<File> directories;
     private ArrayList<File> files;
 
-    public LSCommand (String pathToFile){
+    public LSCommand(String pathToFile) {
         file = new File(pathToFile);
-        if (!file.getName().equals("")){
+        if (!file.getName().equals("")) {
             files = new ArrayList<>();
             directories = new ArrayList<>();
             setDirectories();
@@ -26,8 +27,8 @@ public class LSCommand {
 
     public LSCommand(String[] commands, String pathToFile) {
         this(pathToFile);
-        if (commands.length == 2){
-            switch (commands[1]){
+        if (commands.length == 2) {
+            switch (commands[1]) {
                 case "-l":
                     System.out.println("Directories:");
                     listDirectoriesTopDown();
@@ -56,54 +57,54 @@ public class LSCommand {
                 default:
                     System.out.println("Flag not recognized. Try -help");
             }
-        }else if (commands.length != 1){
+        } else if (commands.length != 1) {
             System.out.println("Too many flags. Try -help");
-        }else {
+        } else {
             System.out.print("Directories: ");
-            if (getDirectories().size() > 0){
+            if (getDirectories().size() > 0) {
                 printDirectories();
-            } else{
+            } else {
                 System.out.println("No directories in this directory");
             }
             System.out.print("Files: ");
-            if (files.size() > 0){
+            if (files.size() > 0) {
                 printFiles();
-            }else {
+            } else {
                 System.out.println("No files in this directory");
             }
         }
 
     }
 
-    public void setDirectories (){
+    public void setDirectories() {
         directories.addAll(Arrays.asList(file.listFiles((dir, name) -> new File(dir, name).isDirectory())));
     }
 
-    public void setFiles () {
+    public void setFiles() {
         files.addAll(Arrays.asList(file.listFiles((current, name) -> new File(current, name).isFile())));
     }
 
     public ArrayList<File> getFiles() {
-        if (files == null){
+        if (files == null) {
             throw new NullPointerException();
-        }else {
-        return files;
+        } else {
+            return files;
         }
     }
 
     public ArrayList<File> getDirectories() {
-        if (directories == null){
+        if (directories == null) {
             throw new NullPointerException();
-        }else{
+        } else {
             return directories;
         }
     }
 
-    private void printFiles () {
+    private void printFiles() {
         files.forEach(file1 -> System.out.print(file1.getName() + " "));
     }
 
-    private void printDirectories () {
+    private void printDirectories() {
         directories.forEach(directories1 -> System.out.print(directories1.getName() + " "));
     }
 

@@ -27,7 +27,7 @@ public class Cmd {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < line.length(); i++) {
             char c = line.charAt(i);
-            if(c == '\"' || c == ' ' && !quoted) {
+            if (c == '\"' || c == ' ' && !quoted) {
                 if (c == '\"')
                     quoted = !quoted;
                 if (!quoted && stringBuilder.length() > 0) {
@@ -83,19 +83,21 @@ public class Cmd {
                 break;
         }
     }
+
     private void catCommand(String[] tokens) {
         Concatenate cat = new Concatenate();
         cat.in(tokens);
     }
-	private void WCCommand(String[] tokens) {
-		WordCount wc = new WordCount();
-		wc.in(tokens);
-		try {
-			System.out.print(wc.call());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+
+    private void WCCommand(String[] tokens) {
+        WordCount wc = new WordCount();
+        wc.in(tokens);
+        try {
+            System.out.print(wc.call());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void helpCommand() {
         System.out.println("Available commands:");
