@@ -121,6 +121,44 @@ public class MkdirCommandTest {
 
     }
 
+    @Test
+    public void convertTokensToString() {
+        String str = mkdir.getLine(mkdirArray);
+        System.out.println(str);
+
+    }
+
+    @Test
+    public void convertTokensToParentString() {
+        String str = mkdir.getParentLine(arrParent);
+        System.out.println(str);
+
+    }
+
+    @Test
+    public void theStringShouldSplitAtEachSpaceCharacter()  {
+        String[] str = mkdir.getLine(mkdirArray).split(" ");
+        assertEquals(3, str.length);
+        System.out.println(str.length);
+
+    }
+
+    @Test
+    public void theStringShouldSplitAtEachSpaceCharacterParentLine() {
+        String[] str = mkdir.getParentLine(arrParent).trim().split(" ");
+        assertEquals(2, str.length);
+        System.out.println(str.length);
+
+    }
+
+
+    @Test
+    public void theNameWithoutFlagCannotContainBackslash() {
+        mkdir.getLineWithoutBackslash(mkdirArray);
+        assertTrue(mkdir.getLineWithoutBackslash(mkdirArray));
+
+    }
+
 
     @After
     public void setUp() {
