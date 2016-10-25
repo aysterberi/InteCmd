@@ -64,6 +64,8 @@ public class Concatenate implements CommandInterface {
         } catch (IOException e) {
             System.out.println("Error reading from " + fileName);
         }
+    }
+
     public String help() {
         String h = "cat - concatenate two more files and send to standard out.\n" +
                 "Flags: -u\t\tDo not buffer stream.";
