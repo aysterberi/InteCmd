@@ -147,7 +147,6 @@ public class MkdirCommandTest {
     public void theStringShouldSplitAtEachSpaceCharacter()  {
         String[] str = mkdir.getLine(mkdirArray).split(" ");
         assertEquals(3, str.length);
-        System.out.println(str.length);
 
     }
 
@@ -155,7 +154,6 @@ public class MkdirCommandTest {
     public void theStringShouldSplitAtEachSpaceCharacterParentLine() {
         String[] str = mkdir.getParentLine(arrParent).trim().split(" ");
         assertEquals(3, str.length);
-        System.out.println(str.length);
 
     }
 
