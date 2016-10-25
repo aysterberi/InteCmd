@@ -1,5 +1,6 @@
 package intecmd;
 
+import intecmd.commands.LSCommand;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,6 +18,10 @@ public class CmdTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private Cmd cmd;
     private String[] grepCommandArray = {"grep", "nonExistantString", "nonExistantFile.txt"};
+    private String[] lsCommandArray = {"ls", "-help"};
+    private String[] wcCommandArray = {"wc", "-l","pom.xml"};
+    private String[] helpCommandArray = {"help"};
+
 
     @Rule
     public final ExpectedSystemExit expectedSystemExit = ExpectedSystemExit.none();
@@ -63,5 +68,22 @@ public class CmdTest {
     public void theGrepCommandShouldBeExecuted() {
         cmd.commandSwitch(grepCommandArray);
         assertEquals("No files with that name", outContent.toString().trim());
+    }
+
+    @Test
+    public void theLsCommandShouldBeExecuted() {
+        cmd.commandSwitch(lsCommandArray);
+        String expectedOutput = "-l lists all directories and files in the current folder " +
+                "\n-f show all files in the current folder" +
+                "\n-fl lists all files in the current folder" +
+                "\n-d show all directories in the current folder" +
+                "\n-ld lists all directories in the current folder";
+        assertEquals(expectedOutput, outContent.toString().trim());
+    }
+
+    @Test
+    public void theWcCommandShouldExecute() {
+        cmd.commandSwitch(wcCommandArray);
+        assertEquals("Lines: 59.", outContent.toString().trim());
     }
 }
