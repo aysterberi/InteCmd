@@ -1,8 +1,5 @@
 import java.util.ArrayList;
 
-/**
- * Created by Niklas on 2016-10-25.
- */
 public class MockRoot {
 
     protected String rootName;
@@ -27,5 +24,9 @@ public class MockRoot {
      */
     private boolean rootNameIsValid(String rootName) {
         return System.getProperty("os.name").startsWith("Windows") ? rootName.matches(ChangeDirectory.PATTERN_ROOT_WINDOWS) : rootName.matches(ChangeDirectory.PATTERN_ROOT_UNIX);
+    }
+
+    public String toString() {
+        return rootName;
     }
 }
