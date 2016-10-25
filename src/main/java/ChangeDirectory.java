@@ -11,17 +11,17 @@ public class ChangeDirectory {
 
     private CurrentDirectory currentDirectory = new CurrentDirectory();
 
-    public ChangeDirectory(String[] options) {
+    public ChangeDirectory(String[] data) {
         try {
-            switch(options.length) {
+            switch(data.length) {
                 case 1:
                     homeDirectory();
                     break;
                 case 2:
-                    readOptions(options);
+                    readOptions(data);
                     break;
                 default:
-                    directoryExists(options);
+                    moveDown(data);
                     break;
             }
         } catch(Exception e) {
@@ -57,6 +57,13 @@ public class ChangeDirectory {
         currentDirectory.setCurrentDirectory(path);
     }
 
+    public void moveDown(String[] splitDirectory) {
+        String directory = splitDirectory[1];
+        for(int i = 2; i < splitDirectory.length; i++)
+            directory += " " + splitDirectory[i];
+        moveDown(directory);
+    }
+
     public void moveDown(String directory) {
         if (!directoryExists(directory))
             throw new IllegalArgumentException("No such file or directory.");
@@ -69,13 +76,6 @@ public class ChangeDirectory {
             if (file.getName().equals(directory))
                 return true;
         return false;
-    }
-
-    private boolean directoryExists(String[] splitDirectory) {
-        String directory = splitDirectory[0];
-        for(int i = 1; i < splitDirectory.length; i++)
-            directory += " " + splitDirectory[i];
-        return  directoryExists(directory);
     }
 
     public void changeRoot(String root) {

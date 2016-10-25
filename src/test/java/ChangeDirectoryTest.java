@@ -102,4 +102,10 @@ public class ChangeDirectoryTest {
         assertEquals("No such file or directory.", outContent.toString().trim());
         System.setOut(null);
     }
+
+    @Test
+    public void fileNameHasWhiteSpaces() {
+        cd = new ChangeDirectory(new String[] {CD_COMMAND, "Test", "Test", "Test"});
+        assertEquals(USER_DIRECTORY + CurrentDirectory.SEPARATOR + "Test Test Test", currentDirectory.toString());
+    }
 }
