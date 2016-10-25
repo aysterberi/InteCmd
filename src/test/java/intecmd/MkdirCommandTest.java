@@ -78,7 +78,7 @@ public class MkdirCommandTest {
 
     @Test
     public void theDirectoryShouldNotBeNull() throws IOException {
-        File dir = tempDir.newFolder(DIR_NAME);
+        File dir1 = tempDir.newFolder(DIR_NAME_1);
         mkdir = new MkdirCommand(dir.getPath());
         assertNotNull(mkdir.getDirectory());
 
@@ -86,7 +86,7 @@ public class MkdirCommandTest {
 
     @Test
     public void theDirectoryAlreadyExists() throws IOException {
-        File dir = tempDir.newFolder(DIR_NAME);
+        File dir1 = tempDir.newFolder(DIR_NAME_1);
         mkdir = new MkdirCommand(dir.getPath());
         assertTrue(mkdir.getDirectory().exists());
     }
@@ -94,7 +94,7 @@ public class MkdirCommandTest {
 
     @Test
     public void directoryCreated() throws IOException {
-        File dir = tempDir.newFolder(DIR_NAME);
+        File dir1 = tempDir.newFolder(DIR_NAME_1);
         mkdir = new MkdirCommand(dir.getPath());
         assertEquals(dir.getName(), mkdir.getDirectory().getName());
 
@@ -103,7 +103,7 @@ public class MkdirCommandTest {
 
     @Test
     public void directoryIsCreated() throws IOException {
-        File dir3 = tempDir.newFolder(DIR_NAME);
+        File dir1 = tempDir.newFolder(DIR_NAME_1);
         assertTrue(dir3.exists());
     }
 
