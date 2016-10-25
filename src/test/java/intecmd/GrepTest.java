@@ -25,6 +25,7 @@ public class GrepTest {
     private String[] sentenceArray = {"grep", "\"a longer\"", "testSentence.txt"};
     private String[] nonExistingFileArray = {"grep", "test", "doesNotExist.txt"};
     private String[] multipleHitsArray = {"grep", "multiple", "*.txt"};
+    private String[] sameFileMultipleHitsArray = {"grep", "two", "twoHits.txt"};
 
     @Before
     public void setUp() {
@@ -36,6 +37,8 @@ public class GrepTest {
             String testSentence = "search\nfor\n\"a longer\"\nword";
             String testMultipleHitsOne = "multiple\nhits\none";
             String testMultipleHitsTwo = "multiple\nhits\ntwo";
+            String multipleHitsSameFile = "two\nhits\ntwo";
+
             PrintWriter printWriter = new PrintWriter("test.txt", "utf-8");
             printWriter.write(testFile);
             printWriter.close();
@@ -51,6 +54,9 @@ public class GrepTest {
             printWriter = new PrintWriter("mulTwo.txt", "utf-8");
             printWriter.write(testMultipleHitsTwo);
             printWriter.close();
+            printWriter = new PrintWriter("twoHits.txt", "utf-8");
+            printWriter.write(multipleHitsSameFile);
+            printWriter.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -64,6 +70,7 @@ public class GrepTest {
             Files.deleteIfExists(Paths.get("testSentence.txt"));
             Files.deleteIfExists(Paths.get("mulOne.txt"));
             Files.deleteIfExists(Paths.get("mulTwo.txt"));
+            Files.deleteIfExists(Paths.get("twoHits.txt"));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -127,5 +134,11 @@ public class GrepTest {
     public void searchingInAllFilesShouldReturnMultipleHits() {
         grep = new GrepCommand(multipleHitsArray);
         assertEquals("multiplemultiple", grep.executeSearch(multipleHitsArray));
+    }
+
+    @Test
+    public void multipleMatchesInOneFileShouldReturnAllHits() {
+        grep = new GrepCommand(sameFileMultipleHitsArray);
+        assertEquals("twotwo", grep.executeSearch(sameFileMultipleHitsArray));
     }
 }
