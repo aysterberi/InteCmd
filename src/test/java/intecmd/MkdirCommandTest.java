@@ -41,6 +41,18 @@ public class MkdirCommandTest {
         currentDirectory.setCurrentDirectory(USER_DIR);
     }
 
+    @Test
+    public void testConstructor(){
+        mkdir = new MkdirCommand(mkdirArray);
+        currentDirectory = new CurrentDirectory();
+        currentDirectory.setCurrentDirectory(USER_DIR);
+    }
+
+    @Test
+    public void testConstructorWithFlag(){
+        mkdir = new MkdirCommand(arrParent);
+    }
+
 
     @Before
     public void init(){
@@ -63,16 +75,6 @@ public class MkdirCommandTest {
         assertTrue(dir2.exists());
         assertTrue(dir3.exists());
 
-    }
-
-    @Test
-    public void testConstructor(){
-        mkdir = new MkdirCommand(mkdirArray);
-    }
-
-    @Test
-    public void testConstructorWithFlag(){
-        mkdir = new MkdirCommand(arrParent);
     }
 
 
