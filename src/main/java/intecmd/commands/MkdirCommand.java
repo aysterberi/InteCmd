@@ -60,32 +60,32 @@ public class MkdirCommand {
     }
 
 
-    public String getRegularLine(String[] tokens) {
+    public String getLine(String[] tokens) {
         String line = "";
         for (int i = 1; i < tokens.length; i++) {
             if (i == tokens.length - 1)
                 line += tokens[i];
             else
                 line += tokens[i] + " ";
-        }
-        return currentDirectory.toString() + "\\" + line;
 
+        }
+        return line;
     }
+
 
     public String getParentLine(String[] tokens) {
         String line = "";
         for (int i = 1; i < tokens.length; i++) {
             if (i == tokens.length - 1)
                 line += tokens[i];
-            if (line.contains("-p"))
-                line = line.replaceFirst("-p", "");
             else
-                line += tokens[i] + "";
+                line += tokens[i] + " ";
 
         }
-        return "\\" + line;
+        return line.replace("-p", "");
 
     }
+
 
     public String toString() {
         return dir.getName();
