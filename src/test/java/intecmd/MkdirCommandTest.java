@@ -48,7 +48,6 @@ public class MkdirCommandTest {
     }
 
 
-
     @Before
     public void initMkdir() {
         mkdir = new MkdirCommand("");
@@ -56,12 +55,19 @@ public class MkdirCommandTest {
         currentDirectory.setCurrentDirectory(USER_DIR);
     }
 
+
     @Test
     public void temporaryDirectoryTest() throws IOException {
-        File dir = tempDir.newFolder(DIR_NAME);
-        System.out.println("Directory: " + dir.getName() + " exists? " + dir.exists());
+        File dir1 = tempDir.newFolder(DIR_NAME_1);
+        File dir2 = tempDir.newFolder(DIR_NAME_2);
+        File dir3 = tempDir.newFolder(DIR_NAME_3);
+        System.out.println("Directory: " + dir1.getName() + " exists? " + dir1.exists());
+        System.out.println("Directory: " + dir2.getName() + " exists? " + dir2.exists());
+        System.out.println("Directory: " + dir3.getName() + " exists? " + dir3.exists());
+
 
     }
+    
 
     @Test
     public void getCurrentDirectory() {
