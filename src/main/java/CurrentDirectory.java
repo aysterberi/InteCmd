@@ -8,9 +8,7 @@ public class CurrentDirectory {
 
     public void setCurrentDirectory(String path) {
         verifyPath(path);
-        if(!pathExists(path))
-            throw new IllegalArgumentException("Path " + path + " does not exist.");
-        currentDirectory = path;
+       currentDirectory = path;
     }
 
     private void verifyPath(String path) {
@@ -20,10 +18,6 @@ public class CurrentDirectory {
             throw new IllegalArgumentException("Path can't exceed root directory.");
         else if (path.equals(""))
             throw new IllegalArgumentException("Path can't be empty.");
-    }
-
-    private boolean pathExists(String path) {
-        return new File(path).exists();
     }
 
     public String toString() {

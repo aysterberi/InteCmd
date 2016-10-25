@@ -36,11 +36,6 @@ public class CurrentDirectoryTest {
         currentDirectory.setCurrentDirectory("");
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void ifPathDoesNotFollowRulesItShouldThrowIllegalArgumentException() {
-        currentDirectory.setCurrentDirectory(INVALID_PATH);
-    }
-
     @Test
     public void setCurrentDirectoryShouldAcceptValidPath() {
         currentDirectory.setCurrentDirectory(VALID_PATH);
