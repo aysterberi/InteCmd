@@ -28,7 +28,7 @@ public class MkdirCommandTest {
     private static final String P = "-p";
 
     private String[] mkdirArray = {MKDIR, DIR_NAME_1, DIR_NAME_2, DIR_NAME_3};
-    private String[] arrParent = {MKDIR, P, DIR_NAME_1, DIR_NAME_2};
+    private String[] arrParent = {MKDIR, P, DIR_NAME_1, DIR_NAME_2, DIR_NAME_3};
 
 
 
@@ -133,14 +133,13 @@ public class MkdirCommandTest {
     @Test
     public void convertTokensToString() {
         String str = mkdir.getLine(mkdirArray);
-        System.out.println(str);
-
+        assertEquals(TEST_STR, str);
     }
 
     @Test
     public void convertTokensToParentString() {
-        String str = mkdir.getParentLine(arrParent);
-        System.out.println(str);
+        String str = mkdir.getParentLine(arrParent).trim();
+        assertEquals(TEST_STR, str);
 
     }
 
@@ -155,7 +154,7 @@ public class MkdirCommandTest {
     @Test
     public void theStringShouldSplitAtEachSpaceCharacterParentLine() {
         String[] str = mkdir.getParentLine(arrParent).trim().split(" ");
-        assertEquals(2, str.length);
+        assertEquals(3, str.length);
         System.out.println(str.length);
 
     }
