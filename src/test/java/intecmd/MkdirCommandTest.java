@@ -122,6 +122,15 @@ public class MkdirCommandTest {
     }
 
     @Test
+    public void createParentDirectory() throws IOException {
+        File dir3 = tempDir.newFolder(DIR_NAME_1, DIR_NAME_2, DIR_NAME_3);
+        mkdir = new MkdirCommand(dir3.getPath());
+        assertEquals(dir3.getPath(), mkdir.getDirectory().getAbsolutePath());
+        System.out.println(mkdir.getDirectory().getAbsolutePath());
+
+    }
+
+    @Test
     public void convertTokensToString() {
         String str = mkdir.getLine(mkdirArray);
         System.out.println(str);
