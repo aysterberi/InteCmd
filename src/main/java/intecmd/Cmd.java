@@ -5,6 +5,8 @@ import intecmd.commands.Concatenate;
 import intecmd.commands.LSCommand;
 import intecmd.commands.WordCount;
 import intecmd.commands.GrepCommand;
+import intecmd.commands.MkdirCommand;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,6 +70,9 @@ public class Cmd {
                 case "cat":
                     catCommand(tokens);
                     break;
+                case "mkdir":
+                    new MkdirCommand(tokens);
+                    break;
                 default:
                     System.out.println("Unrecognized command");
                     break;
@@ -93,6 +98,7 @@ public class Cmd {
         System.out.println("'exit' - Exits the application");
         System.out.println("'echo' - Whatever input comes after the command gets printed back");
         System.out.println("'ls' - Shows all directories and files in the current directory");
+        System.out.println("'mkdir' - Creates a new directory");
         System.out.println();
     }
 
