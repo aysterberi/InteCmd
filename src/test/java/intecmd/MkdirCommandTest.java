@@ -21,7 +21,15 @@ public class MkdirCommandTest {
     private CurrentDirectory currentDirectory;
 
     private final String USER_DIR = System.getProperty("user.dir");
-    private static final String DIR_NAME = "New_Directory";
+    private static final String DIR_NAME_1 = "Directory1";
+    private static final String DIR_NAME_2 = "Directory2";
+    private static final String DIR_NAME_3 = "Directory3";
+    private static final String MKDIR = "mkdir";
+    private static final String P = "-p";
+
+    private String[] mkdirArray = {MKDIR, DIR_NAME_1, DIR_NAME_2, DIR_NAME_3};
+    private String[] arrParent = {MKDIR, P, DIR_NAME_1, DIR_NAME_2};
+
 
 
     @Rule
@@ -30,9 +38,15 @@ public class MkdirCommandTest {
 
     @Before
     public void init(){
-        File dir = new File(tempDir.getRoot(), DIR_NAME);
-        System.out.println("Directory: " + dir.getName() + " exists? " + dir.exists());
+        File dir1 = new File(tempDir.getRoot(), DIR_NAME_1);
+        File dir2 = new File(tempDir.getRoot(), DIR_NAME_2);
+        File dir3 = new File(tempDir.getRoot(), DIR_NAME_3);
+        System.out.println("Directory: " + dir1.getName() + " exists? " + dir1.exists());
+        System.out.println("Directory: " + dir2.getName() + " exists? " + dir2.exists());
+        System.out.println("Directory: " + dir3.getName() + " exists? " + dir3.exists());
+
     }
+
 
 
     @Before
