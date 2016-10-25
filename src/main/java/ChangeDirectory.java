@@ -1,46 +1,56 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class ChangeDirectory {
 
-    public final static String ROOT_PATTERN_WINDOWS = "[a-zA-Z]{1}:\\\\{0,1}+";
-    public final static String ROOT_PATTERN_UNIX = "\\";
+    public final static String CMD_PATTERN_PARENT_DIRECTORY = "..";
+    public final static String PATTERN_ROOT_WINDOWS = "[a-zA-Z]{1}:\\\\{0,1}+";
+    public final static String PATTERN_ROOT_UNIX = "/";
+    public final static String PATTERN_WINDOWS_DIRECTORY = "^[^<>:\"/\\\\|?*]*$";
+    public final static String PATTERN_UNIX_DIRECTORY = "^[^/]$";
+
     private CurrentDirectory currentDirectory = new CurrentDirectory();
 
     public ChangeDirectory(String[] options) {
-        if (options.length > 1) {
-            try {
-                switch (options[1]) {
-                    case "..":
-                        moveUp(currentDirectory.toString());
-                        break;
-                    default:
-                        if(options[1].matches(ROOT_PATTERN_WINDOWS))
-                            changeRoot(options[1].toLowerCase());
-                        else
-                            moveDown(options[1]);
-                        break;
-                }
-            } catch(Exception e) {
-                System.out.println(e.getMessage());
+        try {
+            switch(options.length) {
+                case 1:
+                    homeDirectory();
+                    break;
+                case 2:
+                    readOptions(options);
+                    break;
+                default:
+                    directoryExists(options);
+                    break;
             }
-        } else {
-            homeDirectory();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
         }
-
     }
 
     public ChangeDirectory() {
         this(new String[] {""});
     }
 
+    private void readOptions(String[] options) {
+        if(options[1].matches(CMD_PATTERN_PARENT_DIRECTORY))
+            moveUp();
+        else if (options[1].matches(PATTERN_WINDOWS_DIRECTORY) || options[1].matches(PATTERN_UNIX_DIRECTORY))
+            moveDown(options[1]);
+        else if(options[1].matches(PATTERN_ROOT_WINDOWS) || options[1].matches(PATTERN_ROOT_UNIX))
+            changeRoot(options[1].toLowerCase());
+        else
+            throw new IllegalArgumentException("No such file or directory.");
+    }
+
     public void homeDirectory() {
         currentDirectory.setCurrentDirectory(System.getProperty("user.home"));
     }
 
-    public void moveUp(String path) {
-        String[] directories = path.split(CurrentDirectory.SEPARATOR+CurrentDirectory.SEPARATOR);
+    private void moveUp() {
+        String[] directories = currentDirectory.toString().split(CurrentDirectory.SEPARATOR+CurrentDirectory.SEPARATOR);
+        String path;
         path = directories[0];
         for(int i = 1; i < directories.length - 1; i++)
             path += CurrentDirectory.SEPARATOR + directories[i];
@@ -48,8 +58,9 @@ public class ChangeDirectory {
     }
 
     public void moveDown(String directory) {
-        if (directoryExists(directory))
-            currentDirectory.setCurrentDirectory(currentDirectory.toString() + CurrentDirectory.SEPARATOR + directory);
+        if (!directoryExists(directory))
+            throw new IllegalArgumentException("No such file or directory.");
+        currentDirectory.setCurrentDirectory(currentDirectory.toString() + CurrentDirectory.SEPARATOR + directory);
     }
 
     private boolean directoryExists(String directory) {
@@ -60,9 +71,16 @@ public class ChangeDirectory {
         return false;
     }
 
-    private void changeRoot(String root) throws FileNotFoundException {
+    private boolean directoryExists(String[] splitDirectory) {
+        String directory = splitDirectory[0];
+        for(int i = 1; i < splitDirectory.length; i++)
+            directory += " " + splitDirectory[i];
+        return  directoryExists(directory);
+    }
+
+    public void changeRoot(String root) {
         if(!rootExists(root))
-            throw new FileNotFoundException("No such file or directory.");
+            throw new IllegalArgumentException("No such file or directory.");
         else
             currentDirectory.setCurrentDirectory(root.toUpperCase());
 

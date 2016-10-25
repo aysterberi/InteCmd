@@ -1,8 +1,11 @@
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.PrintStream;
 
 import static org.junit.Assert.*;
 
@@ -12,6 +15,7 @@ public class ChangeDirectoryTest {
     private final String USER_DIRECTORY = System.getProperty("user.dir");
     private final String HOME_DIRECTORY = System.getProperty("user.home");
     private final String USER_DIRECTORY_SRC = USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src";
+    private final String USER_DIRECTORY_CHILD = USER_DIRECTORY + CurrentDirectory.SEPARATOR + "ChildTempDirectory";
     private final String CD_COMMAND = "CD";
     private final String MOCK_PATH_WINDOWS = USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src";
     private final String MOCK_PATH_WINDOWS_ROOT = "C:";
@@ -20,6 +24,9 @@ public class ChangeDirectoryTest {
 
     private ChangeDirectory cd;
     private CurrentDirectory currentDirectory;
+
+    @Rule
+    public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
     @Before
     public void initialize() {
@@ -77,9 +84,17 @@ public class ChangeDirectoryTest {
         assertEquals(VALID_ROOT, currentDirectory.toString());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void shouldNotBeAbleToChangeToRootThatDoesNotExist() {
+        cd.changeRoot(INVALID_ROOT);
+    }
+
+    @Test
+    public void invalidCommandShouldPrintMessage() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
         cd = new ChangeDirectory(new String[] {CD_COMMAND, INVALID_ROOT});
-        assertEquals(currentDirectory.toString(), USER_DIRECTORY);
+        assertEquals("No such file or directory.", outContent.toString().trim());
+        System.setOut(null);
     }
 }
