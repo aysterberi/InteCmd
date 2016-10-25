@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 public class CurrentDirectoryTest {
 
     private final String VALID_PATH = System.getProperty("user.dir") + CurrentDirectory.SEPARATOR + "src";
-    private final String INVALID_PATH = "C:/System/test";
     private CurrentDirectory currentDirectory;
 
     @Before

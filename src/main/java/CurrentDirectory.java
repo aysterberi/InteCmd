@@ -1,5 +1,3 @@
-import java.io.File;
-
 public class CurrentDirectory {
 
     public static final String SEPARATOR = System.getProperty("file.separator");
@@ -8,8 +6,6 @@ public class CurrentDirectory {
 
     public void setCurrentDirectory(String path) {
         verifyPath(path);
-        //if(!pathExists(path))
-        //    throw new IllegalArgumentException("Path " + path + " does not exist.");
         currentDirectory = path;
     }
 
@@ -21,10 +17,6 @@ public class CurrentDirectory {
         else if (path.equals(""))
             throw new IllegalArgumentException("Path can't be empty.");
     }
-
-    //private boolean pathExists(String path) {
-    //    return new File(path).exists();
-    //}
 
     public String toString() {
         return currentDirectory;

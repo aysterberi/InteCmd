@@ -15,15 +15,18 @@ public class ChangeDirectoryTest {
     private final String USER_DIRECTORY = System.getProperty("user.dir");
     private final String HOME_DIRECTORY = System.getProperty("user.home");
     private final String USER_DIRECTORY_SRC = USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src";
-    private final String USER_DIRECTORY_CHILD = USER_DIRECTORY + CurrentDirectory.SEPARATOR + "ChildTempDirectory";
     private final String CD_COMMAND = "CD";
-    private final String MOCK_PATH_WINDOWS = USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src";
-    private final String MOCK_PATH_WINDOWS_ROOT = "C:";
     private final String VALID_ROOT = File.listRoots()[0].toString();
     private final String INVALID_ROOT = "XE:/";
+    private final String MOCK_FULL_PATH = "M:" + CurrentDirectory.SEPARATOR + "Parent" + CurrentDirectory.SEPARATOR + "Child";
+    private final String MOCK_SHORT_PATH = "M:" + CurrentDirectory.SEPARATOR + "Parent";
+    private final String MOCK_WINDOWS_ROOT = "M:";
+    private final String MOCK_UNIX_ROOT = "/";
 
-    private ChangeDirectory cd;
     private CurrentDirectory currentDirectory;
+    private ChangeDirectory cd;
+    private MockRoot mockRoot;
+    private MockDirectory mockDirectory0, mockDirectory1, mockDirectory2;
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
@@ -49,32 +52,6 @@ public class ChangeDirectoryTest {
     public void changeCurrentDirectoryToHomeDirectory() {
         cd.homeDirectory();
         assertEquals(HOME_DIRECTORY, currentDirectory.toString());
-    }
-
-    private final String MOCK_FULL_PATH = "M:" + CurrentDirectory.SEPARATOR + "Parent" + CurrentDirectory.SEPARATOR + "Child";
-    private final String MOCK_SHORT_PATH = "M:" + CurrentDirectory.SEPARATOR + "Parent";
-    private final String MOCK_WINDOWS_ROOT = "M:";
-    private final String MOCK_UNIX_ROOT = "/";
-    private MockRoot mockRoot;
-    private MockDirectory mockDirectory0, mockDirectory1, mockDirectory2;
-
-    private void setupMockWindowsSystem() {
-        mockRoot = new MockRoot("M:");
-        mockDirectory1 = new MockDirectory("Parent");
-        mockDirectory2 = new MockDirectory("Child");
-        mockRoot.directories.add(mockDirectory1);
-        mockDirectory1.directories.add(mockDirectory2);
-        currentDirectory.setCurrentDirectory(MOCK_FULL_PATH);
-    }
-
-    private void setupMockUnixSystem() {
-        mockRoot = new MockRoot(MOCK_UNIX_ROOT);
-        mockDirectory0 = new MockDirectory("M:");
-        mockDirectory1 = new MockDirectory("Parent");
-        mockDirectory2 = new MockDirectory("Child");
-        mockRoot.directories.add(mockDirectory1);
-        mockDirectory1.directories.add(mockDirectory2);
-        currentDirectory.setCurrentDirectory(MOCK_UNIX_ROOT + MOCK_FULL_PATH);
     }
 
     /**
@@ -156,5 +133,24 @@ public class ChangeDirectoryTest {
         } catch(Exception e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    private void setupMockWindowsSystem() {
+        mockRoot = new MockRoot("M:");
+        mockDirectory1 = new MockDirectory("Parent");
+        mockDirectory2 = new MockDirectory("Child");
+        mockRoot.directories.add(mockDirectory1);
+        mockDirectory1.directories.add(mockDirectory2);
+        currentDirectory.setCurrentDirectory(MOCK_FULL_PATH);
+    }
+
+    private void setupMockUnixSystem() {
+        mockRoot = new MockRoot(MOCK_UNIX_ROOT);
+        mockDirectory0 = new MockDirectory("M:");
+        mockDirectory1 = new MockDirectory("Parent");
+        mockDirectory2 = new MockDirectory("Child");
+        mockRoot.directories.add(mockDirectory1);
+        mockDirectory1.directories.add(mockDirectory2);
+        currentDirectory.setCurrentDirectory(MOCK_UNIX_ROOT + MOCK_FULL_PATH);
     }
 }
