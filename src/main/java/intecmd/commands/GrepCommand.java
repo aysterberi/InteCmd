@@ -30,8 +30,11 @@ public class GrepCommand implements CommandInterface {
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader;
 
+        if(!tokens[2].endsWith(".txt"))
+            return "Unsupported file format";
         if (files.length == 0)
             return "No files with that name";
+
 
         for (File f : files) {
             try {
