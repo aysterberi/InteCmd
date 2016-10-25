@@ -121,11 +121,6 @@ public class LSCommand implements CommandInterface{
     }
 
     @Override
-    public String out() {
-        return null;
-    }
-
-    @Override
     public String help() {
         return "-l lists all directories and files in the current folder " +
                 "\n-f show all files in the current folder" +

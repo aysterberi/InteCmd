@@ -61,10 +61,6 @@ public class GrepCommand implements CommandInterface {
 
     }
 
-    @Override
-    public String out() {
-        return null;
-    }
 
     @Override
     public String help() {
