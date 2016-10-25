@@ -9,7 +9,6 @@ import intecmd.commands.MkdirCommand;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Cmd {
@@ -46,37 +45,42 @@ public class Cmd {
             System.out.println(currentDirectory);
             System.out.print(">> ");
             String[] tokens = this.tokenizeString(scanner.nextLine());
-            switch (tokens[0]) {
-                case "exit":
-                    exitCommand();
-                case "echo":
-                    System.out.println(echoCommand(tokens));
-                    break;
-                case "help":
-                    helpCommand();
-                    break;
-                case "ls":
-                    new LSCommand(tokens, currentDirectory.toString());
-                    break;
-                case "cd":
-                    new ChangeDirectory(tokens);
-                    break;
-                case "grep":
-                    new GrepCommand(tokens);
-                    break;
-	            case "wc":
-	            	WCCommand(tokens);
-		            break;
-                case "cat":
-                    catCommand(tokens);
-                    break;
+            commandSwitch(tokens);
+        }
+    }
+
+    protected void commandSwitch(String[] tokens) {
+        switch (tokens[0]) {
+            case "exit":
+                exitCommand();
+                return; // return to satisfy IDE
+            case "echo":
+                System.out.println(echoCommand(tokens));
+                break;
+            case "help":
+                helpCommand();
+                break;
+            case "ls":
+                new LSCommand(tokens, currentDirectory.toString());
+                break;
+            case "cd":
+                new ChangeDirectory(tokens);
+                break;
+            case "grep":
+                new GrepCommand(tokens);
+                break;
+            case "wc":
+                WCCommand(tokens);
+                break;
+            case "cat":
+                catCommand(tokens);
+                break;
                 case "mkdir":
                     new MkdirCommand(tokens);
                     break;
-                default:
-                    System.out.println("Unrecognized command");
-                    break;
-            }
+            default:
+                System.out.println("Unrecognized command");
+                break;
         }
     }
     private void catCommand(String[] tokens) {
@@ -98,8 +102,11 @@ public class Cmd {
         System.out.println("'exit' - Exits the application");
         System.out.println("'echo' - Whatever input comes after the command gets printed back");
         System.out.println("'ls' - Shows all directories and files in the current directory");
+        System.out.println("'grep' - Searches for matches of a string in a file or files");
+        System.out.println("'cat' - ");
         System.out.println("'mkdir' - Creates a new directory");
-        System.out.println();
+        System.out.println("'cd - Change directory'");
+        System.out.println("'wc' - Counts words");
     }
 
     public void exitCommand() {

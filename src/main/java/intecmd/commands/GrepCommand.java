@@ -13,11 +13,12 @@ public class GrepCommand implements CommandInterface {
     public GrepCommand(String[] tokens) {
         this.tokens = tokens;
         if (tokens.length > 3)
-            tooManyArguments();
+            System.out.println(tooManyArguments());
         if (tokens[1].equals("help"))
-            help();
-        else
-            executeSearch(tokens);
+            System.out.println(help());
+        else {
+            System.out.println(executeSearch(tokens));
+        }
     }
 
     public String tooManyArguments() {
@@ -29,8 +30,11 @@ public class GrepCommand implements CommandInterface {
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader;
 
+        if(!tokens[2].endsWith(".txt"))
+            return "Unsupported file format";
         if (files.length == 0)
             return "No files with that name";
+
 
         for (File f : files) {
             try {
@@ -65,6 +69,8 @@ public class GrepCommand implements CommandInterface {
 
     public File[] fileFinder(String directory) {
         File dir = new File(directory);
-        return dir.listFiles((dir1, name) -> name.equals(this.tokens[2]));
+        if(!this.tokens[2].startsWith("*"))
+            return dir.listFiles((dir1, name) -> name.equals(this.tokens[2]));
+        return dir.listFiles((dir1, name) -> name.endsWith(".txt"));
     }
 }

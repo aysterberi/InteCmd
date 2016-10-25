@@ -1,13 +1,14 @@
 package intecmd.commands;
 
 import com.sun.org.apache.xpath.internal.SourceTree;
+import intecmd.CommandInterface;
 import intecmd.CurrentDirectory;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class LSCommand{
+public class LSCommand implements CommandInterface{
     private final String DEFAULTPATH = ".";
     private File file = new File(DEFAULTPATH);
     private ArrayList<File> directories;
@@ -25,7 +26,7 @@ public class LSCommand{
 
     public LSCommand(String[] commands, String pathToFile) {
         this(pathToFile);
-        if (commands.length > 1){
+        if (commands.length == 2){
             switch (commands[1]){
                 case "-l":
                     System.out.println("Directories:");
@@ -49,9 +50,14 @@ public class LSCommand{
                     System.out.println("Directories:");
                     listDirectoriesTopDown();
                     break;
+                case "-help":
+                    System.out.println(help());
+                    break;
                 default:
-                    System.out.println("Flag not recognized");
+                    System.out.println("Flag not recognized. Try -help");
             }
+        }else if (commands.length != 1){
+            System.out.println("Too many flags. Try -help");
         }else {
             System.out.print("Directories: ");
             if (getDirectories().size() > 0){
@@ -107,5 +113,24 @@ public class LSCommand{
 
     private void listDirectoriesTopDown() {
         directories.forEach(directories1 -> System.out.println(directories1.getName()));
+    }
+
+    @Override
+    public void in(String[] data) {
+
+    }
+
+    @Override
+    public String out() {
+        return null;
+    }
+
+    @Override
+    public String help() {
+        return "-l lists all directories and files in the current folder " +
+                "\n-f show all files in the current folder" +
+                "\n-fl lists all files in the current folder" +
+                "\n-d show all directories in the current folder" +
+                "\n-ld lists all directories in the current folder";
     }
 }

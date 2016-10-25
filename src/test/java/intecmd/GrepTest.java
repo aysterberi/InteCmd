@@ -1,11 +1,11 @@
 package intecmd;
 
-import intecmd.CurrentDirectory;
 import intecmd.commands.GrepCommand;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -24,7 +24,10 @@ public class GrepTest {
     private String[] helpTokenArray = {"grep", "help"};
     private String[] tooLongTokenArray = {"grep", "test", "test.txt", "extra"};
     private String[] sentenceArray = {"grep", "\"a longer\"", "testSentence.txt"};
-    private String[] nonExsistingFileArray = {"grep", "test", "doesNotExist.txt"};
+    private String[] nonExistingFileArray = {"grep", "test", "doesNotExist.txt"};
+    private String[] multipleHitsArray = {"grep", "multiple", "*.txt"};
+    private String[] sameFileMultipleHitsArray = {"grep", "two", "twoHits.txt"};
+    private String[] unsupportedArray = {"grep", "test", "unsupported.exe"};
 
     @Before
     public void setUp() {
@@ -34,6 +37,10 @@ public class GrepTest {
             String testFile = "this\nis\na\ntest\ndocument";
             String anotherTestFile = "this\nis\nanother\ntest\ndocument";
             String testSentence = "search\nfor\n\"a longer\"\nword";
+            String testMultipleHitsOne = "multiple\nhits\none";
+            String testMultipleHitsTwo = "multiple\nhits\ntwo";
+            String multipleHitsSameFile = "two\nhits\ntwo";
+
             PrintWriter printWriter = new PrintWriter("test.txt", "utf-8");
             printWriter.write(testFile);
             printWriter.close();
@@ -43,6 +50,16 @@ public class GrepTest {
             printWriter = new PrintWriter("testSentence.txt", "utf-8");
             printWriter.write(testSentence);
             printWriter.close();
+            printWriter = new PrintWriter("mulOne.txt", "utf-8");
+            printWriter.write(testMultipleHitsOne);
+            printWriter.close();
+            printWriter = new PrintWriter("mulTwo.txt", "utf-8");
+            printWriter.write(testMultipleHitsTwo);
+            printWriter.close();
+            printWriter = new PrintWriter("twoHits.txt", "utf-8");
+            printWriter.write(multipleHitsSameFile);
+            printWriter.close();
+            File unsupportedFile = new File("unsupported.exe");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -54,6 +71,10 @@ public class GrepTest {
             Files.deleteIfExists(Paths.get("test.txt"));
             Files.deleteIfExists(Paths.get("anotherTest.txt"));
             Files.deleteIfExists(Paths.get("testSentence.txt"));
+            Files.deleteIfExists(Paths.get("mulOne.txt"));
+            Files.deleteIfExists(Paths.get("mulTwo.txt"));
+            Files.deleteIfExists(Paths.get("twoHits.txt"));
+            Files.deleteIfExists(Paths.get("unsupported.exe"));
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -109,7 +130,25 @@ public class GrepTest {
 
     @Test
     public void searchingForNonExistingFileShouldReturnErrorMessage() {
-        grep = new GrepCommand(nonExsistingFileArray);
-        assertEquals("No files with that name", grep.executeSearch(nonExsistingFileArray));
+        grep = new GrepCommand(nonExistingFileArray);
+        assertEquals("No files with that name", grep.executeSearch(nonExistingFileArray));
+    }
+
+    @Test
+    public void searchingInAllFilesShouldReturnMultipleHits() {
+        grep = new GrepCommand(multipleHitsArray);
+        assertEquals("multiplemultiple", grep.executeSearch(multipleHitsArray));
+    }
+
+    @Test
+    public void multipleMatchesInOneFileShouldReturnAllHits() {
+        grep = new GrepCommand(sameFileMultipleHitsArray);
+        assertEquals("twotwo", grep.executeSearch(sameFileMultipleHitsArray));
+    }
+
+    @Test
+    public void unsupportedFileEndingShouldReturnErrorMessage() {
+        grep = new GrepCommand(unsupportedArray);
+        assertEquals("Unsupported file format", grep.executeSearch(unsupportedArray));
     }
 }
