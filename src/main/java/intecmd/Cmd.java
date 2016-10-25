@@ -81,6 +81,7 @@ public class Cmd {
             default:
                 System.out.println("Unrecognized command");
                 break;
+
         }
     }
 
