@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.mockito.Mock;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -51,14 +52,31 @@ public class ChangeDirectoryTest {
         assertEquals(HOME_DIRECTORY, currentDirectory.toString());
     }
 
+    private final String MOCK_FULL_PATH = "M:" + CurrentDirectory.SEPARATOR + "Parent" + CurrentDirectory.SEPARATOR + "Child";
+    private final String MOCK_SHORT_PATH = "M:" + CurrentDirectory.SEPARATOR + "Parent";
+    private final String MOCK_WINDOWS_ROOT = "M:";
+    private final String MOCK_UNIX_ROOT = "/";
+    private MockRoot mockRoot;
+    private MockDirectory mockDirectory1, mockDirectory2;
+
+    private void setupMockSystem() {
+        mockRoot = new MockRoot("M:");
+        mockDirectory1 = new MockDirectory("Parent");
+        mockDirectory2 = new MockDirectory("Child");
+        mockRoot.directories.add(mockDirectory1);
+        mockDirectory1.directories.add(mockDirectory2);
+
+    }
+
     /**
      * Requires mock up.
      */
     @Test
     public void moveUpOneDirectory() {
-        currentDirectory.setCurrentDirectory(USER_DIRECTORY_SRC);
+        setupMockSystem();
+        currentDirectory.setCurrentDirectory(MOCK_FULL_PATH);
         cd = new ChangeDirectory(new String[] {"cd", ".."});
-        assertEquals(USER_DIRECTORY, currentDirectory.toString());
+        assertEquals(MOCK_SHORT_PATH, currentDirectory.toString());
     }
 
     /**
@@ -66,10 +84,14 @@ public class ChangeDirectoryTest {
      */
     @Test
     public void shouldNotBeAbleToMoveUpFurtherThanHighestLevel() {
-        currentDirectory.setCurrentDirectory(HOME_DIRECTORY);
+        setupMockSystem();
+        currentDirectory.setCurrentDirectory(MOCK_FULL_PATH);
         for(int i = 0; i < 30; i++)
             cd = new ChangeDirectory(new String[] {"cd", ".."});
-        assertEquals(VALID_ROOT, currentDirectory.toString() + CurrentDirectory.SEPARATOR);
+        if (System.getProperty("os.name").startsWith("Windows"))
+            assertEquals(MOCK_WINDOWS_ROOT, currentDirectory.toString());
+        else
+            assertEquals(MOCK_UNIX_ROOT, currentDirectory.toString());
     }
 
     @Test
@@ -103,6 +125,9 @@ public class ChangeDirectoryTest {
         System.setOut(null);
     }
 
+    /**
+     * Requires mock up.
+     */
     @Test
     public void fileNameHasWhiteSpaces() {
         cd = new ChangeDirectory(new String[] {CD_COMMAND, "Test", "Test", "Test"});

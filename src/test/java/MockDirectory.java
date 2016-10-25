@@ -2,11 +2,10 @@ import java.util.ArrayList;
 
 public class MockDirectory {
 
-    protected ArrayList<String> files;
+    protected ArrayList<MockDirectory> directories = new ArrayList<>();
     protected String name;
 
     public MockDirectory(String name) {
-        System.out.println("New directory name: " + name);
         if(directoryNameIsValid(name))
             this.name = name;
         else
