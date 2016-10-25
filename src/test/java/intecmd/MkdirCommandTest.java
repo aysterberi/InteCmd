@@ -67,7 +67,7 @@ public class MkdirCommandTest {
 
 
     }
-    
+
 
     @Test
     public void getCurrentDirectory() {
@@ -105,6 +105,20 @@ public class MkdirCommandTest {
     public void directoryIsCreated() throws IOException {
         File dir3 = tempDir.newFolder(DIR_NAME);
         assertTrue(dir3.exists());
+    }
+
+    @Test
+    public void multipleDirectoriesAreCreated() throws IOException {
+        File dir1 = tempDir.newFolder(DIR_NAME_1);
+        File dir2 = tempDir.newFolder(DIR_NAME_2);
+        File dir3 = tempDir.newFolder(DIR_NAME_3);
+        mkdir = new MkdirCommand(dir1.getPath());
+        mkdir = new MkdirCommand(dir2.getPath());
+        mkdir = new MkdirCommand(dir3.getPath());
+        assertTrue(dir1.exists());
+        assertTrue(dir2.exists());
+        assertTrue(dir3.exists());
+
     }
 
 
