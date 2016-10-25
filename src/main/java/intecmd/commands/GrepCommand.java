@@ -13,9 +13,9 @@ public class GrepCommand implements CommandInterface {
     public GrepCommand(String[] tokens) {
         this.tokens = tokens;
         if (tokens.length > 3)
-            tooManyArguments();
+            System.out.println(tooManyArguments());
         if (tokens[1].equals("help"))
-            help();
+            System.out.println(help());
         else {
             System.out.println(executeSearch(tokens));
         }
