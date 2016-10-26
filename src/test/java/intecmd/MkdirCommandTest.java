@@ -33,7 +33,7 @@ public class MkdirCommandTest {
 
     @Before
     public void initMkdir() {
-        mkdir = new MkdirCommand("");
+        mkdir = new MkdirCommand(new String[] {"mkdir"});
         currentDirectory = new CurrentDirectory();
         currentDirectory.setCurrentDirectory(USER_DIR);
     }
