@@ -13,7 +13,7 @@ public class LSCommand implements CommandInterface {
 
     public LSCommand(String pathToFile) {
         file = new File(pathToFile);
-        if (!file.getName().equals("")) {
+        if (!file.getName().equals(null)) {
             files = new ArrayList<>();
             directories = new ArrayList<>();
             setDirectories();
@@ -69,7 +69,6 @@ public class LSCommand implements CommandInterface {
                 System.out.println("No files in this directory");
             }
         }
-
     }
 
     public void setDirectories() {

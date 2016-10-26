@@ -37,13 +37,13 @@ public class LSTest {
 
     @Test(expected = NullPointerException.class)
     public void theDirectoryListShouldNotBeNull() {
-        cmdLS = new LSCommand("");
+        cmdLS = new LSCommand(null);
         cmdLS.getDirectories();
     }
 
     @Test(expected = NullPointerException.class)
     public void theFileListShouldBeNull() {
-        cmdLS = new LSCommand("");
+        cmdLS = new LSCommand(null);
         cmdLS.getFiles();
     }
 
