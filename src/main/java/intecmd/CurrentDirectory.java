@@ -3,7 +3,7 @@ package intecmd;
 public class CurrentDirectory {
 
     public static final String SEPARATOR = System.getProperty("file.separator");
-    private  static final String USER_SYSTEM = System.getProperty("os.name");
+    private static final String USER_SYSTEM = System.getProperty("os.name");
     private static String currentDirectory = System.getProperty("user.dir");
 
     public void setCurrentDirectory(String path) {
