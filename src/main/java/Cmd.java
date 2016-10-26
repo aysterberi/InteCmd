@@ -1,6 +1,3 @@
-import java.io.File;
-import java.io.FilenameFilter;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -51,7 +48,7 @@ public class Cmd {
                     new LSCommand(tokens, currentDirectory);
                     break;
                 case "cd":
-                    new ChangeDirectory(tokens);
+                    new ChangeDirectoryCommand(tokens);
                     break;
                 default:
                     System.out.println("Unrecognized command");
