@@ -143,21 +143,21 @@ public class MkdirCommandTest {
 
     @Test
     public void convertTokensToString() {
-        String str = mkdir.getLine(mkdirArray).trim();
+        String str = mkdir.getLine(mkdirArray);
         assertEquals(TEST_STR, str);
     }
 
 
     @Test
     public void convertTokensToParentString() {
-        String str = mkdir.getParentLine(arrParent).trim();
+        String str = mkdir.getParentLine(arrParent);
         assertEquals(TEST_STR, str);
 
     }
 
     @Test
     public void theStringShouldSplitAtEachSpaceCharacter()  {
-        String[] str = mkdir.getLine(mkdirArray).split(" ");
+        String[] str = mkdir.getLine(mkdirArray).trim().split(" ");
         assertEquals(3, str.length);
 
     }
