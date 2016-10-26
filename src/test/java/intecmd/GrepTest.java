@@ -17,17 +17,17 @@ import static org.junit.Assert.assertNotNull;
 public class GrepTest {
 
     private static final String USER_DIRECTORY = System.getProperty("user.dir");
-    private GrepCommand grep;
+    private static final String[] anotherCorrectTokenArray = {"grep", "another", "anotherTest.txt"};
+    private static final String[] correctTokenArray = {"grep", "test", "test.txt"};
+    private static final String[] helpTokenArray = {"grep", "help"};
+    private static final String[] tooLongTokenArray = {"grep", "test", "test.txt", "extra"};
+    private static final String[] sentenceArray = {"grep", "\"a longer\"", "testSentence.txt"};
+    private static final String[] nonExistingFileArray = {"grep", "test", "doesNotExist.txt"};
+    private static final String[] multipleHitsArray = {"grep", "multiple", "*.txt"};
+    private static final String[] sameFileMultipleHitsArray = {"grep", "two", "twoHits.txt"};
+    private static final String[] unsupportedArray = {"grep", "test", "unsupported.exe"};
     private CurrentDirectory currentDirectory;
-    private String[] anotherCorrectTokenArray = {"grep", "another", "anotherTest.txt"};
-    private String[] correctTokenArray = {"grep", "test", "test.txt"};
-    private String[] helpTokenArray = {"grep", "help"};
-    private String[] tooLongTokenArray = {"grep", "test", "test.txt", "extra"};
-    private String[] sentenceArray = {"grep", "\"a longer\"", "testSentence.txt"};
-    private String[] nonExistingFileArray = {"grep", "test", "doesNotExist.txt"};
-    private String[] multipleHitsArray = {"grep", "multiple", "*.txt"};
-    private String[] sameFileMultipleHitsArray = {"grep", "two", "twoHits.txt"};
-    private String[] unsupportedArray = {"grep", "test", "unsupported.exe"};
+    private GrepCommand grep;
 
     @Before
     public void setUp() {
