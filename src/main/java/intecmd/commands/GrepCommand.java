@@ -40,7 +40,7 @@ public class GrepCommand implements CommandInterface {
 
         for (File f : files) {
             try {
-                bufferedReader = new BufferedReader(new FileReader(f.getName()));
+                bufferedReader = new BufferedReader(new FileReader(f.getAbsolutePath()));
                 String line = bufferedReader.readLine();
                 while (line != null) {
                     if (line.contains(tokens[1])) {
