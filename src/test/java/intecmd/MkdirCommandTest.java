@@ -1,8 +1,6 @@
 package intecmd;
 
-import intecmd.CurrentDirectory;
 import intecmd.commands.MkdirCommand;
-
 import static org.junit.Assert.*;
 
 import org.junit.*;
@@ -14,19 +12,18 @@ import java.io.IOException;
 
 public class MkdirCommandTest {
 
-    private MkdirCommand mkdir;
-    private CurrentDirectory currentDirectory;
-
-    private final String USER_DIR = System.getProperty("user.dir");
+    private static final String USER_DIR = System.getProperty("user.dir");
     private static final String DIR_NAME_1 = "Directory1";
     private static final String DIR_NAME_2 = "Directory2";
     private static final String DIR_NAME_3 = "Directory3";
     private static final String MKDIR = "mkdir";
     private static final String P = "-p";
     private static final String TEST_STR = "Directory1 Directory2 Directory3";
+    private static final String[] arrParent = {MKDIR, P, DIR_NAME_1, DIR_NAME_2};
+    private static final String[] mkdirArray = {MKDIR, DIR_NAME_1, DIR_NAME_2, DIR_NAME_3};
 
-    private String[] mkdirArray = {MKDIR, DIR_NAME_1, DIR_NAME_2, DIR_NAME_3};
-    private String[] arrParent = {MKDIR, P, DIR_NAME_1, DIR_NAME_2, DIR_NAME_3};
+    private MkdirCommand mkdir;
+    private CurrentDirectory currentDirectory;
 
 
 
@@ -152,7 +149,6 @@ public class MkdirCommandTest {
     public void convertTokensToParentString() {
         String str = mkdir.getParentLine(arrParent);
         assertEquals(TEST_STR, str);
-
     }
 
     @Test
