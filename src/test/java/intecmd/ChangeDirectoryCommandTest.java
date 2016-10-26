@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
 public class ChangeDirectoryCommandTest {
 
 
+    private final String USER_SYSTEM = System.getProperty("os.name");
     private final String USER_DIRECTORY = System.getProperty("user.dir");
     private final String HOME_DIRECTORY = System.getProperty("user.home");
     private final String USER_DIRECTORY_SRC = USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src";
@@ -64,12 +65,12 @@ public class ChangeDirectoryCommandTest {
      */
     @Test
     public void moveUpOneDirectory() {
-        if (System.getProperty("os.name").startsWith("Windows"))
+        if (USER_SYSTEM.startsWith("Windows"))
             setupMockWindowsSystem();
         else
             setupMockUnixSystem();
         cd = new ChangeDirectoryCommand(new String[] {"cd", ".."});
-        if (System.getProperty("os.name").startsWith("Windows"))
+        if (USER_SYSTEM.startsWith("Windows"))
             assertEquals(MOCK_SHORT_PATH, currentDirectory.toString());
         else
             assertEquals(MOCK_UNIX_ROOT + MOCK_SHORT_PATH, currentDirectory.toString());
@@ -80,13 +81,13 @@ public class ChangeDirectoryCommandTest {
      */
     @Test
     public void shouldNotBeAbleToMoveUpFurtherThanHighestLevel() {
-        if (System.getProperty("os.name").startsWith("Windows"))
+        if (USER_SYSTEM.startsWith("Windows"))
             setupMockWindowsSystem();
         else
             setupMockUnixSystem();
         for(int i = 0; i < 30; i++)
             cd = new ChangeDirectoryCommand(new String[] {"cd", ".."});
-        if (System.getProperty("os.name").startsWith("Windows"))
+        if (USER_SYSTEM.startsWith("Windows"))
             assertEquals(MOCK_WINDOWS_ROOT, currentDirectory.toString());
         else
             assertEquals(MOCK_UNIX_ROOT, currentDirectory.toString());
