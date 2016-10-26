@@ -36,7 +36,6 @@ public class GrepCommand implements CommandInterface {
         if (files.length == 0)
             return "No files with that name";
 
-
         for (File f : files) {
             try {
                 bufferedReader = new BufferedReader(new FileReader(f.getName()));
