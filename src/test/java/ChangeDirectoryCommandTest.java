@@ -9,7 +9,7 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.*;
 
-public class ChangeDirectoryTest {
+public class ChangeDirectoryCommandTest {
 
 
     private final String USER_DIRECTORY = System.getProperty("user.dir");
@@ -24,7 +24,7 @@ public class ChangeDirectoryTest {
     private final String MOCK_UNIX_ROOT = "/";
 
     private CurrentDirectory currentDirectory;
-    private ChangeDirectory cd;
+    private ChangeDirectoryCommand cd;
     private MockRoot mockRoot;
     private MockDirectory mockDirectory0, mockDirectory1, mockDirectory2;
 
@@ -33,14 +33,14 @@ public class ChangeDirectoryTest {
 
     @Before
     public void initialize() {
-        cd = new ChangeDirectory();
+        cd = new ChangeDirectoryCommand();
         currentDirectory = new CurrentDirectory();
         currentDirectory.setCurrentDirectory(USER_DIRECTORY);
     }
 
     @Test
     public void initiateChangeDirectory() {
-        new ChangeDirectory();
+        new ChangeDirectoryCommand();
     }
 
     @Test
@@ -63,7 +63,7 @@ public class ChangeDirectoryTest {
             setupMockWindowsSystem();
         else
             setupMockUnixSystem();
-        cd = new ChangeDirectory(new String[] {"cd", ".."});
+        cd = new ChangeDirectoryCommand(new String[] {"cd", ".."});
         if (System.getProperty("os.name").startsWith("Windows"))
             assertEquals(MOCK_SHORT_PATH, currentDirectory.toString());
         else
@@ -80,7 +80,7 @@ public class ChangeDirectoryTest {
         else
             setupMockUnixSystem();
         for(int i = 0; i < 30; i++)
-            cd = new ChangeDirectory(new String[] {"cd", ".."});
+            cd = new ChangeDirectoryCommand(new String[] {"cd", ".."});
         if (System.getProperty("os.name").startsWith("Windows"))
             assertEquals(MOCK_WINDOWS_ROOT, currentDirectory.toString());
         else
@@ -89,7 +89,7 @@ public class ChangeDirectoryTest {
 
     @Test
     public void moveDownOneDirectory() {
-        cd = new ChangeDirectory(new String[] {CD_COMMAND, "src"});
+        cd = new ChangeDirectoryCommand(new String[] {CD_COMMAND, "src"});
         assertEquals(USER_DIRECTORY_SRC, currentDirectory.toString());
     }
 
@@ -100,7 +100,7 @@ public class ChangeDirectoryTest {
 
     @Test
     public void changeToValidRoot() {
-        cd = new ChangeDirectory(new String[] {CD_COMMAND, VALID_ROOT});
+        cd = new ChangeDirectoryCommand(new String[] {CD_COMMAND, VALID_ROOT});
         assertEquals(VALID_ROOT, currentDirectory.toString());
     }
 
@@ -113,7 +113,7 @@ public class ChangeDirectoryTest {
     public void invalidCommandShouldPrintMessage() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        cd = new ChangeDirectory(new String[] {CD_COMMAND, INVALID_ROOT});
+        cd = new ChangeDirectoryCommand(new String[] {CD_COMMAND, INVALID_ROOT});
         assertEquals("No such file or directory.", outContent.toString().trim());
         System.setOut(null);
     }
@@ -127,8 +127,8 @@ public class ChangeDirectoryTest {
             File directory = temporaryFolder.newFolder("Test Test Test");
             String path = directory.getAbsolutePath();
             currentDirectory.setCurrentDirectory(path);
-            new ChangeDirectory(new String[] {CD_COMMAND, ".."});
-            cd = new ChangeDirectory(new String[] {CD_COMMAND, "Test", "Test", "Test"});
+            new ChangeDirectoryCommand(new String[] {CD_COMMAND, ".."});
+            cd = new ChangeDirectoryCommand(new String[] {CD_COMMAND, "Test", "Test", "Test"});
             assertEquals(directory.getAbsolutePath(), currentDirectory.toString());
         } catch(Exception e) {
             System.err.println(e.getMessage());
