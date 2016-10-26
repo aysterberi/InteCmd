@@ -12,11 +12,14 @@
 package intecmd.commands;
 
 import intecmd.CommandInterface;
+import intecmd.CurrentDirectory;
+import org.omg.CORBA.Current;
 
 import java.io.*;
 
 public class Concatenate implements CommandInterface {
     private boolean isBuffered = true;
+    private CurrentDirectory curDir = new CurrentDirectory();
 
     public void in(String[] data) {
 
@@ -32,9 +35,19 @@ public class Concatenate implements CommandInterface {
                     continue; //do nothing
                 }
                 try {
-                    FileInputStream fis = new FileInputStream(s);
-                    cat(fis, s);
-                    fis.close();
+                    if (s.contains("\\/"))
+                    {
+                        FileInputStream fis = new FileInputStream(s);
+                        cat(fis, s);
+                        fis.close();
+                    }
+                    else
+                    {
+                        FileInputStream fis = new FileInputStream(curDir.toString()+s);
+                        cat(fis, s);
+                        fis.close();
+                    }
+
                 } catch (java.io.IOException e) {
                     System.out.println("Could not open " + s);
                 }
