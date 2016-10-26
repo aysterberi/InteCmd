@@ -19,13 +19,12 @@ public class MkdirCommandTest {
     private static final String MKDIR = "mkdir";
     private static final String P = "-p";
     private static final String TEST_STR = "Directory1 Directory2 Directory3";
-    private static final String[] arrParent = {MKDIR, P, DIR_NAME_1, DIR_NAME_2, DIR_NAME_3};
+
     private static final String[] mkdirArray = {MKDIR, DIR_NAME_1, DIR_NAME_2, DIR_NAME_3};
+    private static final String[] arrParent = {MKDIR, P, DIR_NAME_1, DIR_NAME_2, DIR_NAME_3};
 
     private MkdirCommand mkdir;
     private CurrentDirectory currentDirectory;
-
-
 
     @Rule
     public TemporaryFolder tempDir = new TemporaryFolder();
@@ -149,6 +148,7 @@ public class MkdirCommandTest {
     public void convertTokensToParentString() {
         String str = mkdir.getParentLine(arrParent);
         assertEquals(TEST_STR, str);
+
     }
 
     @Test
