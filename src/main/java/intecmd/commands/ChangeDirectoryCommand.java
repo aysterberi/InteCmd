@@ -40,9 +40,9 @@ public final class ChangeDirectoryCommand {
     }
 
     private void readOptions(String[] options) {
-        if (options[1].matches(CMD_PATTERN_PARENT_DIRECTORY))
+        if (options[1].equals(CMD_PATTERN_PARENT_DIRECTORY))
             moveUp();
-        else if (options[1].matches(CMD_PATTERN_HOME_DIRECTORY))
+        else if (options[1].equals(CMD_PATTERN_HOME_DIRECTORY))
             homeDirectory();
         else if (options[1].matches(PATTERN_WINDOWS_DIRECTORY) || options[1].matches(PATTERN_UNIX_DIRECTORY))
             moveDown(options[1]);
