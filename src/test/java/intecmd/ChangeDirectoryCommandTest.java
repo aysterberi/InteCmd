@@ -17,7 +17,6 @@ import static org.junit.Assert.*;
 public class ChangeDirectoryCommandTest {
 
 
-    private final String USER_SYSTEM = System.getProperty("os.name");
     private final String USER_DIRECTORY = System.getProperty("user.dir");
     private final String HOME_DIRECTORY = System.getProperty("user.home");
     private final String USER_DIRECTORY_SRC = USER_DIRECTORY + CurrentDirectory.SEPARATOR + "src";
@@ -71,12 +70,12 @@ public class ChangeDirectoryCommandTest {
      */
     @Test
     public void moveUpOneDirectory() {
-        if (USER_SYSTEM.startsWith("Windows"))
+        if (System.getProperty("os.name").startsWith("Windows"))
             setupMockWindowsSystem();
         else
             setupMockUnixSystem();
         cd = new ChangeDirectoryCommand(new String[] {"cd", ".."});
-        if (USER_SYSTEM.startsWith("Windows"))
+        if (System.getProperty("os.name").startsWith("Windows"))
             assertEquals(MOCK_SHORT_PATH, currentDirectory.toString());
         else
             assertEquals(MOCK_UNIX_ROOT + MOCK_SHORT_PATH, currentDirectory.toString());
@@ -87,13 +86,13 @@ public class ChangeDirectoryCommandTest {
      */
     @Test
     public void shouldNotBeAbleToMoveUpFurtherThanHighestLevel() {
-        if (USER_SYSTEM.startsWith("Windows"))
+        if (System.getProperty("os.name").startsWith("Windows"))
             setupMockWindowsSystem();
         else
             setupMockUnixSystem();
         for(int i = 0; i < 30; i++)
             cd = new ChangeDirectoryCommand(new String[] {"cd", ".."});
-        if (USER_SYSTEM.startsWith("Windows"))
+        if (System.getProperty("os.name").startsWith("Windows"))
             assertEquals(MOCK_WINDOWS_ROOT, currentDirectory.toString());
         else
             assertEquals(MOCK_UNIX_ROOT, currentDirectory.toString());
@@ -111,7 +110,6 @@ public class ChangeDirectoryCommandTest {
         System.setOut(new PrintStream(outContent));
         new ChangeDirectoryCommand(new String[] {CD_COMMAND, "jansdljasdlkjakd"});
         assertEquals("No such file or directory.", outContent.toString().trim());
-        System.setOut(null);
     }
 
     @Test
@@ -126,7 +124,6 @@ public class ChangeDirectoryCommandTest {
         System.setOut(new PrintStream(outContent));
         cd = new ChangeDirectoryCommand(new String[] {CD_COMMAND, INVALID_ROOT});
         assertEquals("No such file or directory.", outContent.toString().trim());
-        System.setOut(null);
     }
 
     @Test
@@ -135,7 +132,6 @@ public class ChangeDirectoryCommandTest {
         System.setOut(new PrintStream(outContent));
         cd = new ChangeDirectoryCommand(new String[] {CD_COMMAND, INVALID_COMMAND});
         assertEquals("No such file or directory.", outContent.toString().trim());
-        System.setOut(null);
     }
 
     /**
@@ -153,6 +149,11 @@ public class ChangeDirectoryCommandTest {
         } catch(Exception e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    @After
+    public void shutdown() {
+        currentDirectory.setCurrentDirectory(USER_DIRECTORY);
     }
 
     private void setupMockWindowsSystem() {
