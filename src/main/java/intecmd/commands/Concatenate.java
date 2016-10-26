@@ -43,7 +43,7 @@ public class Concatenate implements CommandInterface {
                     }
                     else
                     {
-                        FileInputStream fis = new FileInputStream(curDir.toString()+s);
+                        FileInputStream fis = new FileInputStream(curDir.toString() +curDir.SEPARATOR+s);
                         cat(fis, s);
                         fis.close();
                     }
