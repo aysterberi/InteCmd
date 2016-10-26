@@ -4,6 +4,7 @@ import intecmd.commands.WordCountCommand;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.omg.CORBA.Current;
 
 import java.io.*;
 
@@ -15,6 +16,7 @@ public class WordCountCommandTest {
 	private final PrintStream oldOut = System.out;
 	private WordCountCommand wordCountCommand;
 	private InputStream testStream;
+	private CurrentDirectory directory = new CurrentDirectory();
 
 	@Before
 	public void setUpTests() {
@@ -106,9 +108,10 @@ public class WordCountCommandTest {
 	@Test
 	public void countShouldFailGracefully() throws Exception {
 		wordCountCommand.in(new String[] {"-l", "-w", "-c", "faux file trololol"});
+		String path = directory.toString() + CurrentDirectory.SEPARATOR;
 		//normalize EOL (should fix Travis CI breaking)
 		String s = outContent.toString().replaceAll("\\r\\n", "\n").replaceAll("\\r", "\\n");
-		assertEquals("Could not open faux file trololol.\nAn error occurred when processing the stream.\n", s);
+		assertEquals("Could not open "+path+"faux file trololol.\nAn error occurred when processing the stream.\n", s);
 	}
 	@Test
 	public void nonsenseInput() throws Exception {
@@ -125,8 +128,9 @@ public class WordCountCommandTest {
 	@Test
 	public void theCallShouldExitWhenWrongFile() throws Exception {
 		wordCountCommand.in(new String[] {"-l", "fauxfile.mp3"});
+		String path = directory.toString() + CurrentDirectory.SEPARATOR;
 		System.out.println(wordCountCommand.call());
-		assertEquals("Could not open fauxfile.mp3.\n" +
+		assertEquals("Could not open "+path+"fauxfile.mp3.\n" +
 				"An error occurred when processing the stream.\n" +
 				"Exiting wc.", outContent.toString().trim().replaceAll("\\r\\n", "\n"));
 	}

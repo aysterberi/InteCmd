@@ -1,6 +1,7 @@
 package intecmd.commands;
 
 import intecmd.CommandInterface;
+import intecmd.CurrentDirectory;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class WordCountCommand implements CommandInterface, Callable {
 	private Long newlineCount;
 	private boolean printWords, printChars, printLines;
 	private boolean isDone, helpMode, isError, isWorking;
+	private CurrentDirectory currentDirectory = new CurrentDirectory();
 
 	public WordCountCommand() {
 		message = "";
@@ -36,13 +38,13 @@ public class WordCountCommand implements CommandInterface, Callable {
 		List<String> other = new ArrayList<>();
 		String flagCheck = Arrays.toString(data);
 		if (!flagCheck.contains("-l") &&
-		    !flagCheck.contains("-w")
-		    && !flagCheck.contains("-c")) {
+				!flagCheck.contains("-w")
+				&& !flagCheck.contains("-c")) {
 			//no flags, set all to true and print them all.		   
 			printWords = true;
 			printChars = true;
 			printLines = true;
-			}
+		}
 		for (String s : data) {
 
 			if (!s.contains("-")) {
@@ -173,7 +175,12 @@ public class WordCountCommand implements CommandInterface, Callable {
 
 	private void count(String s) {
 		isWorking = true;
-		InputStream in = openFile(s);
+		InputStream in;
+		if (!s.contains(CurrentDirectory.SEPARATOR)) {
+			in = openFile(currentDirectory.toString() + currentDirectory.SEPARATOR + s);
+		} else {
+			in = openFile(s);
+		}
 		long[] results;
 		try {
 			results = processStream(in);
