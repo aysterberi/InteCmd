@@ -52,6 +52,15 @@ public class WordCountTest {
 	}
 
 	@Test
+	public void helpFlagShouldWork() throws Exception {
+		wordCount.in(new String[]{"-h"});
+		String s = "\nwc - wordcount. \nThis program counts all words for a given file. " +
+				"\nWhitespace is used as the delimiter. Empty lines will not be counted." +
+				"\nFlags:\n-l\t\tCount all lines.\n-w\t\tCount all words.\n-c\t\tCount all 16-bit Unicode characters.\nDefault (no flags) shows all of these counts.\n\nFor example, to count the lines in file xyz.txt run:\n\t\t\twc -l xyz.txt";
+		System.out.print(wordCount.call()); //emulate Cmd call
+		assertEquals(s.trim(), outContent.toString().trim());
+	}
+	@Test
 	public void theLineCountAlternativeShouldWork() throws Exception {
 		wordCount.in(new String[]{"-l"}); //count only lines
 		testStream = new ByteArrayInputStream("this\r\nis\r\nfour\r\nlines.\r\n".getBytes());
