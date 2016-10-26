@@ -96,14 +96,14 @@ public class MkdirCommand {
 
     public String getParentLine(String[] tokens) {
         String line = "";
-        for (int i = 1; i < tokens.length; i++) {
+        for (int i = 2; i < tokens.length; i++) {
             if (i == tokens.length - 1)
                 line += tokens[i];
             else
                 line += tokens[i] + " ";
 
         }
-        return line.replace("-p", "");
+        return line;
 
     }
 
