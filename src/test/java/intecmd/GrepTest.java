@@ -17,15 +17,16 @@ import static org.junit.Assert.assertNotNull;
 public class GrepTest {
 
     private static final String USER_DIRECTORY = System.getProperty("user.dir");
-    private static final String[] anotherCorrectTokenArray = {"grep", "another", "anotherTest.txt"};
-    private static final String[] correctTokenArray = {"grep", "test", "test.txt"};
-    private static final String[] helpTokenArray = {"grep", "help"};
-    private static final String[] tooLongTokenArray = {"grep", "test", "test.txt", "extra"};
-    private static final String[] sentenceArray = {"grep", "\"a longer\"", "testSentence.txt"};
-    private static final String[] nonExistingFileArray = {"grep", "test", "doesNotExist.txt"};
-    private static final String[] multipleHitsArray = {"grep", "multiple", "*.txt"};
-    private static final String[] sameFileMultipleHitsArray = {"grep", "two", "twoHits.txt"};
-    private static final String[] unsupportedArray = {"grep", "test", "unsupported.exe"};
+    private static final String[] ANOTHER_CORRECT_TOKEN_ARRAY = {"grep", "another", "anotherTest.txt"};
+    private static final String[] CORRECT_TOKEN_ARRAY = {"grep", "test", "test.txt"};
+    private static final String[] HELP_TOKEN_ARRAY = {"grep", "help"};
+    private static final String[] TOO_LONG_TOKEN_ARRAY = {"grep", "test", "test.txt", "extra"};
+    private static final String[] TOO_SHORT_TOKEN_ARRAY = {"grep", "test"};
+    private static final String[] SENTENCE_ARRAY = {"grep", "\"a longer\"", "testSentence.txt"};
+    private static final String[] NON_EXISTING_FILE_ARRAY = {"grep", "test", "doesNotExist.txt"};
+    private static final String[] MULTIPLE_HITS_ARRAY = {"grep", "multiple", "*.txt"};
+    private static final String[] SAME_FILE_MULTIPLE_HITS_ARRAY = {"grep", "two", "twoHits.txt"};
+    private static final String[] UNSUPPORTED_ARRAY = {"grep", "test", "unsupported.exe"};
     private CurrentDirectory currentDirectory;
     private GrepCommand grep;
 
@@ -82,73 +83,79 @@ public class GrepTest {
 
     @Test
     public void theGrepCommandShouldNotBeNull() {
-        grep = new GrepCommand(correctTokenArray);
+        grep = new GrepCommand(CORRECT_TOKEN_ARRAY);
         assertNotNull(grep);
     }
 
     @Test
     public void theTokenArrayShouldContainThreeEntries() {
-        grep = new GrepCommand(correctTokenArray);
+        grep = new GrepCommand(CORRECT_TOKEN_ARRAY);
         assertEquals(3, grep.tokens.length);
     }
 
     @Test
     public void ifTokenArrayContainsTooManyEntriesDoNotExecuteCommand() {
-        grep = new GrepCommand(tooLongTokenArray);
+        grep = new GrepCommand(TOO_LONG_TOKEN_ARRAY);
         assertEquals("Too many arguments, try again", grep.tooManyArguments());
     }
 
     @Test
+    public void ifTokenArrayContainsTooFewArgumentsReturnErrorMessage() {
+        grep = new GrepCommand(TOO_SHORT_TOKEN_ARRAY);
+        assertEquals("Too few arguments, try again", grep.executeSearch(TOO_SHORT_TOKEN_ARRAY));
+    }
+
+    @Test
     public void grepCommandFollowedByHelpCommandShouldReturnTheCorrectString() {
-        grep = new GrepCommand(helpTokenArray);
+        grep = new GrepCommand(HELP_TOKEN_ARRAY);
         assertEquals("test help", grep.help());
     }
 
     @Test
     public void executeSearchShouldReturnTheCorrectStringWhenSearchingForTest() {
-        grep = new GrepCommand(correctTokenArray);
-        assertEquals("test", grep.executeSearch(correctTokenArray));
+        grep = new GrepCommand(CORRECT_TOKEN_ARRAY);
+        assertEquals("test", grep.executeSearch(CORRECT_TOKEN_ARRAY));
     }
 
     @Test
     public void executeSearchShouldReturnTheCorrectStringWhenSearchingForAnotherTest() {
-        grep = new GrepCommand(anotherCorrectTokenArray);
-        assertEquals("another", grep.executeSearch(anotherCorrectTokenArray));
+        grep = new GrepCommand(ANOTHER_CORRECT_TOKEN_ARRAY);
+        assertEquals("another", grep.executeSearch(ANOTHER_CORRECT_TOKEN_ARRAY));
     }
 
     @Test
     public void anErrorMessageShouldBeReturnedIfNoMatchWasFound() {
-        grep = new GrepCommand(correctTokenArray);
-        assertEquals("error message", grep.executeSearch(anotherCorrectTokenArray));
+        grep = new GrepCommand(CORRECT_TOKEN_ARRAY);
+        assertEquals("error message", grep.executeSearch(ANOTHER_CORRECT_TOKEN_ARRAY));
     }
 
     @Test
     public void executeSearchForSentenceInQuotationsShouldReturnTheSentence() {
-        grep = new GrepCommand(sentenceArray);
-        assertEquals("a longer", grep.executeSearch(sentenceArray));
+        grep = new GrepCommand(SENTENCE_ARRAY);
+        assertEquals("a longer", grep.executeSearch(SENTENCE_ARRAY));
     }
 
     @Test
     public void searchingForNonExistingFileShouldReturnErrorMessage() {
-        grep = new GrepCommand(nonExistingFileArray);
-        assertEquals("No files with that name", grep.executeSearch(nonExistingFileArray));
+        grep = new GrepCommand(NON_EXISTING_FILE_ARRAY);
+        assertEquals("No files with that name", grep.executeSearch(NON_EXISTING_FILE_ARRAY));
     }
 
     @Test
     public void searchingInAllFilesShouldReturnMultipleHits() {
-        grep = new GrepCommand(multipleHitsArray);
-        assertEquals("multiplemultiple", grep.executeSearch(multipleHitsArray));
+        grep = new GrepCommand(MULTIPLE_HITS_ARRAY);
+        assertEquals("multiplemultiple", grep.executeSearch(MULTIPLE_HITS_ARRAY));
     }
 
     @Test
     public void multipleMatchesInOneFileShouldReturnAllHits() {
-        grep = new GrepCommand(sameFileMultipleHitsArray);
-        assertEquals("twotwo", grep.executeSearch(sameFileMultipleHitsArray));
+        grep = new GrepCommand(SAME_FILE_MULTIPLE_HITS_ARRAY);
+        assertEquals("twotwo", grep.executeSearch(SAME_FILE_MULTIPLE_HITS_ARRAY));
     }
 
     @Test
     public void unsupportedFileEndingShouldReturnErrorMessage() {
-        grep = new GrepCommand(unsupportedArray);
-        assertEquals("Unsupported file format", grep.executeSearch(unsupportedArray));
+        grep = new GrepCommand(UNSUPPORTED_ARRAY);
+        assertEquals("Unsupported file format", grep.executeSearch(UNSUPPORTED_ARRAY));
     }
 }
