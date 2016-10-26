@@ -51,7 +51,6 @@ final class ChangeDirectoryCommand {
 
     private void moveUp() {
         String[] pathParts = splitPath();
-        String path = systemIsWindows() ? pathParts[0] : PATTERN_ROOT_UNIX;
         if (systemIsWindows()) {
             moveUpWindowsPath(pathParts);
         } else {
