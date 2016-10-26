@@ -8,6 +8,8 @@ import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 
 public class MkdirCommandTest {
@@ -170,6 +172,16 @@ public class MkdirCommandTest {
     public void theNameWithoutFlagCannotContainBackslash() {
         assertTrue(mkdir.getLineWithoutBackslash(mkdirArray));
 
+    }
+    @After
+    public void Shutdown() {
+        try {
+            Files.deleteIfExists(Paths.get("Directory1"));
+            Files.deleteIfExists(Paths.get("Directory2"));
+            Files.deleteIfExists(Paths.get("Directory3"));
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
 }
