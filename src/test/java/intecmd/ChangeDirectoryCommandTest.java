@@ -105,7 +105,6 @@ public class ChangeDirectoryCommandTest {
         System.setOut(new PrintStream(outContent));
         new ChangeDirectoryCommand(new String[] {CD_COMMAND, "jansdljasdlkjakd"});
         assertEquals("No such file or directory.", outContent.toString().trim());
-        System.setOut(null);
     }
 
     @Test
@@ -120,7 +119,6 @@ public class ChangeDirectoryCommandTest {
         System.setOut(new PrintStream(outContent));
         cd = new ChangeDirectoryCommand(new String[] {CD_COMMAND, INVALID_ROOT});
         assertEquals("No such file or directory.", outContent.toString().trim());
-        System.setOut(null);
     }
 
     @Test
@@ -129,7 +127,6 @@ public class ChangeDirectoryCommandTest {
         System.setOut(new PrintStream(outContent));
         cd = new ChangeDirectoryCommand(new String[] {CD_COMMAND, INVALID_COMMAND});
         assertEquals("No such file or directory.", outContent.toString().trim());
-        System.setOut(null);
     }
 
     /**
