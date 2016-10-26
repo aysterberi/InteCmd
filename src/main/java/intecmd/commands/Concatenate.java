@@ -35,7 +35,7 @@ public class Concatenate implements CommandInterface {
                     continue; //do nothing
                 }
                 try {
-                    if (s.contains("\\/"))
+                    if (s.contains(curDir.SEPARATOR))
                     {
                         FileInputStream fis = new FileInputStream(s);
                         cat(fis, s);
