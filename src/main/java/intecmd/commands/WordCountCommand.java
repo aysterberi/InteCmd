@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class WordCount implements CommandInterface, Callable {
+public class WordCountCommand implements CommandInterface, Callable {
 
 	private String message;
 	private Long charCount;
@@ -17,7 +17,7 @@ public class WordCount implements CommandInterface, Callable {
 	private boolean printWords, printChars, printLines;
 	private boolean isDone, helpMode, isError, isWorking;
 
-	public WordCount() {
+	public WordCountCommand() {
 		message = "";
 		wordCount = 0L;
 		newlineCount = 0L;

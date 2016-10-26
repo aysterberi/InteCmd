@@ -17,7 +17,7 @@ import org.omg.CORBA.Current;
 
 import java.io.*;
 
-public class Concatenate implements CommandInterface {
+public class ConcatenateCommand implements CommandInterface {
     private boolean isBuffered = true;
     private CurrentDirectory curDir = new CurrentDirectory();
 

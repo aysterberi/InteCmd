@@ -81,12 +81,12 @@ public class Cmd {
     }
 
     private void catCommand(String[] tokens) {
-        Concatenate cat = new Concatenate();
+        ConcatenateCommand cat = new ConcatenateCommand();
         cat.in(tokens);
     }
 
     private void WCCommand(String[] tokens) {
-        WordCount wc = new WordCount();
+        WordCountCommand wc = new WordCountCommand();
         wc.in(tokens);
         try {
             System.out.print(wc.call());

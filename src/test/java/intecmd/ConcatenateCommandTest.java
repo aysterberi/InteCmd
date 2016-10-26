@@ -1,6 +1,6 @@
 package intecmd;
 
-import intecmd.commands.Concatenate;
+import intecmd.commands.ConcatenateCommand;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,16 +9,16 @@ import java.io.*;
 
 import static org.junit.Assert.assertEquals;
 
-public class ConcatenateTest {
+public class ConcatenateCommandTest {
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	private final PrintStream oldOut = System.out;
-	Concatenate cat;
+	ConcatenateCommand cat;
 	InputStream is;
 
 	@Before
 	public void setUpTests() {
 		System.setOut(new PrintStream(outContent));
-		cat = new Concatenate();
+		cat = new ConcatenateCommand();
 	}
 
 	@Test
@@ -45,7 +45,7 @@ public class ConcatenateTest {
 		outContent.reset();
 
 		is = new ByteArrayInputStream(testString.getBytes());
-		cat = new Concatenate();
+		cat = new ConcatenateCommand();
 		cat.cat(is, "file 2"); //8K buffered
 		String bufOut = outContent.toString();
 		assertEquals(unbufOut, bufOut);
