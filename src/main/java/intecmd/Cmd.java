@@ -45,6 +45,11 @@ public class Cmd {
     }
 
     protected void commandSwitch(String[] tokens) {
+        if(tokens.length < 1)
+        {
+            //exit gracefully when fed nil
+            return;
+        }
         switch (tokens[0]) {
             case "exit":
                 exitCommand();
