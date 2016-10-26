@@ -50,5 +50,6 @@ fabric.properties
 target/
 .idea/.name
 inte-cmd.iml
+.idea/artifacts/INTEProject_jar.xml
 .idea/findbugs-idea.xml
 .idea/INTEProject.iml

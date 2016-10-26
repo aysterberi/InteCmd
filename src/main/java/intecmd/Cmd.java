@@ -1,11 +1,6 @@
 package intecmd;
 
-import intecmd.commands.ChangeDirectory;
-import intecmd.commands.Concatenate;
-import intecmd.commands.LSCommand;
-import intecmd.commands.WordCount;
-import intecmd.commands.GrepCommand;
-import intecmd.commands.MkdirCommand;
+import intecmd.commands.*;
 
 
 import java.util.ArrayList;
@@ -64,7 +59,7 @@ public class Cmd {
                 new LSCommand(tokens, currentDirectory.toString());
                 break;
             case "cd":
-                new ChangeDirectory(tokens);
+                new ChangeDirectoryCommand(tokens);
                 break;
             case "grep":
                 new GrepCommand(tokens);

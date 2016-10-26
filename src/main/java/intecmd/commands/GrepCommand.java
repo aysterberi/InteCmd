@@ -32,7 +32,7 @@ public class GrepCommand implements CommandInterface {
 
         if(!tokens[2].endsWith(".txt"))
             return "Unsupported file format";
-        if (files.length == 0)
+        if (files == null || files.length == 0)
             return "No files with that name";
 
 
