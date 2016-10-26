@@ -52,3 +52,4 @@ target/
 inte-cmd.iml
 .idea/findbugs-idea.xml
 .idea/INTEProject.iml
+.idea/artifacts/INTEProject_jar.xml
