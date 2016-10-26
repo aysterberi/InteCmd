@@ -1,17 +1,17 @@
 import java.io.File;
 import java.util.ArrayList;
 
-public class ChangeDirectory {
+final class ChangeDirectoryCommand {
 
-    public final static String CMD_PATTERN_PARENT_DIRECTORY = "..";
-    public final static String PATTERN_ROOT_WINDOWS = "[a-zA-Z]{1}:\\\\{0,1}+";
-    public final static String PATTERN_ROOT_UNIX = "/";
-    public final static String PATTERN_WINDOWS_DIRECTORY = "^[^<>:\"/\\\\|?*]*$";
-    public final static String PATTERN_UNIX_DIRECTORY = "^[^/]$";
+    private final static String CMD_PATTERN_PARENT_DIRECTORY = "..";
+    private final static String PATTERN_ROOT_WINDOWS = "[a-zA-Z]{1}:\\\\{0,1}+";
+    private final static String PATTERN_ROOT_UNIX = "/";
+    private final static String PATTERN_WINDOWS_DIRECTORY = "^[^<>:\"/\\\\|?*]*$";
+    private final static String PATTERN_UNIX_DIRECTORY = "^[^/]$";
 
     private CurrentDirectory currentDirectory = new CurrentDirectory();
 
-    public ChangeDirectory(String[] data) {
+    ChangeDirectoryCommand(String[] data) {
         try {
             switch(data.length) {
                 case 1:
@@ -29,7 +29,7 @@ public class ChangeDirectory {
         }
     }
 
-    public ChangeDirectory() {
+    ChangeDirectoryCommand() {
         this(new String[] {""});
     }
 
@@ -44,7 +44,7 @@ public class ChangeDirectory {
             throw new IllegalArgumentException("No such file or directory.");
     }
 
-    public void homeDirectory() {
+    void homeDirectory() {
         currentDirectory.setCurrentDirectory(System.getProperty("user.home"));
     }
 
@@ -72,14 +72,14 @@ public class ChangeDirectory {
         return System.getProperty("os.name").startsWith("Windows");
     }
 
-    public void moveDown(String[] splitDirectory) {
+    private void moveDown(String[] splitDirectory) {
         String directory = splitDirectory[1];
         for(int i = 2; i < splitDirectory.length; i++)
             directory += " " + splitDirectory[i];
         moveDown(directory);
     }
 
-    public void moveDown(String directory) {
+    void moveDown(String directory) {
         if (!directoryExists(directory))
             throw new IllegalArgumentException("No such file or directory.");
         currentDirectory.setCurrentDirectory(currentDirectory.toString() + CurrentDirectory.SEPARATOR + directory);
@@ -93,7 +93,7 @@ public class ChangeDirectory {
         return false;
     }
 
-    public void changeRoot(String root) {
+    void changeRoot(String root) {
         if(!rootExists(root))
             throw new IllegalArgumentException("No such file or directory.");
         else
