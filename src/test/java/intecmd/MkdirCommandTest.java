@@ -143,7 +143,7 @@ public class MkdirCommandTest {
 
     @Test
     public void convertTokensToString() {
-        String str = mkdir.getLine(mkdirArray);
+        String str = mkdir.getLine(mkdirArray).trim();
         assertEquals(TEST_STR, str);
     }
 
