@@ -1,3 +1,7 @@
+package intecmd;
+
+
+import intecmd.commands.ChangeDirectoryCommand;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,6 +22,7 @@ public class ChangeDirectoryCommandTest {
     private final String CD_COMMAND = "CD";
     private final String VALID_ROOT = File.listRoots()[0].toString();
     private final String INVALID_ROOT = "XE:/";
+    private final String INVALID_COMMAND = "-teasd";
     private final String MOCK_FULL_PATH = "M:" + CurrentDirectory.SEPARATOR + "Parent" + CurrentDirectory.SEPARATOR + "Child";
     private final String MOCK_SHORT_PATH = "M:" + CurrentDirectory.SEPARATOR + "Parent";
     private final String MOCK_WINDOWS_ROOT = "M:";
@@ -50,7 +55,7 @@ public class ChangeDirectoryCommandTest {
 
     @Test
     public void changeCurrentDirectoryToHomeDirectory() {
-        cd.homeDirectory();
+        cd = new ChangeDirectoryCommand(new String[] {CD_COMMAND, "~"});
         assertEquals(HOME_DIRECTORY, currentDirectory.toString());
     }
 
@@ -93,9 +98,13 @@ public class ChangeDirectoryCommandTest {
         assertEquals(USER_DIRECTORY_SRC, currentDirectory.toString());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void moveDownOneDirectoryPathDoesNotExistShouldThorIllegalArgumentException() {
-        cd.moveDown("jansdljasdlkjakd");
+    @Test
+    public void moveDownOneDirectoryPathDoesNotExistShouldPrintMessage() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        new ChangeDirectoryCommand(new String[] {CD_COMMAND, "jansdljasdlkjakd"});
+        assertEquals("No such file or directory.", outContent.toString().trim());
+        System.setOut(null);
     }
 
     @Test
@@ -104,16 +113,20 @@ public class ChangeDirectoryCommandTest {
         assertEquals(VALID_ROOT, currentDirectory.toString());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldNotBeAbleToChangeToRootThatDoesNotExist() {
-        cd.changeRoot(INVALID_ROOT);
+    @Test
+    public void changingToRootThatDoesNotExistShouldPrintMessage() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        cd = new ChangeDirectoryCommand(new String[] {CD_COMMAND, INVALID_ROOT});
+        assertEquals("No such file or directory.", outContent.toString().trim());
+        System.setOut(null);
     }
 
     @Test
     public void invalidCommandShouldPrintMessage() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        cd = new ChangeDirectoryCommand(new String[] {CD_COMMAND, INVALID_ROOT});
+        cd = new ChangeDirectoryCommand(new String[] {CD_COMMAND, INVALID_COMMAND});
         assertEquals("No such file or directory.", outContent.toString().trim());
         System.setOut(null);
     }

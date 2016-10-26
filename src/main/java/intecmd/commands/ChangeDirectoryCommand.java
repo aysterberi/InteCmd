@@ -1,17 +1,22 @@
+package intecmd.commands;
+
+import intecmd.CurrentDirectory;
+
 import java.io.File;
 import java.util.ArrayList;
 
-final class ChangeDirectoryCommand {
+public final class ChangeDirectoryCommand {
 
     private final static String CMD_PATTERN_PARENT_DIRECTORY = "..";
     private final static String PATTERN_ROOT_WINDOWS = "[a-zA-Z]{1}:\\\\{0,1}+";
     private final static String PATTERN_ROOT_UNIX = "/";
     private final static String PATTERN_WINDOWS_DIRECTORY = "^[^<>:\"/\\\\|?*]*$";
     private final static String PATTERN_UNIX_DIRECTORY = "^[^/]$";
+    private final static String CMD_PATTERN_HOME_DIRECTORY = "~";
 
     private CurrentDirectory currentDirectory = new CurrentDirectory();
 
-    ChangeDirectoryCommand(String[] data) {
+    public ChangeDirectoryCommand(String[] data) {
         try {
             switch(data.length) {
                 case 1:
@@ -29,22 +34,24 @@ final class ChangeDirectoryCommand {
         }
     }
 
-    ChangeDirectoryCommand() {
+    public ChangeDirectoryCommand() {
         this(new String[] {""});
     }
 
     private void readOptions(String[] options) {
-        if(options[1].matches(CMD_PATTERN_PARENT_DIRECTORY))
+        if (options[1].matches(CMD_PATTERN_PARENT_DIRECTORY))
             moveUp();
+        else if (options[1].matches(CMD_PATTERN_HOME_DIRECTORY))
+            homeDirectory();
         else if (options[1].matches(PATTERN_WINDOWS_DIRECTORY) || options[1].matches(PATTERN_UNIX_DIRECTORY))
             moveDown(options[1]);
-        else if(options[1].matches(PATTERN_ROOT_WINDOWS) || options[1].matches(PATTERN_ROOT_UNIX))
+        else if (options[1].matches(PATTERN_ROOT_WINDOWS) || options[1].matches(PATTERN_ROOT_UNIX))
             changeRoot(options[1].toLowerCase());
         else
             throw new IllegalArgumentException("No such file or directory.");
     }
 
-    void homeDirectory() {
+    private void homeDirectory() {
         currentDirectory.setCurrentDirectory(System.getProperty("user.home"));
     }
 

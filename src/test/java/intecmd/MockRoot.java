@@ -1,3 +1,7 @@
+package intecmd;
+
+import intecmd.MockDirectory;
+
 import java.util.ArrayList;
 
 public class MockRoot {
