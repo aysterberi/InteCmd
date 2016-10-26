@@ -50,22 +50,38 @@ public class ChangeDirectory {
 
     private void moveUp() {
         String[] pathParts = splitPath();
-        String path = systemIsWindows() ? pathParts[0] : PATTERN_ROOT_UNIX;
-        if (systemIsWindows()) {
-            for (int i = 1; i < pathParts.length - 1; i++) {
-                path += CurrentDirectory.SEPARATOR + pathParts[i];
-            }
+        if(systemIsWindows()) {
+            moveUpWindowsPath(pathParts);
         } else {
-            for (int i = 1; i < pathParts.length - 2; i++) {
-                path += pathParts[i] + CurrentDirectory.SEPARATOR;
-            }
-            path += pathParts[pathParts.length-2];
+            moveUpUnixPath(pathParts);
         }
+    }
+
+    private void moveUpWindowsPath(String[] pathParts) {
+        String path = pathParts[0];
+        for(int i = 1; i < pathParts.length - 1; i++)
+            path += CurrentDirectory.SEPARATOR + pathParts[i];
+        currentDirectory.setCurrentDirectory(path);
+    }
+
+    private void moveUpUnixPath(String[] pathParts) {
+        String path = PATTERN_ROOT_UNIX;
+        for(int i = 1; i < pathParts.length - 2; i++)
+            path +=  pathParts[i] + CurrentDirectory.SEPARATOR;
+        path += pathParts[pathParts.length-2];
         currentDirectory.setCurrentDirectory(path);
     }
 
     private String[] splitPath() {
-        return System.getProperty("os.name").startsWith("Windows") ? currentDirectory.toString().split(CurrentDirectory.SEPARATOR + CurrentDirectory.SEPARATOR) : currentDirectory.toString().split(CurrentDirectory.SEPARATOR);
+        return System.getProperty("os.name").startsWith("Windows") ? windowsSplitPath() : unixSplitPath();
+    }
+
+    private String[] windowsSplitPath() {
+        return currentDirectory.toString().split(CurrentDirectory.SEPARATOR+CurrentDirectory.SEPARATOR);
+    }
+
+    private String[] unixSplitPath() {
+        return currentDirectory.toString().split(CurrentDirectory.SEPARATOR);
     }
 
     private boolean systemIsWindows() {
