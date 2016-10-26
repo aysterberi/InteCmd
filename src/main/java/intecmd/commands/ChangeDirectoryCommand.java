@@ -4,6 +4,7 @@ import intecmd.CurrentDirectory;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public final class ChangeDirectoryCommand {
 
@@ -18,7 +19,7 @@ public final class ChangeDirectoryCommand {
 
     public ChangeDirectoryCommand(String[] data) {
         try {
-            switch(data.length) {
+            switch (data.length) {
                 case 1:
                     homeDirectory();
                     break;
@@ -29,13 +30,13 @@ public final class ChangeDirectoryCommand {
                     moveDown(data);
                     break;
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     public ChangeDirectoryCommand() {
-        this(new String[] {""});
+        this(new String[]{""});
     }
 
     private void readOptions(String[] options) {
@@ -46,7 +47,7 @@ public final class ChangeDirectoryCommand {
         else if (options[1].matches(PATTERN_WINDOWS_DIRECTORY) || options[1].matches(PATTERN_UNIX_DIRECTORY))
             moveDown(options[1]);
         else if (options[1].matches(PATTERN_ROOT_WINDOWS) || options[1].matches(PATTERN_ROOT_UNIX))
-            changeRoot(options[1].toLowerCase());
+            changeRoot(options[1].toLowerCase(Locale.ROOT));
         else
             throw new IllegalArgumentException("No such file or directory.");
     }
@@ -57,7 +58,7 @@ public final class ChangeDirectoryCommand {
 
     private void moveUp() {
         String[] pathParts = splitPath();
-        if(systemIsWindows()) {
+        if (systemIsWindows()) {
             moveUpWindowsPath(pathParts);
         } else {
             moveUpUnixPath(pathParts);
@@ -65,18 +66,22 @@ public final class ChangeDirectoryCommand {
     }
 
     private void moveUpWindowsPath(String[] pathParts) {
-        String path = pathParts[0];
-        for(int i = 1; i < pathParts.length - 1; i++)
-            path += CurrentDirectory.SEPARATOR + pathParts[i];
-        currentDirectory.setCurrentDirectory(path);
+        StringBuilder stringBuilder = new StringBuilder(pathParts[0]);
+        for (int i = 1; i < pathParts.length - 1; i++) {
+            stringBuilder.append(CurrentDirectory.SEPARATOR);
+            stringBuilder.append(pathParts[i]);
+        }
+        currentDirectory.setCurrentDirectory(stringBuilder.toString());
     }
 
     private void moveUpUnixPath(String[] pathParts) {
-        String path = PATTERN_ROOT_UNIX;
-        for(int i = 1; i < pathParts.length - 2; i++)
-            path +=  pathParts[i] + CurrentDirectory.SEPARATOR;
-        path += pathParts[pathParts.length-2];
-        currentDirectory.setCurrentDirectory(path);
+        StringBuilder stringBuilder = new StringBuilder(PATTERN_ROOT_UNIX);
+        for (int i = 1; i < pathParts.length - 2; i++) {
+            stringBuilder.append(pathParts[i]);
+            stringBuilder.append(CurrentDirectory.SEPARATOR);
+        }
+        stringBuilder.append(pathParts[pathParts.length - 2]);
+        currentDirectory.setCurrentDirectory(stringBuilder.toString());
     }
 
     private String[] splitPath() {
@@ -84,7 +89,7 @@ public final class ChangeDirectoryCommand {
     }
 
     private String[] windowsSplitPath() {
-        return currentDirectory.toString().split(CurrentDirectory.SEPARATOR+CurrentDirectory.SEPARATOR);
+        return currentDirectory.toString().split(CurrentDirectory.SEPARATOR + CurrentDirectory.SEPARATOR);
     }
 
     private String[] unixSplitPath() {
@@ -97,9 +102,12 @@ public final class ChangeDirectoryCommand {
 
     private void moveDown(String[] splitDirectory) {
         String directory = splitDirectory[1];
-        for(int i = 2; i < splitDirectory.length; i++)
-            directory += " " + splitDirectory[i];
-        moveDown(directory);
+        StringBuilder stringBuilder = new StringBuilder(directory);
+        for (int i = 2; i < splitDirectory.length; i++) {
+            stringBuilder.append(" ");
+            stringBuilder.append(splitDirectory[i]);
+        }
+        moveDown(stringBuilder.toString());
     }
 
     void moveDown(String directory) {
@@ -110,23 +118,24 @@ public final class ChangeDirectoryCommand {
 
     private boolean directoryExists(String directory) {
         ArrayList<File> files = new LSCommand(currentDirectory.toString()).getDirectories();
-        for(File file : files)
+        for (File file : files)
             if (file.getName().equals(directory))
                 return true;
         return false;
     }
 
     void changeRoot(String root) {
-        if(!rootExists(root))
+        if (!rootExists(root))
             throw new IllegalArgumentException("No such file or directory.");
         else
-            currentDirectory.setCurrentDirectory(root.toUpperCase());
+            currentDirectory.setCurrentDirectory(root.toUpperCase(Locale.ROOT));
 
     }
 
     private boolean rootExists(String root) {
-        for(File file : File.listRoots())
-            if(file.toString().toLowerCase().equals(root.toLowerCase()) || file.toString().toLowerCase().equals(root.toLowerCase() + CurrentDirectory.SEPARATOR))
+        for (File file : File.listRoots())
+            if (file.toString().toLowerCase(Locale.ROOT).equals(root.toLowerCase(Locale.ROOT)) ||
+                    file.toString().toLowerCase(Locale.ROOT).equals(root.toLowerCase(Locale.ROOT) + CurrentDirectory.SEPARATOR))
                 return true;
         return false;
     }
