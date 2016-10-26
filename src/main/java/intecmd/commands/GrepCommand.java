@@ -27,6 +27,8 @@ public class GrepCommand implements CommandInterface {
     }
 
     public String executeSearch(String[] tokens) {
+        if (tokens.length == 2)
+            return "Too few arguments, try again";
         File[] files = fileFinder(currentDirectory.toString());
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader;
