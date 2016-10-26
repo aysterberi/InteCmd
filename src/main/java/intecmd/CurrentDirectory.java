@@ -7,7 +7,7 @@ public class CurrentDirectory {
     private static String currentDirectory = System.getProperty("user.dir");
 
     public void setCurrentDirectory(String path) {
-        //verifyPath(path);
+        verifyPath(path);
         currentDirectory = path;
     }
 
