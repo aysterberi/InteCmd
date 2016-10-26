@@ -13,7 +13,6 @@ package intecmd.commands;
 
 import intecmd.CommandInterface;
 import intecmd.CurrentDirectory;
-import org.omg.CORBA.Current;
 
 import java.io.*;
 
